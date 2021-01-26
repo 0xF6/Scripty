@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Expressions;
@@ -43,7 +44,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
                 var lexer = new Lexer(infixTest.Input);
                 var parser = new Parser(lexer);
                 var program = parser.ParseCode();
-                CheckParserErrors(parser);
+                StaticTests.CheckParserErrors(parser);
 
                 Assert.AreEqual(1, program.Statements.Count,
                     $"program should have 1 statement, got={program.Statements.Count}");
@@ -53,38 +54,10 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
                 Assert.AreEqual("ExpressionStatement", stmt.GetType().Name,
                     $"first statement not of type 'ExpressionStatement', got={stmt.GetType().Name}");
 
-                Assert.AreEqual("InfixExpression", stmt.Expression.GetType().Name,
-                    $"expression not of type 'InfixExpression', got={stmt.Expression.GetType().Name}");
-
                 var exp = stmt.Expression as InfixExpression;
 
-                TestIntegerLiteral(exp.Left, infixTest.LeftValue);
-
-                Assert.AreEqual(infixTest.Operator, exp.Operator,
-                    $"operator is not {infixTest.Operator}, got={exp.Operator}");
-
-                TestIntegerLiteral(exp.Right, infixTest.RightValue);
+                StaticTests.TestInfixExpression(stmt.Expression, exp.Left, exp.Operator, exp.Right);
             }
-        }
-
-        private void TestIntegerLiteral(IExpression exp, long val)
-        {
-            Assert.AreEqual("IntegerLiteral", exp.GetType().Name,
-                $"expression right side is not f type 'IntegerLiteral', got={exp.GetType().Name}");
-
-            var integerLiteral = exp as IntegerLiteral;
-
-            Assert.AreEqual(integerLiteral.Value, val,
-                $"integerLiteral value is not {val}, got={integerLiteral.Value}");
-
-            Assert.AreEqual(integerLiteral.TokenLiteral(), $"{val}",
-                $"integerLiterals token literal is not '{val}', got='{integerLiteral.TokenLiteral()}'");
-        }
-
-        private void CheckParserErrors(Parser parser)
-        {
-            var errors = parser.Errors;
-            Assert.AreEqual(0, errors.Count);
         }
     }
 }

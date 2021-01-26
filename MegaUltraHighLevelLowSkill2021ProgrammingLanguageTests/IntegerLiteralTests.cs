@@ -22,7 +22,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
             var lexer = new Lexer(input);
             var parser = new Parser(lexer);
             var program = parser.ParseCode();
-            CheckParserErrors(parser);
+            StaticTests.CheckParserErrors(parser);
             Assert.AreEqual(1, program.Statements.Count,
                 $"program should have 1 statement, got={program.Statements.Count}");
 
@@ -40,12 +40,6 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
 
             Assert.AreEqual("100500", int64Literal.TokenLiteral(),
                 $"literals token literal not 100500, got={int64Literal.TokenLiteral()}");
-        }
-
-        private void CheckParserErrors(Parser parser)
-        {
-            var errors = parser.Errors;
-            Assert.AreEqual(0, errors.Count);
         }
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Expressions;
+using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Interfaces;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Literals;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Statements;
 using NUnit.Framework;
@@ -36,8 +37,8 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
                 var lexer = new Lexer(prefixTest.Input);
                 var parser = new Parser(lexer);
                 var program = parser.ParseCode();
-                CheckParserErrors(parser);
-                
+                StaticTests.CheckParserErrors(parser);
+
                 Assert.AreEqual(1, program.Statements.Count,
                     $"program should have 1 statement, got={program.Statements.Count}");
 
@@ -54,22 +55,8 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
                 Assert.AreEqual(prefixTest.Operator, exp.Operator,
                     $"operator is not {prefixTest.Operator}, got={exp.Operator}");
 
-                Assert.AreEqual("IntegerLiteral", exp.Right.GetType().Name,
-                    $"expression right side is not f type 'IntegerLiteral', got={exp.Right.GetType().Name}");
-                var integerLiteral = exp.Right as IntegerLiteral;
-
-                Assert.AreEqual(integerLiteral.Value, prefixTest.IntegerValue,
-                    $"integerLiteral value is not {prefixTest.IntegerValue}, got={integerLiteral.Value}");
-
-                Assert.AreEqual(integerLiteral.TokenLiteral(), $"{prefixTest.IntegerValue}",
-                    $"integerLiterals token literal is not '{prefixTest.IntegerValue}', got='{integerLiteral.TokenLiteral()}'");
+                StaticTests.TestIntegerLiteral(exp.Right, prefixTest.IntegerValue);
             }
-        }
-
-        private void CheckParserErrors(Parser parser)
-        {
-            var errors = parser.Errors;
-            Assert.AreEqual(0, errors.Count);
         }
     }
 }

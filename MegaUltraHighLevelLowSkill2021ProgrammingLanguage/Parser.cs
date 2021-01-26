@@ -54,8 +54,56 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
                 {Token.INT, new PrefixParseFn(this.ParseIntegerLiteral)},
                 {Token.BANG, new PrefixParseFn(this.ParsePrefixExpression)},
                 {Token.MINUS, new PrefixParseFn(this.ParsePrefixExpression)},
+                {Token.TRUE, new PrefixParseFn(this.ParseBoolean)},
+                {Token.FALSE, new PrefixParseFn(this.ParseBoolean)},
+                {Token.LPAREN, new PrefixParseFn(this.ParseGroupedExpression)},
+                {Token.IF, new PrefixParseFn(this.ParseIfExpression)},
             };
         }
+
+        private IExpression ParseIfExpression()
+        {
+            var expression = new IfExpression {Token = this.CurrentToken};
+            if (!this.ExpectPeek(Token.LPAREN)) return null;
+            this.NextToken();
+            expression.Condition = this.ParseExpression(Enums.Precedences.LOWEST);
+            if (!this.ExpectPeek(Token.RPAREN)) return null;
+            if (!this.ExpectPeek(Token.LBRACE)) return null;
+            expression.Consequence = this.ParseBlockStatement();
+
+            if (!this.PeekTokenIs(Token.ELSE)) return expression;
+            this.NextToken();
+            if (!this.ExpectPeek(Token.LBRACE)) return null;
+
+            expression.Alternative = this.ParseBlockStatement();
+
+            return expression;
+        }
+
+        private BlockStatement ParseBlockStatement()
+        {
+            var block = new BlockStatement {Token = this.CurrentToken, Statements = new List<IStatement>()};
+            this.NextToken();
+            while (!this.CurTokenIs(Token.RBRACE) && !this.CurTokenIs(Token.EOF))
+            {
+                var stmt = this.ParseStatement();
+                if (!(stmt is null)) block.Statements.Add(stmt);
+                this.NextToken();
+            }
+
+            return block;
+        }
+
+        private IExpression ParseGroupedExpression()
+        {
+            this.NextToken();
+            var exp = this.ParseExpression(Enums.Precedences.LOWEST);
+
+            return !this.ExpectPeek(Token.RPAREN) ? null : exp;
+        }
+
+        private IExpression ParseBoolean() => new BooleanLiteral
+            {Token = this.CurrentToken, Value = this.CurTokenIs(Token.TRUE)};
 
         private void SetInfixFns()
         {
@@ -166,6 +214,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
                 this.NextToken();
                 leftExp = infix(leftExp);
             }
+
             return leftExp;
         }
 

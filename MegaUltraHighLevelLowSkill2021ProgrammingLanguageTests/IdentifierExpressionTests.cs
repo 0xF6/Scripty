@@ -20,7 +20,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
             var lexer = new Lexer(input);
             var parser = new Parser(lexer);
             var program = parser.ParseCode();
-            CheckParserErrors(parser);
+            StaticTests.CheckParserErrors(parser);
             Assert.AreEqual(1, program.Statements.Count,
                 $"program should have 1 statement, got={program.Statements.Count}");
 
@@ -29,21 +29,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
             Assert.AreEqual("ExpressionStatement", stmt.GetType().Name,
                 $"first statement not of type 'ExpressionStatement', got={stmt.GetType().Name}");
 
-            Assert.AreEqual("Identifier", stmt.Expression.GetType().Name,
-                $"expression not of type 'Identifier', got={stmt.Expression.GetType().Name}");
-
-            var ident = stmt.Expression as Identifier;
-
-            Assert.AreEqual("fooBar", ident.Value, $"identifier not {input}, got={ident.Value}");
-
-            Assert.AreEqual("fooBar", ident.TokenLiteral(),
-                $"identifier token literal not {input}, got={ident.TokenLiteral()}");
-        }
-
-        private void CheckParserErrors(Parser parser)
-        {
-            var errors = parser.Errors;
-            Assert.AreEqual(0, errors.Count);
+            StaticTests.TestIdentifier(stmt.Expression, "fooBar");
         }
     }
 }

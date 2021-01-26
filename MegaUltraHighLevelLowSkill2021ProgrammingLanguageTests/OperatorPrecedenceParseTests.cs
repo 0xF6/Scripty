@@ -34,6 +34,10 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
                 new OperatorTest {Input = "a < b != c > b", Expected = "((a < b) != (c > b))"},
                 new OperatorTest
                     {Input = "3 + 4 * 5 == 3 * 1 + 4 * 5", Expected = "((3 + (4 * 5)) == ((3 * 1) + (4 * 5)))"},
+                new OperatorTest {Input = "true", Expected = "true"},
+                new OperatorTest {Input = "false", Expected = "false"},
+                new OperatorTest {Input = "3 > 5 == false", Expected = "((3 > 5) == false)"},
+                new OperatorTest {Input = "3 < 5 == true", Expected = "((3 < 5) == true)"},
             };
 
             foreach (var operatorTest in tests)
@@ -41,16 +45,10 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
                 var lexer = new Lexer(operatorTest.Input);
                 var parser = new Parser(lexer);
                 var program = parser.ParseCode();
-                CheckParserErrors(parser);
+                StaticTests.CheckParserErrors(parser);
                 var actual = program.Str();
                 Assert.AreEqual(operatorTest.Expected, actual);
             }
-        }
-
-        private void CheckParserErrors(Parser parser)
-        {
-            var errors = parser.Errors;
-            Assert.AreEqual(0, errors.Count);
         }
     }
 }
