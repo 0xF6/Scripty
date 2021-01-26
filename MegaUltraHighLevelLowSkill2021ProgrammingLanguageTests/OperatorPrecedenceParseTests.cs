@@ -21,7 +21,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
         {
             var tests = new OperatorTest[]
             {
-                new OperatorTest {Input = "-a * b", Expected = "((-a) * b)"},
+                new OperatorTest {Input = "-a * b", Expected = "(-(a * b))"},
                 new OperatorTest {Input = "!-a", Expected = "(!(-a))"},
                 new OperatorTest {Input = "a + b + c", Expected = "((a + b) + c)"},
                 new OperatorTest {Input = "a * b * c", Expected = "((a * b) * c)"},
@@ -30,7 +30,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
                 new OperatorTest {Input = "a + b / c", Expected = "(a + (b / c))"},
                 new OperatorTest {Input = "a + b * c + d / e - f", Expected = "(((a + (b * c)) + (d / e)) - f)"},
                 new OperatorTest {Input = "a > b == c < b", Expected = "((a > b) == (c < b))"},
-                new OperatorTest {Input = "a + b; -c * c", Expected = "(a + b)((-c) * c)"},
+                new OperatorTest {Input = "a + b; -c * c", Expected = "(a + b)(-(c * c))"},
                 new OperatorTest {Input = "a < b != c > b", Expected = "((a < b) != (c > b))"},
                 new OperatorTest
                     {Input = "3 + 4 * 5 == 3 * 1 + 4 * 5", Expected = "((3 + (4 * 5)) == ((3 * 1) + (4 * 5)))"},
