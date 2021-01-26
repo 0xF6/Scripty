@@ -6,7 +6,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            new Repl().Run();
         }
     }
 }
