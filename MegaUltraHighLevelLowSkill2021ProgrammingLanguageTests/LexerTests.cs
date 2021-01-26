@@ -13,7 +13,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
         }
 
         [Test]
-        public void LexerTest1()
+        public void SymbolTests()
         {
             const string input = "=;+(){},;!*<>/-5";
             var tests = new Token[]
@@ -46,7 +46,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
         }
 
         [Test]
-        public void LexerTest2()
+        public void KeywordsTest()
         {
             const string input =
                 @"let five = 501;
@@ -134,7 +134,7 @@ if (5 < 10) {
         }
 
         [Test]
-        public void LexerTest3()
+        public void EqualityOperatorsTest()
         {
             const string input =
                 @"10 == 10;
