@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
 {
@@ -12,16 +13,28 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
             {
                 Console.Write(PROMPT);
                 var input = Console.ReadLine();
-                if (input is null)
-                {
-                    return;
-                }
+                if (input is null) return;
 
                 var lexer = new Lexer(input);
-                for (var tok = lexer.NextToken(); tok.Type != Token.EOF; tok = lexer.NextToken())
+                var parser = new Parser(lexer);
+
+                var program = parser.ParseCode();
+                if (parser.Errors.Count != 0)
                 {
-                    Console.WriteLine($"{{ Type: {tok.Type}, Literal: {tok.Literal}}}");
+                    PrintParserErrors(parser.Errors);
+                    continue;
                 }
+
+                Console.WriteLine(program.Str());
+            }
+        }
+
+        private static void PrintParserErrors(List<string> errors)
+        {
+            foreach (var error in errors)
+            {
+                // TODO: add makaque
+                Console.WriteLine(error);
             }
         }
     }
