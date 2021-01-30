@@ -17,6 +17,14 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
         public string Operator { get; set; }
     }
 
+    struct BoolInfixTest
+    {
+        public string Input { get; set; }
+        public bool LeftValue { get; set; }
+        public bool RightValue { get; set; }
+        public string Operator { get; set; }
+    }
+
     public class InfixExpressionsParseTests
     {
         [SetUp]
@@ -37,6 +45,37 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
                 new InfixTest {Input = "5 < 5", LeftValue = 5, RightValue = 5, Operator = "<"},
                 new InfixTest {Input = "5 == 5", LeftValue = 5, RightValue = 5, Operator = "=="},
                 new InfixTest {Input = "5 != 5", LeftValue = 5, RightValue = 5, Operator = "!="},
+            };
+
+            foreach (var infixTest in infixTests)
+            {
+                var lexer = new Lexer(infixTest.Input);
+                var parser = new Parser(lexer);
+                var program = parser.ParseCode();
+                StaticTests.CheckParserErrors(parser);
+
+                Assert.AreEqual(1, program.Statements.Count,
+                    $"program should have 1 statement, got={program.Statements.Count}");
+
+                var stmt = program.Statements.First() as ExpressionStatement;
+
+                Assert.AreEqual("ExpressionStatement", stmt.GetType().Name,
+                    $"first statement not of type 'ExpressionStatement', got={stmt.GetType().Name}");
+
+                var exp = stmt.Expression as InfixExpression;
+
+                StaticTests.TestInfixExpression(stmt.Expression, exp.Left, exp.Operator, exp.Right);
+            }
+        }
+
+        [Test]
+        public void BoolInfixExpressionsParseTest()
+        {
+            var infixTests = new BoolInfixTest[]
+            {
+                new BoolInfixTest {Input = "true == true", LeftValue = true, RightValue = true, Operator = "=="},
+                new BoolInfixTest {Input = "true != false", LeftValue = true, RightValue = false, Operator = "!="},
+                new BoolInfixTest {Input = "false == false", LeftValue = false, RightValue = false, Operator = "=="},
             };
 
             foreach (var infixTest in infixTests)

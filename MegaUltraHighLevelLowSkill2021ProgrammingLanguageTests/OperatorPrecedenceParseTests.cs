@@ -38,6 +38,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
                 new OperatorTest {Input = "false", Expected = "false"},
                 new OperatorTest {Input = "3 > 5 == false", Expected = "((3 > 5) == false)"},
                 new OperatorTest {Input = "3 < 5 == true", Expected = "((3 < 5) == true)"},
+                new OperatorTest {Input = "!(true == true)", Expected = "(!(true == true))"},
             };
 
             foreach (var operatorTest in tests)

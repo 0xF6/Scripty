@@ -22,6 +22,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
             var lexer = new Lexer(input);
             var parser = new Parser(lexer);
             var program = parser.ParseCode();
+            
             StaticTests.CheckParserErrors(parser);
             Assert.AreEqual(1, program.Statements.Count,
                 $"program should have 1 statement, got={program.Statements.Count}");

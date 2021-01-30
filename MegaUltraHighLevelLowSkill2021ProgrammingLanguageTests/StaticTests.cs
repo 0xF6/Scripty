@@ -24,7 +24,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
 
             Assert.AreEqual(val, boolLiteral.Value);
 
-            Assert.AreEqual($"{val}", boolLiteral.TokenLiteral());
+            Assert.AreEqual($"{val}".ToLower(), boolLiteral.TokenLiteral());
         }
 
         public static void TestIntegerLiteral(IExpression exp, long val)
