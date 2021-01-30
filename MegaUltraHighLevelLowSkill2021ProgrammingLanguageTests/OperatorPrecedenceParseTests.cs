@@ -33,12 +33,26 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
                 new OperatorTest {Input = "a + b; -c * c", Expected = "(a + b)(-(c * c))"},
                 new OperatorTest {Input = "a < b != c > b", Expected = "((a < b) != (c > b))"},
                 new OperatorTest
-                    {Input = "3 + 4 * 5 == 3 * 1 + 4 * 5", Expected = "((3 + (4 * 5)) == ((3 * 1) + (4 * 5)))"},
+                {
+                    Input = "3 + 4 * 5 == 3 * 1 + 4 * 5",
+                    Expected = "((3 + (4 * 5)) == ((3 * 1) + (4 * 5)))"
+                },
                 new OperatorTest {Input = "true", Expected = "true"},
                 new OperatorTest {Input = "false", Expected = "false"},
                 new OperatorTest {Input = "3 > 5 == false", Expected = "((3 > 5) == false)"},
                 new OperatorTest {Input = "3 < 5 == true", Expected = "((3 < 5) == true)"},
                 new OperatorTest {Input = "!(true == true)", Expected = "(!(true == true))"},
+                new OperatorTest {Input = "a + add(b * c) + d", Expected = "((a + add((b * c))) + d)"},
+                new OperatorTest
+                {
+                    Input = "add(a, b, 1, 2 * 3, 4 + 5, add(6, 7 * 8))",
+                    Expected = "add(a, b, 1, (2 * 3), (4 + 5), add(6, (7 * 8)))"
+                },
+                new OperatorTest
+                {
+                    Input = "add(a + b + c * d / f + g)",
+                    Expected = "add((((a + b) + ((c * d) / f)) + g))"
+                },
             };
 
             foreach (var operatorTest in tests)

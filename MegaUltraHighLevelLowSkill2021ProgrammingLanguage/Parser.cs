@@ -43,6 +43,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
                 {Token.MINUS, Enums.Precedences.SUM},
                 {Token.SLASH, Enums.Precedences.PRODUCT},
                 {Token.ASTERISK, Enums.Precedences.PRODUCT},
+                {Token.LPAREN, Enums.Precedences.CALL},
             };
         }
 
@@ -154,8 +155,34 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
                 {Token.NOT_EQ, this.ParseInfixExpression},
                 {Token.LT, this.ParseInfixExpression},
                 {Token.GT, this.ParseInfixExpression},
+                {Token.LPAREN, this.ParseCallExpression},
             };
         }
+
+        private IExpression ParseCallExpression(IExpression v) => new CallExpression
+            {Token = this.CurrentToken, Function = v, Arguments = this.ParseCallArguments()};
+
+        private List<IExpression> ParseCallArguments()
+        {
+            var args = new List<IExpression>();
+            if (this.PeekTokenIs(Token.RPAREN))
+            {
+                this.NextToken();
+                return args;
+            }
+
+            this.NextToken();
+            args.Add(this.ParseExpression(Enums.Precedences.LOWEST));
+            while (this.PeekTokenIs(Token.COMMA))
+            {
+                this.NextToken();
+                this.NextToken();
+                args.Add(this.ParseExpression(Enums.Precedences.LOWEST));
+            }
+
+            return !this.ExpectPeek(Token.RPAREN) ? null : args;
+        }
+
 
         private IExpression ParsePrefixExpression()
         {
