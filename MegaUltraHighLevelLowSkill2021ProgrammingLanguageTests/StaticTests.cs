@@ -52,21 +52,21 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
             Assert.AreEqual(value, ident.TokenLiteral());
         }
 
-        public static void TestLiteralExpression(IExpression exp, IExpression expected)
+        public static void TestLiteralExpression(IExpression exp, object expected)
         {
             switch (expected.GetType().Name)
             {
-                case "IntegerLiteral":
-                    var integerExpectation = expected as IntegerLiteral;
-                    TestIntegerLiteral(exp, integerExpectation.Value);
+                case "Int64":
+                    var expectedInt = (long) expected;
+                    TestIntegerLiteral(exp, expectedInt);
                     break;
-                case "Identifier":
-                    var identifierExpectation = expected as Identifier;
-                    TestIdentifier(exp, identifierExpectation.Value);
+                case "String":
+                    var expectedIdent = (string) expected;
+                    TestIdentifier(exp, expectedIdent);
                     break;
-                case "BooleanLiteral":
-                    var booleanExpectation = expected as BooleanLiteral;
-                    TestBooleanLiteral(exp, booleanExpectation.Value);
+                case "Boolean":
+                    var expectedBool = (bool) expected;
+                    TestBooleanLiteral(exp, expectedBool);
                     break;
                 default:
                     Console.Out.WriteLine(expected.GetType().Name);

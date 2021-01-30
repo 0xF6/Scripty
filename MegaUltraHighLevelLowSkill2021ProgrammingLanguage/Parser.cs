@@ -307,8 +307,10 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
         {
             var stmt = new ReturnStatement {Token = this.CurrentToken};
             this.NextToken();
-            // TODO skip expressions until semicolon is encountered
-            while (!this.CurTokenIs(Token.SEMICOLON)) this.NextToken();
+            stmt.ReturnValue = this.ParseExpression(Enums.Precedences.LOWEST);
+
+            if (this.PeekTokenIs(Token.SEMICOLON)) this.NextToken();
+
             return stmt;
         }
 
@@ -321,9 +323,11 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
             stmt.Name = new Identifier {Token = this.CurrentToken, Value = this.CurrentToken.Literal};
             if (!this.ExpectPeek(Token.ASSIGN)) return null;
 
+            this.NextToken();
+            stmt.Value = this.ParseExpression(Enums.Precedences.LOWEST);
 
-            // TODO skip expressions until semicolon is encountered
-            while (!this.CurTokenIs(Token.SEMICOLON)) this.NextToken();
+            if (this.PeekTokenIs(Token.SEMICOLON)) this.NextToken();
+
             return stmt;
         }
 
