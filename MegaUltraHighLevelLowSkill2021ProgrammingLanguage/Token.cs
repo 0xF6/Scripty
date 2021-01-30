@@ -44,7 +44,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
 
         private Dictionary<string, string> keywords = new Dictionary<string, string>()
         {
-            {"fn", FUNCTION},
+            {"fun", FUNCTION},
             {"let", LET},
             {"true", TRUE},
             {"false", FALSE},

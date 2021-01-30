@@ -58,7 +58,44 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
                 {Token.FALSE, new PrefixParseFn(this.ParseBoolean)},
                 {Token.LPAREN, new PrefixParseFn(this.ParseGroupedExpression)},
                 {Token.IF, new PrefixParseFn(this.ParseIfExpression)},
+                {Token.FUNCTION, new PrefixParseFn(this.ParseFunctionLiteral)},
             };
+        }
+
+        private IExpression ParseFunctionLiteral()
+        {
+            var lit = new FunctionLiteral {Token = this.CurrentToken};
+            if (!this.ExpectPeek(Token.LPAREN)) return null;
+            lit.Parameters = this.ParseFunctionParameters();
+            if (!this.ExpectPeek(Token.LBRACE)) return null;
+            lit.Body = this.ParseBlockStatement();
+            return lit;
+        }
+
+        private List<Identifier> ParseFunctionParameters()
+        {
+            var identifiers = new List<Identifier>();
+
+            if (this.PeekTokenIs(Token.RPAREN))
+            {
+                this.NextToken();
+                return identifiers;
+            }
+
+            this.NextToken();
+
+            var ident = new Identifier {Token = this.CurrentToken, Value = this.CurrentToken.Literal};
+            identifiers.Add(ident);
+
+            while (this.PeekTokenIs(Token.COMMA))
+            {
+                this.NextToken();
+                this.NextToken();
+                ident = new Identifier {Token = this.CurrentToken, Value = this.CurrentToken.Literal};
+                identifiers.Add(ident);
+            }
+
+            return !this.ExpectPeek(Token.RPAREN) ? null : identifiers;
         }
 
         private IExpression ParseIfExpression()

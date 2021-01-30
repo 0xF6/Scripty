@@ -51,7 +51,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
             const string input =
                 @"let five = 501;
 let ten = 10;
-let add = fn (x, y) {
+let add = fun (x, y) {
   x + y; 
 }; 
 
@@ -77,7 +77,7 @@ if (5 < 10) {
                 new Token {Type = Token.LET, Literal = "let"},
                 new Token {Type = Token.IDENT, Literal = "add"},
                 new Token {Type = Token.ASSIGN, Literal = "="},
-                new Token {Type = Token.FUNCTION, Literal = "fn"},
+                new Token {Type = Token.FUNCTION, Literal = "fun"},
                 new Token {Type = Token.LPAREN, Literal = "("},
                 new Token {Type = Token.IDENT, Literal = "x"},
                 new Token {Type = Token.COMMA, Literal = ","},
