@@ -2,12 +2,12 @@
 
 namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Console.WriteLine($"Welcome to {typeof(Program).Namespace}");
-            new Repl().Run();
+            Repl.Run();
         }
     }
 }

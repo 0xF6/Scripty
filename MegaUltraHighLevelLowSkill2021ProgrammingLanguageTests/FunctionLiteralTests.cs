@@ -7,7 +7,7 @@ using NUnit.Framework;
 
 namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
 {
-    struct FunctionTests
+    internal struct FunctionTests
     {
         public string Input { get; set; }
         public List<string> ExpectedParams { get; set; }
@@ -63,9 +63,9 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
         {
             var tests = new FunctionTests[]
             {
-                new FunctionTests {Input = "fun() {}", ExpectedParams = new List<string>()},
-                new FunctionTests {Input = "fun(x) {}", ExpectedParams = new List<string>() {"x"}},
-                new FunctionTests {Input = "fun(x, y, z) {}", ExpectedParams = new List<string>() {"x", "y", "z"}},
+                new() {Input = "fun() {}", ExpectedParams = new List<string>()},
+                new() {Input = "fun(x) {}", ExpectedParams = new List<string> {"x"}},
+                new() {Input = "fun(x, y, z) {}", ExpectedParams = new List<string> {"x", "y", "z"}}
             };
 
             foreach (var functionTests in tests)

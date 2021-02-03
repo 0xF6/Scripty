@@ -1,7 +1,5 @@
-using System;
 using System.Linq;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Expressions;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Literals;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Statements;
 using NUnit.Framework;
@@ -22,7 +20,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
             var lexer = new Lexer(input);
             var parser = new Parser(lexer);
             var program = parser.ParseCode();
-            
+
             StaticTests.CheckParserErrors(parser);
             Assert.AreEqual(1, program.Statements.Count,
                 $"program should have 1 statement, got={program.Statements.Count}");
@@ -36,7 +34,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
                 $"expression not of type 'IntegerLiteral', got={stmt.Expression.GetType().Name}");
 
             var int64Literal = stmt.Expression as IntegerLiteral;
-            
+
             Assert.AreEqual(100500, int64Literal.Value, $"literal not 100500, got={int64Literal.Value}");
 
             Assert.AreEqual("100500", int64Literal.TokenLiteral(),

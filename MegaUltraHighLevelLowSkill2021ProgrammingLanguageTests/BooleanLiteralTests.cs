@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
 {
-    struct BooleanTest
+    internal struct BooleanTest
     {
         public string Input { get; set; }
         public bool Value { get; set; }
@@ -24,8 +24,8 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
         {
             var tests = new BooleanTest[]
             {
-                new BooleanTest {Input = "true", Value = true},
-                new BooleanTest {Input = "false", Value = false},
+                new() {Input = "true", Value = true},
+                new() {Input = "false", Value = false}
             };
 
             foreach (var booleanTest in tests)

@@ -2,55 +2,53 @@ using System.Collections.Generic;
 
 namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
 {
-    using System.Collections;
-
     public class Token
     {
-        public const string ILLEGAL = "ILLEGAL";
-        public const string EOF = "EOF";
+        public const string Illegal = "ILLEGAL";
+        public const string Eof = "EOF";
 
         // identifiers
-        public const string IDENT = "IDENT";
-        public const string INT = "INT";
+        public const string Ident = "IDENT";
+        public const string Int = "INT";
 
         //operators
-        public const string ASSIGN = "=";
-        public const string PLUS = "+";
-        public const string MINUS = "-";
-        public const string BANG = "!";
-        public const string SLASH = "/";
-        public const string ASTERISK = "*";
-        public const string GT = ">";
-        public const string LT = "<";
-        public const string EQ = "==";
-        public const string NOT_EQ = "!=";
+        public const string Assign = "=";
+        public const string Plus = "+";
+        public const string Minus = "-";
+        public const string Bang = "!";
+        public const string Slash = "/";
+        public const string Asterisk = "*";
+        public const string Gt = ">";
+        public const string Lt = "<";
+        public const string Eq = "==";
+        public const string NotEq = "!=";
 
         // delimiters
-        public const string COMMA = ",";
-        public const string SEMICOLON = ";";
-        public const string LPAREN = "(";
-        public const string RPAREN = ")";
-        public const string LBRACE = "{";
-        public const string RBRACE = "}";
+        public const string Comma = ",";
+        public const string Semicolon = ";";
+        public const string Lparen = "(";
+        public const string Rparen = ")";
+        public const string Lbrace = "{";
+        public const string Rbrace = "}";
 
         // keywords
-        public const string FUNCTION = "FUNCTION";
-        public const string LET = "LET";
-        public const string TRUE = "TRUE";
-        public const string FALSE = "FALSE";
-        public const string IF = "IF";
-        public const string ELSE = "ELSE";
-        public const string RETURN = "RETURN";
+        public const string Function = "FUNCTION";
+        public const string Let = "LET";
+        public const string True = "TRUE";
+        public const string False = "FALSE";
+        public const string If = "IF";
+        public const string Else = "ELSE";
+        public const string Return = "RETURN";
 
-        private Dictionary<string, string> keywords = new Dictionary<string, string>()
+        private readonly Dictionary<string, string> keywords = new()
         {
-            {"fun", FUNCTION},
-            {"let", LET},
-            {"true", TRUE},
-            {"false", FALSE},
-            {"if", IF},
-            {"else", ELSE},
-            {"return", RETURN},
+            {"fun", Function},
+            {"let", Let},
+            {"true", True},
+            {"false", False},
+            {"if", If},
+            {"else", Else},
+            {"return", Return}
         };
 
         public string Type { get; set; }
@@ -58,8 +56,8 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
 
         public string LookUpIdent(string ident)
         {
-            if (this.keywords.TryGetValue(ident, out var tok)) return tok;
-            return IDENT;
+            if (keywords.TryGetValue(ident, out var tok)) return tok;
+            return Ident;
         }
     }
 }

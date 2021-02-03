@@ -3,7 +3,7 @@ using NUnit.Framework;
 
 namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
 {
-    struct OperatorTest
+    internal struct OperatorTest
     {
         public string Input { get; set; }
         public string Expected { get; set; }
@@ -21,38 +21,38 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
         {
             var tests = new OperatorTest[]
             {
-                new OperatorTest {Input = "-a * b", Expected = "(-(a * b))"},
-                new OperatorTest {Input = "!-a", Expected = "(!(-a))"},
-                new OperatorTest {Input = "a + b + c", Expected = "((a + b) + c)"},
-                new OperatorTest {Input = "a * b * c", Expected = "((a * b) * c)"},
-                new OperatorTest {Input = "a + b - c", Expected = "((a + b) - c)"},
-                new OperatorTest {Input = "a * b / c", Expected = "((a * b) / c)"},
-                new OperatorTest {Input = "a + b / c", Expected = "(a + (b / c))"},
-                new OperatorTest {Input = "a + b * c + d / e - f", Expected = "(((a + (b * c)) + (d / e)) - f)"},
-                new OperatorTest {Input = "a > b == c < b", Expected = "((a > b) == (c < b))"},
-                new OperatorTest {Input = "a + b; -c * c", Expected = "(a + b)(-(c * c))"},
-                new OperatorTest {Input = "a < b != c > b", Expected = "((a < b) != (c > b))"},
-                new OperatorTest
+                new() {Input = "-a * b", Expected = "((-a) * b)"},
+                new() {Input = "!-a", Expected = "(!(-a))"},
+                new() {Input = "a + b + c", Expected = "((a + b) + c)"},
+                new() {Input = "a * b * c", Expected = "((a * b) * c)"},
+                new() {Input = "a + b - c", Expected = "((a + b) - c)"},
+                new() {Input = "a * b / c", Expected = "((a * b) / c)"},
+                new() {Input = "a + b / c", Expected = "(a + (b / c))"},
+                new() {Input = "a + b * c + d / e - f", Expected = "(((a + (b * c)) + (d / e)) - f)"},
+                new() {Input = "a > b == c < b", Expected = "((a > b) == (c < b))"},
+                new() {Input = "a + b; -c * c", Expected = "(a + b)((-c) * c)"},
+                new() {Input = "a < b != c > b", Expected = "((a < b) != (c > b))"},
+                new()
                 {
                     Input = "3 + 4 * 5 == 3 * 1 + 4 * 5",
                     Expected = "((3 + (4 * 5)) == ((3 * 1) + (4 * 5)))"
                 },
-                new OperatorTest {Input = "true", Expected = "true"},
-                new OperatorTest {Input = "false", Expected = "false"},
-                new OperatorTest {Input = "3 > 5 == false", Expected = "((3 > 5) == false)"},
-                new OperatorTest {Input = "3 < 5 == true", Expected = "((3 < 5) == true)"},
-                new OperatorTest {Input = "!(true == true)", Expected = "(!(true == true))"},
-                new OperatorTest {Input = "a + add(b * c) + d", Expected = "((a + add((b * c))) + d)"},
-                new OperatorTest
+                new() {Input = "true", Expected = "true"},
+                new() {Input = "false", Expected = "false"},
+                new() {Input = "3 > 5 == false", Expected = "((3 > 5) == false)"},
+                new() {Input = "3 < 5 == true", Expected = "((3 < 5) == true)"},
+                new() {Input = "!(true == true)", Expected = "(!(true == true))"},
+                new() {Input = "a + add(b * c) + d", Expected = "((a + add((b * c))) + d)"},
+                new()
                 {
                     Input = "add(a, b, 1, 2 * 3, 4 + 5, add(6, 7 * 8))",
                     Expected = "add(a, b, 1, (2 * 3), (4 + 5), add(6, (7 * 8)))"
                 },
-                new OperatorTest
+                new()
                 {
                     Input = "add(a + b + c * d / f + g)",
                     Expected = "add((((a + b) + ((c * d) / f)) + g))"
-                },
+                }
             };
 
             foreach (var operatorTest in tests)

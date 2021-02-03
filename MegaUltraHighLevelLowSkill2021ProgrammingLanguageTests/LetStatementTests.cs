@@ -1,5 +1,3 @@
-using System;
-using System.Data.SqlTypes;
 using System.Linq;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Expressions;
@@ -8,7 +6,7 @@ using NUnit.Framework;
 
 namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
 {
-    struct LetStatementTestCases
+    internal struct LetStatementTestCases
     {
         public string Input { get; set; }
         public string ExpectedIdentifier { get; set; }
@@ -16,11 +14,14 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
 
         public LetStatementTestCases ExpectedValueSet<T>(T val)
         {
-            this._expectedVal = val as object;
+            _expectedVal = val;
             return this;
         }
 
-        public object ExpectedValueGet() => this._expectedVal;
+        public object ExpectedValueGet()
+        {
+            return _expectedVal;
+        }
     }
 
     public class LetStatementTests
@@ -33,9 +34,9 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
         [Test]
         public void LetStatementsTest()
         {
-            const string input = @"let x = 5;
-let y = 10;
-let foo = 123456789;";
+            const string input = @"let x = 5; 
+let y = 10; 
+let foo = 123456789; ";
             var lexer = new Lexer(input);
             var parser = new Parser(lexer);
 
@@ -46,9 +47,9 @@ let foo = 123456789;";
                 $"program.Statements does not contain 3 statements, got={program.Statements.Count}");
             var tests = new Identifier[]
             {
-                new Identifier {Value = "x"},
-                new Identifier {Value = "y"},
-                new Identifier {Value = "foo"},
+                new() {Value = "x"},
+                new() {Value = "y"},
+                new() {Value = "foo"}
             };
 
             for (var i = 0; i < tests.Length; i++)
@@ -62,13 +63,13 @@ let foo = 123456789;";
         [Test]
         public void LetStatementsTest1()
         {
-            var tests = new LetStatementTestCases[]
+            var tests = new[]
             {
                 new LetStatementTestCases {Input = "let x = 5;", ExpectedIdentifier = "x"}.ExpectedValueSet<long>(5),
                 new LetStatementTestCases {Input = "let y = true;", ExpectedIdentifier = "y"}
                     .ExpectedValueSet(true),
                 new LetStatementTestCases {Input = "let foo = y;", ExpectedIdentifier = "foo"}
-                    .ExpectedValueSet("y"),
+                    .ExpectedValueSet("y")
             };
 
             foreach (var letStatementTestCases in tests)

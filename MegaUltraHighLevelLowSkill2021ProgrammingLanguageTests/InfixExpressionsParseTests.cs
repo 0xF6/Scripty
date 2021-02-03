@@ -1,15 +1,12 @@
-using System;
 using System.Linq;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Expressions;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Interfaces;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Literals;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Statements;
 using NUnit.Framework;
 
 namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
 {
-    struct InfixTest
+    internal struct InfixTest
     {
         public string Input { get; set; }
         public long LeftValue { get; set; }
@@ -17,7 +14,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
         public string Operator { get; set; }
     }
 
-    struct BoolInfixTest
+    internal struct BoolInfixTest
     {
         public string Input { get; set; }
         public bool LeftValue { get; set; }
@@ -37,14 +34,14 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
         {
             var infixTests = new InfixTest[]
             {
-                new InfixTest {Input = "5 + 5", LeftValue = 5, RightValue = 5, Operator = "+"},
-                new InfixTest {Input = "5 - 5", LeftValue = 5, RightValue = 5, Operator = "-"},
-                new InfixTest {Input = "5 * 5", LeftValue = 5, RightValue = 5, Operator = "*"},
-                new InfixTest {Input = "5 / 5", LeftValue = 5, RightValue = 5, Operator = "/"},
-                new InfixTest {Input = "5 > 5", LeftValue = 5, RightValue = 5, Operator = ">"},
-                new InfixTest {Input = "5 < 5", LeftValue = 5, RightValue = 5, Operator = "<"},
-                new InfixTest {Input = "5 == 5", LeftValue = 5, RightValue = 5, Operator = "=="},
-                new InfixTest {Input = "5 != 5", LeftValue = 5, RightValue = 5, Operator = "!="},
+                new() {Input = "5 + 5", LeftValue = 5, RightValue = 5, Operator = "+"},
+                new() {Input = "5 - 5", LeftValue = 5, RightValue = 5, Operator = "-"},
+                new() {Input = "5 * 5", LeftValue = 5, RightValue = 5, Operator = "*"},
+                new() {Input = "5 / 5", LeftValue = 5, RightValue = 5, Operator = "/"},
+                new() {Input = "5 > 5", LeftValue = 5, RightValue = 5, Operator = ">"},
+                new() {Input = "5 < 5", LeftValue = 5, RightValue = 5, Operator = "<"},
+                new() {Input = "5 == 5", LeftValue = 5, RightValue = 5, Operator = "=="},
+                new() {Input = "5 != 5", LeftValue = 5, RightValue = 5, Operator = "!="}
             };
 
             foreach (var infixTest in infixTests)
@@ -73,9 +70,9 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
         {
             var infixTests = new BoolInfixTest[]
             {
-                new BoolInfixTest {Input = "true == true", LeftValue = true, RightValue = true, Operator = "=="},
-                new BoolInfixTest {Input = "true != false", LeftValue = true, RightValue = false, Operator = "!="},
-                new BoolInfixTest {Input = "false == false", LeftValue = false, RightValue = false, Operator = "=="},
+                new() {Input = "true == true", LeftValue = true, RightValue = true, Operator = "=="},
+                new() {Input = "true != false", LeftValue = true, RightValue = false, Operator = "!="},
+                new() {Input = "false == false", LeftValue = false, RightValue = false, Operator = "=="}
             };
 
             foreach (var infixTest in infixTests)

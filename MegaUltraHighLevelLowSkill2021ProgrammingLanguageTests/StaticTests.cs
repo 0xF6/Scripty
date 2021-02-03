@@ -69,7 +69,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
                     TestBooleanLiteral(exp, expectedBool);
                     break;
                 default:
-                    Console.Out.WriteLine(expected.GetType().Name);
+                    // Console.Out.WriteLine(expected.GetType().Name);
                     break;
             }
         }
@@ -83,13 +83,13 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
 
             var opExp = exp as InfixExpression;
 
-            StaticTests.TestLiteralExpression(opExp.Left, left);
+            TestLiteralExpression(opExp.Left, left);
 
             Assert.AreEqual(op, opExp.Operator,
                 $"operator is not {op}, got={opExp.Operator}");
 
 
-            StaticTests.TestLiteralExpression(opExp.Right, right);
+            TestLiteralExpression(opExp.Right, right);
         }
 
         public static void TestLetStatement(LetStatement statement, string name)

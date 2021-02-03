@@ -1,143 +1,164 @@
-using System;
-
 namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
 {
     public class Lexer
     {
+        public Lexer(string input)
+        {
+            Input = input;
+            Position = 0;
+            ReadPosition = 0;
+            ReadChar();
+        }
+
         public string Input { get; set; }
         public int Position { get; set; }
         public int ReadPosition { get; set; }
         public char Ch { get; set; }
 
-        public Lexer(string input)
-        {
-            this.Input = input;
-            this.Position = 0;
-            this.ReadPosition = 0;
-            this.ReadChar();
-        }
-
         public Token NextToken()
         {
-            this.SkipWhitespace();
-            var tok = new Token { };
-            switch (this.Ch)
+            SkipWhitespace();
+            var tok = new Token();
+            switch (Ch)
             {
                 case '=':
-                    if (this.PeekChar() == '=')
+                    if (PeekChar() == '=')
                     {
-                        var ch = this.Ch;
-                        this.ReadChar();
-                        var literal = $"{ch}{this.Ch}";
-                        tok = NewToken(Token.EQ, literal);
+                        var ch = Ch;
+                        ReadChar();
+                        var literal = $"{ch}{Ch}";
+                        tok = NewToken(Token.Eq, literal);
                     }
-                    else tok = NewToken(Token.ASSIGN, this.Ch.ToString());
+                    else
+                    {
+                        tok = NewToken(Token.Assign, Ch.ToString());
+                    }
 
                     break;
                 case '!':
-                    if (this.PeekChar() == '=')
+                    if (PeekChar() == '=')
                     {
-                        var ch = this.Ch;
-                        this.ReadChar();
-                        var literal = $"{ch}{this.Ch}";
-                        tok = NewToken(Token.NOT_EQ, literal);
+                        var ch = Ch;
+                        ReadChar();
+                        var literal = $"{ch}{Ch}";
+                        tok = NewToken(Token.NotEq, literal);
                     }
-                    else tok = NewToken(Token.BANG, this.Ch.ToString());
+                    else
+                    {
+                        tok = NewToken(Token.Bang, Ch.ToString());
+                    }
 
                     break;
                 case '-':
-                    tok = NewToken(Token.MINUS, this.Ch.ToString());
+                    tok = NewToken(Token.Minus, Ch.ToString());
                     break;
                 case '/':
-                    tok = NewToken(Token.SLASH, this.Ch.ToString());
+                    tok = NewToken(Token.Slash, Ch.ToString());
                     break;
                 case '*':
-                    tok = NewToken(Token.ASTERISK, this.Ch.ToString());
+                    tok = NewToken(Token.Asterisk, Ch.ToString());
                     break;
                 case '<':
-                    tok = NewToken(Token.LT, this.Ch.ToString());
+                    tok = NewToken(Token.Lt, Ch.ToString());
                     break;
                 case '>':
-                    tok = NewToken(Token.GT, this.Ch.ToString());
+                    tok = NewToken(Token.Gt, Ch.ToString());
                     break;
                 case ';':
-                    tok = NewToken(Token.SEMICOLON, this.Ch.ToString());
+                    tok = NewToken(Token.Semicolon, Ch.ToString());
                     break;
                 case '(':
-                    tok = NewToken(Token.LPAREN, this.Ch.ToString());
+                    tok = NewToken(Token.Lparen, Ch.ToString());
                     break;
                 case ')':
-                    tok = NewToken(Token.RPAREN, this.Ch.ToString());
+                    tok = NewToken(Token.Rparen, Ch.ToString());
                     break;
                 case ',':
-                    tok = NewToken(Token.COMMA, this.Ch.ToString());
+                    tok = NewToken(Token.Comma, Ch.ToString());
                     break;
                 case '+':
-                    tok = NewToken(Token.PLUS, this.Ch.ToString());
+                    tok = NewToken(Token.Plus, Ch.ToString());
                     break;
                 case '{':
-                    tok = NewToken(Token.LBRACE, this.Ch.ToString());
+                    tok = NewToken(Token.Lbrace, Ch.ToString());
                     break;
                 case '}':
-                    tok = NewToken(Token.RBRACE, this.Ch.ToString());
+                    tok = NewToken(Token.Rbrace, Ch.ToString());
                     break;
                 case '\0':
-                    tok.Type = Token.EOF;
+                    tok.Type = Token.Eof;
                     tok.Literal = "";
                     break;
                 default:
-                    if (IsLetter(this.Ch))
+                    if (IsLetter(Ch))
                     {
-                        tok.Literal = this.ReadIdentifier();
+                        tok.Literal = ReadIdentifier();
                         tok.Type = tok.LookUpIdent(tok.Literal);
                         return tok;
                     }
-                    else if (IsDigit(this.Ch))
+                    else if (IsDigit(Ch))
                     {
-                        tok.Type = Token.INT;
-                        tok.Literal = this.ReadNumber();
+                        tok.Type = Token.Int;
+                        tok.Literal = ReadNumber();
                         return tok;
                     }
-                    else tok = NewToken(Token.ILLEGAL, this.Ch.ToString());
+                    else
+                    {
+                        tok = NewToken(Token.Illegal, Ch.ToString());
+                    }
 
                     break;
             }
 
-            this.ReadChar();
+            ReadChar();
             return tok;
         }
 
-        private char PeekChar() => this.ReadPosition >= this.Input.Length ? '\0' : this.Input[this.ReadPosition];
+        private char PeekChar()
+        {
+            return ReadPosition >= Input.Length ? '\0' : Input[ReadPosition];
+        }
 
 
         private void ReadChar()
         {
-            this.Ch = this.ReadPosition >= this.Input.Length ? '\0' : this.Input[this.ReadPosition];
-            this.Position = this.ReadPosition;
-            this.ReadPosition += 1;
+            Ch = ReadPosition >= Input.Length ? '\0' : Input[ReadPosition];
+            Position = ReadPosition;
+            ReadPosition += 1;
         }
 
         private string ReadIdentifier()
         {
-            var position = this.Position;
-            while (IsLetter(this.Ch)) this.ReadChar();
-            return this.Input[position..this.Position];
+            var position = Position;
+            while (IsLetter(Ch)) ReadChar();
+            return Input[position..Position];
         }
 
         private string ReadNumber()
         {
-            var position = this.Position;
-            while (IsDigit(this.Ch)) this.ReadChar();
-            return this.Input[position..this.Position];
+            var position = Position;
+            while (IsDigit(Ch)) ReadChar();
+            return Input[position..Position];
         }
 
         private void SkipWhitespace()
         {
-            while (this.Ch == ' ' || this.Ch == '\n' || this.Ch == '\t' || this.Ch == '\r') this.ReadChar();
+            while (Ch == ' ' || Ch == '\n' || Ch == '\t' || Ch == '\r') ReadChar();
         }
 
-        private static Token NewToken(string type, string ch) => new Token {Type = type, Literal = ch};
-        private static bool IsLetter(char ch) => 'a' <= ch && ch <= 'z' || 'A' <= ch && ch <= 'Z';
-        private static bool IsDigit(char ch) => '0' <= ch && ch <= '9';
+        private static Token NewToken(string type, string ch)
+        {
+            return new() {Type = type, Literal = ch};
+        }
+
+        private static bool IsLetter(char ch)
+        {
+            return 'a' <= ch && ch <= 'z' || 'A' <= ch && ch <= 'Z';
+        }
+
+        private static bool IsDigit(char ch)
+        {
+            return '0' <= ch && ch <= '9';
+        }
     }
 }

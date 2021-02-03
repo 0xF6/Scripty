@@ -1,3 +1,4 @@
+using System;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Interfaces;
 
 namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Expressions
@@ -7,16 +8,20 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Expressions
         public Token Token { get; set; }
         public string Operator { get; set; }
         public IExpression Right { get; set; }
-        public string TokenLiteral() => this.Token.Literal;
+
+        public string TokenLiteral()
+        {
+            return Token.Literal;
+        }
 
         public string Str()
         {
-            return $"({this.Operator}{this.Right.Str()})";
+            return $"({Operator}{Right.Str()})";
         }
 
         public void ExpressionNode()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

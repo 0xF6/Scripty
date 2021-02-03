@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Expressions;
@@ -20,19 +19,19 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
         {
             var program = new Code
             {
-                Statements = new List<IStatement>()
+                Statements = new List<IStatement>
                 {
-                    new LetStatement()
+                    new LetStatement
                     {
-                        Token = new Token {Type = Token.LET, Literal = "let"},
+                        Token = new Token {Type = Token.Let, Literal = "let"},
                         Name = new Identifier
                         {
-                            Token = new Token {Type = Token.IDENT, Literal = "foo"},
+                            Token = new Token {Type = Token.Ident, Literal = "foo"},
                             Value = "foo"
                         },
                         Value = new Identifier
                         {
-                            Token = new Token {Type = Token.IDENT, Literal = "bar"},
+                            Token = new Token {Type = Token.Ident, Literal = "bar"},
                             Value = "bar"
                         }
                     }

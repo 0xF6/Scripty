@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Interfaces;
 
 namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
@@ -8,12 +10,16 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
     {
         public List<IStatement> Statements { get; set; }
 
-        public string TokenLiteral() => this.Statements.Count > 0 ? this.Statements.First().TokenLiteral() : "";
+        public string TokenLiteral()
+        {
+            return Statements.Count > 0 ? Statements.First().TokenLiteral() : "";
+        }
 
 
         public string Str()
         {
-            return this.Statements.Aggregate("", (current, statement) => $"{current}{statement.Str()}");
+            return Statements.Aggregate("",
+                (current, statement) => $"{current}{statement.Str()}"); // TODO: fix precedences
         }
     }
 }

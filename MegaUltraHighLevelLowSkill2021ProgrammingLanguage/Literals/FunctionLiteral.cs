@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Expressions;
@@ -12,18 +13,21 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Literals
         public List<Identifier> Parameters { get; set; }
         public BlockStatement Body { get; set; }
 
-        public string TokenLiteral() => this.Token.Literal;
+        public string TokenLiteral()
+        {
+            return Token.Literal;
+        }
 
         public string Str()
         {
-            var parameters = this.Parameters.Select(identifier => identifier.Str()).ToList();
+            var parameters = Parameters.Select(identifier => identifier.Str()).ToList();
 
-            return $"{this.TokenLiteral()}({string.Join(", ", parameters)}){this.Body.Str()}";
+            return $"{TokenLiteral()}({string.Join(", ", parameters)}){Body.Str()}";
         }
 
         public void ExpressionNode()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

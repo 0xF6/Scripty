@@ -1,15 +1,12 @@
-using System;
 using System.Linq;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Expressions;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Interfaces;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Literals;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Statements;
 using NUnit.Framework;
 
 namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
 {
-    struct PrefixTest
+    internal struct PrefixTest
     {
         public string Input { get; set; }
         public string Operator { get; set; }
@@ -28,8 +25,8 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
         {
             var prefixTests = new PrefixTest[]
             {
-                new PrefixTest {Input = "!5", Operator = "!", IntegerValue = 5},
-                new PrefixTest {Input = "-50", Operator = "-", IntegerValue = 50}
+                new() {Input = "!5", Operator = "!", IntegerValue = 5},
+                new() {Input = "-50", Operator = "-", IntegerValue = 50}
             };
 
             foreach (var prefixTest in prefixTests)

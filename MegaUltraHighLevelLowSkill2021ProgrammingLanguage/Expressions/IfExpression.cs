@@ -1,3 +1,4 @@
+using System;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Interfaces;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Statements;
 
@@ -8,19 +9,23 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Expressions
         public Token Token { get; set; }
         public IExpression Condition { get; set; }
         public BlockStatement Consequence { get; set; }
-        public BlockStatement Alternative { get; set; }
-        public string TokenLiteral() => this.Token.Literal;
+        public BlockStatement? Alternative { get; set; }
+
+        public string TokenLiteral()
+        {
+            return Token.Literal;
+        }
 
         public string Str()
         {
-            var res = $"if{this.Condition.Str()} {this.Consequence.Str()}";
-            if (!(this.Alternative is null)) res = $"{res}else {this.Alternative.Str()}";
+            var res = $"if{Condition.Str()} {Consequence.Str()}";
+            if (!(Alternative is null)) res = $"{res} else {Alternative.Str()}";
             return res;
         }
 
         public void ExpressionNode()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

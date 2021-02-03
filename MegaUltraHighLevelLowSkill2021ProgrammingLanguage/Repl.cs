@@ -3,15 +3,15 @@ using System.Collections.Generic;
 
 namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
 {
-    public class Repl
+    public static class Repl
     {
-        private const string PROMPT = "> ";
+        private const string Prompt = "> ";
 
-        public void Run()
+        public static void Run()
         {
             while (true)
             {
-                Console.Write(PROMPT);
+                Console.Write(Prompt);
                 var input = Console.ReadLine();
                 if (input is null) return;
 
@@ -25,17 +25,16 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
                     continue;
                 }
 
-                Console.WriteLine(program.Str());
+                var evaluated = Evaluator.Eval(program);
+                if (!(evaluated is null)) Console.WriteLine(evaluated.Inspect());
             }
         }
 
         private static void PrintParserErrors(List<string> errors)
         {
             foreach (var error in errors)
-            {
                 // TODO: add makaque
                 Console.WriteLine(error);
-            }
         }
     }
 }
