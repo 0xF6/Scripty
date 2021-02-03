@@ -6,13 +6,6 @@ using NUnit.Framework;
 
 namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
 {
-    internal struct PrefixTest
-    {
-        public string Input { get; set; }
-        public string Operator { get; set; }
-        public long IntegerValue { get; set; }
-    }
-
     public class PrefixExpressionsParseTests
     {
         [SetUp]

@@ -6,24 +6,6 @@ using NUnit.Framework;
 
 namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
 {
-    internal struct LetStatementTestCases
-    {
-        public string Input { get; set; }
-        public string ExpectedIdentifier { get; set; }
-        private object _expectedVal;
-
-        public LetStatementTestCases ExpectedValueSet<T>(T val)
-        {
-            _expectedVal = val;
-            return this;
-        }
-
-        public object ExpectedValueGet()
-        {
-            return _expectedVal;
-        }
-    }
-
     public class LetStatementTests
     {
         [SetUp]
@@ -65,7 +47,7 @@ let foo = 123456789; ";
         {
             var tests = new[]
             {
-                new LetStatementTestCases {Input = "let x = 5;", ExpectedIdentifier = "x"}.ExpectedValueSet<long>(5),
+                new LetStatementTestCases {Input = "let x = 5;", ExpectedIdentifier = "x"}.ExpectedValueSet(5),
                 new LetStatementTestCases {Input = "let y = true;", ExpectedIdentifier = "y"}
                     .ExpectedValueSet(true),
                 new LetStatementTestCases {Input = "let foo = y;", ExpectedIdentifier = "foo"}

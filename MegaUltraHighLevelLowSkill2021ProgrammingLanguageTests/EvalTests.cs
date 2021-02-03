@@ -5,24 +5,6 @@ using NUnit.Framework;
 
 namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
 {
-    internal struct StatementEvalTestCase
-    {
-        public string Input { get; set; }
-        public int? Expected { get; set; }
-    }
-
-    internal struct IntegerTests
-    {
-        public string Input { get; set; }
-        public long expected { get; set; }
-    }
-
-    internal struct BooleanTests
-    {
-        public string Input { get; set; }
-        public bool expected { get; set; }
-    }
-
     public class EvalTests
     {
         [SetUp]
@@ -51,61 +33,61 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
 
             foreach (var integerTest in tests)
             {
-                var evaluated = TestEval(integerTest.Input);
-                TestIntegerObject(evaluated, integerTest.expected);
+                var evaluated = StaticTests.TestEval(integerTest.Input);
+                StaticTests.TestIntegerObject(evaluated, integerTest.expected);
             }
         }
 
         [Test]
         public void BooleanExpressionEvalTest()
         {
-            var tests = new BooleanTests[]
+            var tests = new BooleanTest[]
             {
-                new() {Input = "true", expected = true},
-                new() {Input = "false", expected = false},
-                new() {Input = "1 < 2", expected = true},
-                new() {Input = "1 > 2", expected = false},
-                new() {Input = "1 < 1", expected = false},
-                new() {Input = "1 > 1", expected = false},
-                new() {Input = "1 == 1", expected = true},
-                new() {Input = "1 != 1", expected = false},
-                new() {Input = "1 == 2", expected = false},
-                new() {Input = "1 != 2", expected = true},
-                new() {Input = "true == true", expected = true},
-                new() {Input = "false == false", expected = true},
-                new() {Input = "true == false", expected = false},
-                new() {Input = "true != false", expected = true},
-                new() {Input = "false != true", expected = true},
-                new() {Input = "(1 < 2) == true", expected = true},
-                new() {Input = "(1 < 2) == false", expected = false},
-                new() {Input = "(1 > 2) == true", expected = false},
-                new() {Input = "(1 > 2) == false", expected = true}
+                new() {Input = "true", Value = true},
+                new() {Input = "false", Value = false},
+                new() {Input = "1 < 2", Value = true},
+                new() {Input = "1 > 2", Value = false},
+                new() {Input = "1 < 1", Value = false},
+                new() {Input = "1 > 1", Value = false},
+                new() {Input = "1 == 1", Value = true},
+                new() {Input = "1 != 1", Value = false},
+                new() {Input = "1 == 2", Value = false},
+                new() {Input = "1 != 2", Value = true},
+                new() {Input = "true == true", Value = true},
+                new() {Input = "false == false", Value = true},
+                new() {Input = "true == false", Value = false},
+                new() {Input = "true != false", Value = true},
+                new() {Input = "false != true", Value = true},
+                new() {Input = "(1 < 2) == true", Value = true},
+                new() {Input = "(1 < 2) == false", Value = false},
+                new() {Input = "(1 > 2) == true", Value = false},
+                new() {Input = "(1 > 2) == false", Value = true}
             };
 
             foreach (var booleanTest in tests)
             {
-                var evaluated = TestEval(booleanTest.Input);
-                TestBooleanObject(evaluated, booleanTest.expected);
+                var evaluated = StaticTests.TestEval(booleanTest.Input);
+                StaticTests.TestBooleanObject(evaluated, booleanTest.Value);
             }
         }
 
         [Test]
         public void BangOperatorTest()
         {
-            var tests = new BooleanTests[]
+            var tests = new BooleanTest[]
             {
-                new() {Input = "!true", expected = false},
-                new() {Input = "!false", expected = true},
-                new() {Input = "!5", expected = false},
-                new() {Input = "!!5", expected = true},
-                new() {Input = "!!true", expected = true},
-                new() {Input = "!!false", expected = false}
+                new() {Input = "!true", Value = false},
+                new() {Input = "!false", Value = true},
+                new() {Input = "!5", Value = false},
+                new() {Input = "!!5", Value = true},
+                new() {Input = "!!true", Value = true},
+                new() {Input = "!!false", Value = false}
             };
 
             foreach (var booleanTest in tests)
             {
-                var evaluated = TestEval(booleanTest.Input);
-                TestBooleanObject(evaluated, booleanTest.expected);
+                var evaluated = StaticTests.TestEval(booleanTest.Input);
+                StaticTests.TestBooleanObject(evaluated, booleanTest.Value);
             }
         }
 
@@ -126,8 +108,8 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
 
             foreach (var statementEvalTestCase in tests)
             {
-                var evaluated = TestEval(statementEvalTestCase.Input);
-                TestIntegerObject(evaluated, statementEvalTestCase.Expected);
+                var evaluated = StaticTests.TestEval(statementEvalTestCase.Input);
+                StaticTests.TestIntegerObject(evaluated, statementEvalTestCase.Expected);
             }
         }
 
@@ -147,44 +129,13 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
 
             foreach (var boolEvalTestCase in tests)
             {
-                var evaluated = TestEval(boolEvalTestCase.Input);
+                var evaluated = StaticTests.TestEval(boolEvalTestCase.Input);
                 if (boolEvalTestCase.Expected is null)
-                    Assert.True(TestNullObject(evaluated), $"evaluated object is not Null, got {evaluated}");
+                    Assert.True(StaticTests.TestNullObject(evaluated),
+                        $"evaluated object is not Null, got {evaluated}");
                 else
-                    TestIntegerObject(evaluated, boolEvalTestCase.Expected);
+                    StaticTests.TestIntegerObject(evaluated, boolEvalTestCase.Expected);
             }
-        }
-
-        private static bool TestNullObject(IObject evaluated)
-        {
-            return Equals(evaluated, Evaluator.Null);
-        }
-
-        private static void TestBooleanObject(IObject obj, bool expected)
-        {
-            Assert.AreEqual("Boolean", obj.GetType().Name);
-
-            var result = obj as Boolean;
-
-            Assert.AreEqual(expected, result.Value);
-        }
-
-        private static void TestIntegerObject(IObject obj, long? expected)
-        {
-            Assert.AreEqual("Integer", obj.GetType().Name);
-
-            var result = obj as Integer;
-
-            Assert.AreEqual(expected, result.Value);
-        }
-
-        private static IObject TestEval(string input)
-        {
-            var lexer = new Lexer(input);
-            var parser = new Parser(lexer);
-            var program = parser.ParseCode();
-
-            return Evaluator.Eval(program);
         }
     }
 }

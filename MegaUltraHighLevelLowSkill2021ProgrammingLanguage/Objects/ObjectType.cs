@@ -6,5 +6,6 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects
         public const string BooleanObj = "BOOLEAN";
         public const string NullObj = "NULL";
         public const string ReturnValueObj = "RETURN_VALUE";
+        public const string ErrorObj = "ERROR";
     }
 }

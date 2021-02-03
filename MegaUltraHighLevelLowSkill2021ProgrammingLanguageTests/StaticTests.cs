@@ -2,6 +2,7 @@ using MegaUltraHighLevelLowSkill2021ProgrammingLanguage;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Expressions;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Interfaces;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Literals;
+using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Statements;
 using NUnit.Framework;
 
@@ -68,6 +69,38 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
                     TestBooleanLiteral(exp, expectedBool);
                     break;
             }
+        }
+        
+        public static bool TestNullObject(IObject evaluated)
+        {
+            return Equals(evaluated, Evaluator.Null);
+        }
+
+        public static void TestBooleanObject(IObject obj, bool expected)
+        {
+            Assert.AreEqual("Boolean", obj.GetType().Name);
+
+            var result = obj as Boolean;
+
+            Assert.AreEqual(expected, result.Value);
+        }
+
+        public static void TestIntegerObject(IObject obj, long? expected)
+        {
+            Assert.AreEqual("Integer", obj.GetType().Name);
+
+            var result = obj as Integer;
+
+            Assert.AreEqual(expected, result.Value);
+        }
+
+        public static IObject TestEval(string input)
+        {
+            var lexer = new Lexer(input);
+            var parser = new Parser(lexer);
+            var program = parser.ParseCode();
+
+            return Evaluator.Eval(program);
         }
 
         public static void TestInfixExpression(IExpression exp, IExpression left, string op, IExpression right)

@@ -13,7 +13,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
         public static readonly Boolean False = new() {Value = false};
         public static readonly Null Null = new();
 
-        public static IObject Eval(INode node)
+        public static IObject? Eval(INode node)
         {
             return node.GetType().Name switch
             {
@@ -37,7 +37,9 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
             foreach (var nodeStatement in node.Statements)
             {
                 result = Eval(nodeStatement);
-                if (!(result is null) && result.Type() == ObjectType.ReturnValueObj)
+
+                if (result is null) continue;
+                if (result.Type() == ObjectType.ErrorObj || result.Type() == ObjectType.ReturnValueObj)
                     return result;
             }
 
@@ -50,8 +52,13 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
             foreach (var nodeStatement in node.Statements)
             {
                 result = Eval(nodeStatement);
-                if (result.GetType().Name == nameof(ReturnValue))
-                    return ((ReturnValue) result).Value;
+                switch (result.GetType().Name)
+                {
+                    case nameof(ReturnValue):
+                        return ((ReturnValue) result).Value;
+                    case nameof(Error):
+                        return result;
+                }
             }
 
             return result;
@@ -93,11 +100,14 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
             if (left.Type() == ObjectType.IntegerObj && right.Type() == ObjectType.IntegerObj)
                 return EvalIntegerInfixExpression(infixNodeOperator, (Integer) left, (Integer) right);
 
+            if (left.Type() != right.Type())
+                return NewError($"type mismatch: {left.Type()} {infixNodeOperator} {right.Type()}");
+
             return infixNodeOperator switch
             {
                 "==" => NativeBoolToBooleanObject(Equals(left, right)),
                 "!=" => NativeBoolToBooleanObject(!Equals(left, right)),
-                _ => Null
+                _ => NewError($"unknown operator: {left.Type()} {infixNodeOperator} {right.Type()}")
             };
         }
 
@@ -115,7 +125,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
                 ">" => NativeBoolToBooleanObject(leftVal > rightVal),
                 "!=" => NativeBoolToBooleanObject(leftVal != rightVal),
                 "==" => NativeBoolToBooleanObject(leftVal == rightVal),
-                _ => Null
+                _ => NewError($"unknown operator: {left.Type()} {infixNodeOperator} {right.Type()}")
             };
         }
 
@@ -132,13 +142,18 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
             {
                 "!" => EvalBangOperatorExpression(right),
                 "-" => EvalMinusPrefixOperatorExpression(right),
-                _ => Null
+                _ => NewError($"unknown operator: {op}{right.Type()}")
             };
+        }
+
+        private static Error NewError(string s)
+        {
+            return new() {Message = s};
         }
 
         private static IObject EvalMinusPrefixOperatorExpression(IObject right)
         {
-            if (right.Type() != ObjectType.IntegerObj) return Null;
+            if (right.Type() != ObjectType.IntegerObj) return NewError($"unknown operator: -{right.Type()}");
             var value = ((Integer) right).Value;
             return new Integer {Value = -value};
         }
