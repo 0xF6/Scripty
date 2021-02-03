@@ -2,16 +2,18 @@ using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Interfaces;
 
 namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects
 {
-    public class Null : IObject
+    public class ReturnValue : IObject
     {
+        public IObject Value { get; set; }
+
         public string Type()
         {
-            return ObjectType.NullObj;
+            return ObjectType.ReturnValueObj;
         }
 
         public string Inspect()
         {
-            return "null";
+            return Value.Inspect();
         }
     }
 }

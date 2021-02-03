@@ -8,7 +8,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects
 
         public string Type()
         {
-            return ObjectType.INTEGER_OBJ;
+            return ObjectType.IntegerObj;
         }
 
         public string Inspect()

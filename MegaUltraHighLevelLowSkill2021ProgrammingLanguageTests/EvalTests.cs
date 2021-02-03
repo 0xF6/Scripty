@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
 {
-    internal struct BoolEvalTestCase
+    internal struct StatementEvalTestCase
     {
         public string Input { get; set; }
         public int? Expected { get; set; }
@@ -110,9 +110,31 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
         }
 
         [Test]
+        public void ReturnStatementTest()
+        {
+            var tests = new StatementEvalTestCase[]
+            {
+                new() {Input = "return 10;", Expected = 10},
+                new() {Input = "return 10; 9;", Expected = 10},
+                new() {Input = "return 2 * 5; 9;", Expected = 10},
+                new() {Input = "9; return 2 * 5; 9;", Expected = 10},
+                new()
+                {
+                    Input = "if (10 > 1) { if (15 > 1) { return 10; } return 1; }", Expected = 10
+                }
+            };
+
+            foreach (var statementEvalTestCase in tests)
+            {
+                var evaluated = TestEval(statementEvalTestCase.Input);
+                TestIntegerObject(evaluated, statementEvalTestCase.Expected);
+            }
+        }
+
+        [Test]
         public void IfElseExpressionTest1()
         {
-            var tests = new BoolEvalTestCase[]
+            var tests = new StatementEvalTestCase[]
             {
                 new() {Input = "if (true) { 10 }", Expected = 10},
                 new() {Input = "if (false) { 10 }", Expected = null},

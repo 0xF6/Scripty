@@ -16,7 +16,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects
 
         public string Type()
         {
-            return ObjectType.BOOLEAN_OBJ;
+            return ObjectType.BooleanObj;
         }
 
         public string Inspect()

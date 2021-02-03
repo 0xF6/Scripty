@@ -19,14 +19,48 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
             {
                 nameof(IntegerLiteral) => new Integer {Value = ((IntegerLiteral) node).Value},
                 nameof(ExpressionStatement) => Eval(((ExpressionStatement) node).Expression),
-                nameof(Code) => EvalStatement(((Code) node).Statements),
+                nameof(Code) => EvalProgram((Code) node),
                 nameof(BooleanLiteral) => NativeBoolToBooleanObject(((BooleanLiteral) node).Value),
                 nameof(PrefixExpression) => HandlePrefixExpression(node),
                 nameof(InfixExpression) => HandleInfixExpression(node),
-                nameof(BlockStatement) => EvalStatement(((BlockStatement) node).Statements),
+                nameof(BlockStatement) => EvalBlockStatement((BlockStatement) node),
                 nameof(IfExpression) => EvalIfExpression((IfExpression) node),
+                nameof(ReturnStatement) => HandleReturnStatementEval((ReturnStatement) node),
                 _ => Null
             };
+        }
+
+        private static IObject EvalBlockStatement(BlockStatement node)
+        {
+            IObject? result = null;
+
+            foreach (var nodeStatement in node.Statements)
+            {
+                result = Eval(nodeStatement);
+                if (!(result is null) && result.Type() == ObjectType.ReturnValueObj)
+                    return result;
+            }
+
+            return result;
+        }
+
+        private static IObject EvalProgram(Code node)
+        {
+            IObject result = null;
+            foreach (var nodeStatement in node.Statements)
+            {
+                result = Eval(nodeStatement);
+                if (result.GetType().Name == nameof(ReturnValue))
+                    return ((ReturnValue) result).Value;
+            }
+
+            return result;
+        }
+
+        private static IObject HandleReturnStatementEval(ReturnStatement node)
+        {
+            var value = Eval(node.ReturnValue);
+            return new ReturnValue {Value = value};
         }
 
         private static IObject EvalIfExpression(IfExpression node)
@@ -56,7 +90,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
 
         private static IObject EvalInfixExpression(string infixNodeOperator, IObject left, IObject right)
         {
-            if (left.Type() == ObjectType.INTEGER_OBJ && right.Type() == ObjectType.INTEGER_OBJ)
+            if (left.Type() == ObjectType.IntegerObj && right.Type() == ObjectType.IntegerObj)
                 return EvalIntegerInfixExpression(infixNodeOperator, (Integer) left, (Integer) right);
 
             return infixNodeOperator switch
@@ -104,7 +138,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
 
         private static IObject EvalMinusPrefixOperatorExpression(IObject right)
         {
-            if (right.Type() != ObjectType.INTEGER_OBJ) return Null;
+            if (right.Type() != ObjectType.IntegerObj) return Null;
             var value = ((Integer) right).Value;
             return new Integer {Value = -value};
         }
@@ -126,7 +160,12 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
         private static IObject EvalStatement(List<IStatement> statements)
         {
             IObject result = null;
-            foreach (var statement in statements) result = Eval(statement);
+            foreach (var statement in statements)
+            {
+                result = Eval(statement);
+                if (result.GetType().Name == nameof(ReturnValue))
+                    return ((ReturnValue) result).Value;
+            }
 
             return result;
         }
