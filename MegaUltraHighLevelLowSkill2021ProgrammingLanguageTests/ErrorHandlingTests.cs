@@ -16,16 +16,24 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
         {
             var tests = new OperatorTest[]
             {
-                new() {Input = "5 + true;", Expected = "type mismatch: INTEGER + BOOLEAN"},
-                new() {Input = "5 + true; 12;", Expected = "type mismatch: INTEGER + BOOLEAN"},
-                new() {Input = "-true;", Expected = "unknown operator: -BOOLEAN"},
-                new() {Input = "false + true;", Expected = "unknown operator: BOOLEAN + BOOLEAN"},
-                new() {Input = "5; true + false; 6;", Expected = "unknown operator: BOOLEAN + BOOLEAN"},
-                new() {Input = "if (10 > 1) { true + false; }", Expected = "unknown operator: BOOLEAN + BOOLEAN"},
+                new() {Input = "5 + true;", Expected = "[MUHL3] type mismatch: INTEGER + BOOLEAN"},
+                new() {Input = "5 + true; 12;", Expected = "[MUHL3] type mismatch: INTEGER + BOOLEAN"},
+                new() {Input = "-true;", Expected = "[MUHL4] unknown operator: -BOOLEAN"},
+                new() {Input = "false + true;", Expected = "[MUHL2] unknown operator: BOOLEAN + BOOLEAN"},
+                new()
+                {
+                    Input = "5; true + false; 6;",
+                    Expected = "[MUHL2] unknown operator: BOOLEAN + BOOLEAN"
+                },
+                new()
+                {
+                    Input = "if (10 > 1) { true + false; }",
+                    Expected = "[MUHL2] unknown operator: BOOLEAN + BOOLEAN"
+                },
                 new()
                 {
                     Input = "if (10 > 1) { if (9 > 1) { return true + true; } return false; }",
-                    Expected = "unknown operator: BOOLEAN + BOOLEAN"
+                    Expected = "[MUHL2] unknown operator: BOOLEAN + BOOLEAN"
                 },
             };
 

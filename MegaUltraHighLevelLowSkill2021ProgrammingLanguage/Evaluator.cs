@@ -67,13 +67,20 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
         private static IObject HandleReturnStatementEval(ReturnStatement node)
         {
             var value = Eval(node.ReturnValue);
+            if (IsError(value)) return value;
             return new ReturnValue {Value = value};
+        }
+
+        private static bool IsError(IObject? value)
+        {
+            if (value is null) return false;
+            return value.Type() == ObjectType.ErrorObj;
         }
 
         private static IObject EvalIfExpression(IfExpression node)
         {
             var condition = Eval(node.Condition);
-
+            if (IsError(condition)) return condition;
             if (IsTruthy(condition))
                 return Eval(node.Consequence);
 
@@ -91,7 +98,9 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
         {
             var infixNode = (InfixExpression) node;
             var left = Eval(infixNode.Left);
+            if (IsError(left)) return left;
             var right = Eval(infixNode.Right);
+            if (IsError(right)) return right;
             return EvalInfixExpression(infixNode.Operator, left, right);
         }
 
@@ -101,13 +110,13 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
                 return EvalIntegerInfixExpression(infixNodeOperator, (Integer) left, (Integer) right);
 
             if (left.Type() != right.Type())
-                return NewError($"type mismatch: {left.Type()} {infixNodeOperator} {right.Type()}");
+                return new Error(3, left, infixNodeOperator, right);
 
             return infixNodeOperator switch
             {
                 "==" => NativeBoolToBooleanObject(Equals(left, right)),
                 "!=" => NativeBoolToBooleanObject(!Equals(left, right)),
-                _ => NewError($"unknown operator: {left.Type()} {infixNodeOperator} {right.Type()}")
+                _ => new Error(2, left, infixNodeOperator, right),
             };
         }
 
@@ -125,7 +134,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
                 ">" => NativeBoolToBooleanObject(leftVal > rightVal),
                 "!=" => NativeBoolToBooleanObject(leftVal != rightVal),
                 "==" => NativeBoolToBooleanObject(leftVal == rightVal),
-                _ => NewError($"unknown operator: {left.Type()} {infixNodeOperator} {right.Type()}")
+                _ => new Error(2, left, infixNodeOperator, right),
             };
         }
 
@@ -133,6 +142,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
         {
             var prefixedNode = (PrefixExpression) node;
             var right = Eval(prefixedNode.Right);
+            if (IsError(right)) return right;
             return EvalPrefixExpression(prefixedNode.Operator, right);
         }
 
@@ -142,18 +152,14 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
             {
                 "!" => EvalBangOperatorExpression(right),
                 "-" => EvalMinusPrefixOperatorExpression(right),
-                _ => NewError($"unknown operator: {op}{right.Type()}")
+                _ => new Error(4, null, op, right)
             };
         }
 
-        private static Error NewError(string s)
-        {
-            return new() {Message = s};
-        }
 
         private static IObject EvalMinusPrefixOperatorExpression(IObject right)
         {
-            if (right.Type() != ObjectType.IntegerObj) return NewError($"unknown operator: -{right.Type()}");
+            if (right.Type() != ObjectType.IntegerObj) return new Error(4, null, "-", right);
             var value = ((Integer) right).Value;
             return new Integer {Value = -value};
         }
@@ -178,6 +184,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
             foreach (var statement in statements)
             {
                 result = Eval(statement);
+                if (result is null) continue;
                 if (result.GetType().Name == nameof(ReturnValue))
                     return ((ReturnValue) result).Value;
             }
