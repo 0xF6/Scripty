@@ -1,19 +1,17 @@
-using System;
 using System.Collections.Generic;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Expressions;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Interfaces;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Literals;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Statements;
-using Boolean = MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects.Boolean;
 
 namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
 {
     public static class Evaluator
     {
-        private static readonly Boolean True = new() {Value = true};
-        private static readonly Boolean False = new() {Value = false};
-        private static readonly Null Null = new();
+        public static readonly Boolean True = new() {Value = true};
+        public static readonly Boolean False = new() {Value = false};
+        public static readonly Null Null = new();
 
         public static IObject Eval(INode node)
         {
@@ -25,8 +23,27 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
                 nameof(BooleanLiteral) => NativeBoolToBooleanObject(((BooleanLiteral) node).Value),
                 nameof(PrefixExpression) => HandlePrefixExpression(node),
                 nameof(InfixExpression) => HandleInfixExpression(node),
+                nameof(BlockStatement) => EvalStatement(((BlockStatement) node).Statements),
+                nameof(IfExpression) => EvalIfExpression((IfExpression) node),
                 _ => Null
             };
+        }
+
+        private static IObject EvalIfExpression(IfExpression node)
+        {
+            var condition = Eval(node.Condition);
+
+            if (IsTruthy(condition))
+                return Eval(node.Consequence);
+
+            return !(node.Alternative is null) ? Eval(node.Alternative) : Null;
+        }
+
+        private static bool IsTruthy(IObject obj)
+        {
+            if (Equals(obj, Null)) return false;
+            if (Equals(obj, True)) return true;
+            return !Equals(obj, False);
         }
 
         private static IObject HandleInfixExpression(INode node)

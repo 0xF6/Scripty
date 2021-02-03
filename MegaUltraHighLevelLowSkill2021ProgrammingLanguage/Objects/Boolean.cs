@@ -7,6 +7,13 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects
     {
         public bool Value { get; set; }
 
+        public bool Equals(Boolean other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Value == other.Value;
+        }
+
         public string Type()
         {
             return ObjectType.BOOLEAN_OBJ;
@@ -15,13 +22,6 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects
         public string Inspect()
         {
             return Value.ToString().ToLower();
-        }
-
-        public bool Equals(Boolean other)
-        {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
-            return Value == other.Value;
         }
 
         public override bool Equals(object obj)

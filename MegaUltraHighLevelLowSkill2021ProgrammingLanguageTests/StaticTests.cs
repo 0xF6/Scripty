@@ -1,4 +1,3 @@
-using System;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Expressions;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Interfaces;
@@ -67,9 +66,6 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
                 case "Boolean":
                     var expectedBool = (bool) expected;
                     TestBooleanLiteral(exp, expectedBool);
-                    break;
-                default:
-                    // Console.Out.WriteLine(expected.GetType().Name);
                     break;
             }
         }

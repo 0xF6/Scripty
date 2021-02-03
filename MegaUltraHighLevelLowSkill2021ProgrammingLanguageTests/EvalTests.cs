@@ -1,12 +1,16 @@
-using System;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Interfaces;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects;
 using NUnit.Framework;
-using Boolean = MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects.Boolean;
 
 namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
 {
+    internal struct BoolEvalTestCase
+    {
+        public string Input { get; set; }
+        public int? Expected { get; set; }
+    }
+
     internal struct IntegerTests
     {
         public string Input { get; set; }
@@ -105,6 +109,35 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
             }
         }
 
+        [Test]
+        public void IfElseExpressionTest1()
+        {
+            var tests = new BoolEvalTestCase[]
+            {
+                new() {Input = "if (true) { 10 }", Expected = 10},
+                new() {Input = "if (false) { 10 }", Expected = null},
+                new() {Input = "if (1) { 10 }", Expected = 10},
+                new() {Input = "if (1 < 2) { 10 }", Expected = 10},
+                new() {Input = "if (1 > 2) { 10 }", Expected = null},
+                new() {Input = "if (1 > 2) { 10 } else { 20 }", Expected = 20},
+                new() {Input = "if (1 < 2) { 10 } else { 20 }", Expected = 10}
+            };
+
+            foreach (var boolEvalTestCase in tests)
+            {
+                var evaluated = TestEval(boolEvalTestCase.Input);
+                if (boolEvalTestCase.Expected is null)
+                    Assert.True(TestNullObject(evaluated), $"evaluated object is not Null, got {evaluated}");
+                else
+                    TestIntegerObject(evaluated, boolEvalTestCase.Expected);
+            }
+        }
+
+        private static bool TestNullObject(IObject evaluated)
+        {
+            return Equals(evaluated, Evaluator.Null);
+        }
+
         private static void TestBooleanObject(IObject obj, bool expected)
         {
             Assert.AreEqual("Boolean", obj.GetType().Name);
@@ -114,7 +147,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
             Assert.AreEqual(expected, result.Value);
         }
 
-        private static void TestIntegerObject(IObject obj, long expected)
+        private static void TestIntegerObject(IObject obj, long? expected)
         {
             Assert.AreEqual("Integer", obj.GetType().Name);
 
