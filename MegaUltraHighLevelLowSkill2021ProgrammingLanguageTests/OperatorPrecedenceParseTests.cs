@@ -46,7 +46,17 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
                 {
                     Input = "add(a + b + c * d / f + g)",
                     Expected = "add((((a + b) + ((c * d) / f)) + g))"
-                }
+                },
+                new()
+                {
+                    Input = "a * [1, 2, 3, 4][b * c] * d",
+                    Expected = "((a * ([1, 2, 3, 4][(b * c)])) * d)"
+                },
+                new()
+                {
+                    Input = "add(a * b[2], b[1], 2 * [1,2][1])",
+                    Expected = "add((a * (b[2])), (b[1]), (2 * ([1, 2][1])))"
+                },
             };
 
             foreach (var operatorTest in tests)

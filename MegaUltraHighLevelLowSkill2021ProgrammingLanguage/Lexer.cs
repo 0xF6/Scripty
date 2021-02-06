@@ -93,6 +93,12 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
                     tok.Type = Token.String;
                     tok.Literal = ReadString(true);
                     break;
+                case '[':
+                    tok = NewToken(Token.Lbracket, Ch.ToString());
+                    break;
+                case ']':
+                    tok = NewToken(Token.Rbracket, Ch.ToString());
+                    break;
                 case '\0':
                     tok.Type = Token.Eof;
                     tok.Literal = "";

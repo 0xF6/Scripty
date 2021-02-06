@@ -42,7 +42,8 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
                 {Token.Minus, Enums.Precedences.SUM},
                 {Token.Slash, Enums.Precedences.PRODUCT},
                 {Token.Asterisk, Enums.Precedences.PRODUCT},
-                {Token.Lparen, Enums.Precedences.CALL}
+                {Token.Lparen, Enums.Precedences.CALL},
+                {Token.Lbracket, Enums.Precedences.INDEX}
             };
         }
 
@@ -59,8 +60,56 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
                 {Token.Lparen, ParseGroupedExpression},
                 {Token.If, ParseIfExpression},
                 {Token.Function, ParseFunctionLiteral},
-                {Token.String, ParseStringLiteral}
+                {Token.String, ParseStringLiteral},
+                {Token.Lbracket, ParseArrayLiteral}
             };
+        }
+
+        private void SetInfixFns()
+        {
+            InfixParseFns = new Dictionary<string, InfixParseFn>
+            {
+                {Token.Plus, ParseInfixExpression},
+                {Token.Minus, ParseInfixExpression},
+                {Token.Slash, ParseInfixExpression},
+                {Token.Asterisk, ParseInfixExpression},
+                {Token.Eq, ParseInfixExpression},
+                {Token.NotEq, ParseInfixExpression},
+                {Token.Lt, ParseInfixExpression},
+                {Token.Gt, ParseInfixExpression},
+                {Token.Lparen, ParseCallExpression},
+                {Token.Lbracket, ParseIndexExpression}
+            };
+        }
+
+        private IExpression ParseArrayLiteral()
+        {
+            var array = new ArrayLiteral {Token = CurrentToken};
+            array.Elements = this.ParseExpressionList(Token.Rbracket);
+            return array;
+        }
+
+        private List<IExpression> ParseExpressionList(string end)
+        {
+            var list = new List<IExpression>();
+
+            if (PeekTokenIs(end))
+            {
+                NextToken();
+                return list;
+            }
+
+            NextToken();
+            list.Add(ParseExpression(Enums.Precedences.LOWEST));
+
+            while (PeekTokenIs(Token.Comma))
+            {
+                NextToken();
+                NextToken();
+                list.Add(ParseExpression(Enums.Precedences.LOWEST));
+            }
+
+            return !ExpectPeek(end) ? null : list;
         }
 
         private IExpression ParseStringLiteral()
@@ -151,26 +200,21 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
                 {Token = CurrentToken, Value = CurTokenIs(Token.True)};
         }
 
-        private void SetInfixFns()
+
+        private IExpression ParseIndexExpression(IExpression v)
         {
-            InfixParseFns = new Dictionary<string, InfixParseFn>
-            {
-                {Token.Plus, ParseInfixExpression},
-                {Token.Minus, ParseInfixExpression},
-                {Token.Slash, ParseInfixExpression},
-                {Token.Asterisk, ParseInfixExpression},
-                {Token.Eq, ParseInfixExpression},
-                {Token.NotEq, ParseInfixExpression},
-                {Token.Lt, ParseInfixExpression},
-                {Token.Gt, ParseInfixExpression},
-                {Token.Lparen, ParseCallExpression}
-            };
+            var exp = new IndexExpression {Token = CurrentToken, Left = v};
+            NextToken();
+
+            exp.Index = ParseExpression(Enums.Precedences.LOWEST);
+
+            return !ExpectPeek(Token.Rbracket) ? null : exp;
         }
 
         private IExpression ParseCallExpression(IExpression v)
         {
             return new CallExpression
-                {Token = CurrentToken, Function = v, Arguments = ParseCallArguments()};
+                {Token = CurrentToken, Function = v, Arguments = ParseExpressionList(Token.Rparen)};
         }
 
         private List<IExpression> ParseCallArguments()

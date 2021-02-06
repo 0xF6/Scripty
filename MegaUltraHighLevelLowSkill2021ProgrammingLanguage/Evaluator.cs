@@ -21,7 +21,8 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
 
         public static readonly Dictionary<string, Builtin> Builtins = new()
         {
-            {"length", Length.Build()}
+            {"length", Length.Build()},
+            {"wln", Puts.Build()}
         };
 
         public static IObject? Eval(INode node, Environment env)

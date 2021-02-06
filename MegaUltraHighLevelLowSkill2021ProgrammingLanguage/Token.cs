@@ -31,6 +31,8 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
         public const string Rparen = ")";
         public const string Lbrace = "{";
         public const string Rbrace = "}";
+        public const string Lbracket = "[";
+        public const string Rbracket = "]";
 
         // keywords
         public const string Function = "FUNCTION";

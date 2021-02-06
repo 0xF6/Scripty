@@ -64,6 +64,7 @@ if (5 < 10) {
 10 != 9; 
 'fooBar'
 'foo bar'
+[1, 2];
 ";
             var tests = new Token[]
             {
@@ -131,6 +132,12 @@ if (5 < 10) {
                 new() {Type = Token.Semicolon, Literal = ";"},
                 new() {Type = Token.String, Literal = "fooBar"},
                 new() {Type = Token.String, Literal = "foo bar"},
+                new() {Type = Token.Lbracket, Literal = "["},
+                new() {Type = Token.Int, Literal = "1"},
+                new() {Type = Token.Comma, Literal = ","},
+                new() {Type = Token.Int, Literal = "2"},
+                new() {Type = Token.Rbracket, Literal = "]"},
+                new() {Type = Token.Semicolon, Literal = ";"},
                 new() {Type = Token.Eof, Literal = ""}
             };
 
