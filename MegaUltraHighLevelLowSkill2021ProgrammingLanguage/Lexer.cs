@@ -85,6 +85,14 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
                 case '}':
                     tok = NewToken(Token.Rbrace, Ch.ToString());
                     break;
+                case '"':
+                    tok.Type = Token.String;
+                    tok.Literal = ReadString();
+                    break;
+                case '\'':
+                    tok.Type = Token.String;
+                    tok.Literal = ReadString();
+                    break;
                 case '\0':
                     tok.Type = Token.Eof;
                     tok.Literal = "";
@@ -112,6 +120,18 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
 
             ReadChar();
             return tok;
+        }
+
+        private string ReadString()
+        {
+            var position = Position + 1;
+            while (true)
+            {
+                ReadChar();
+                if (Ch == '"' || Ch == '\'' || Ch == '\0') break;
+            }
+
+            return Input[position..Position];
         }
 
         private char PeekChar()

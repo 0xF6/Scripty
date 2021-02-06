@@ -7,7 +7,6 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects
     public class Environment
     {
         private readonly Dictionary<string, IObject> Store;
-        public Environment? Outer { get; set; }
 
         public Environment()
         {
@@ -21,10 +20,12 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects
             Outer = outer;
         }
 
+        public Environment? Outer { get; set; }
+
         public IObject? Get(string key)
         {
             var existingValue = Store.GetValueOrDefault(key, null);
-            if ((existingValue is null) && !(Outer is null))
+            if (existingValue is null && !(Outer is null))
                 existingValue = Outer.Get(key);
             return existingValue;
         }

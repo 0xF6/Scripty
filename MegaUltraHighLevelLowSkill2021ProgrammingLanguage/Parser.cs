@@ -58,8 +58,14 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
                 {Token.False, ParseBoolean},
                 {Token.Lparen, ParseGroupedExpression},
                 {Token.If, ParseIfExpression},
-                {Token.Function, ParseFunctionLiteral}
+                {Token.Function, ParseFunctionLiteral},
+                {Token.String, ParseStringLiteral}
             };
+        }
+
+        private IExpression ParseStringLiteral()
+        {
+            return new StringLiteral {Token = CurrentToken, Value = CurrentToken.Literal};
         }
 
         private IExpression ParseFunctionLiteral()

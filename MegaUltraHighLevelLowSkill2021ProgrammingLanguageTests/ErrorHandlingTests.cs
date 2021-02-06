@@ -38,6 +38,11 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
                 {
                     Input = "kekpuk",
                     Expected = "[MUHL5] identifier not found: kekpuk"
+                },
+                new()
+                {
+                    Input = "'foo' - 'bar'",
+                    Expected = "[MUHL2] unknown operator: STRING - STRING"
                 }
             };
 

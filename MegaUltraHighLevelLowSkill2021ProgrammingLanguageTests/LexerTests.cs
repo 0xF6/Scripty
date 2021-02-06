@@ -59,7 +59,12 @@ if (5 < 10) {
   return true;
 } else {
   return false;
-};";
+};
+10 == 10;
+10 != 9; 
+'fooBar'
+'foo bar'
+";
             var tests = new Token[]
             {
                 new() {Type = Token.Let, Literal = "let"},
@@ -116,6 +121,16 @@ if (5 < 10) {
                 new() {Type = Token.Semicolon, Literal = ";"},
                 new() {Type = Token.Rbrace, Literal = "}"},
                 new() {Type = Token.Semicolon, Literal = ";"},
+                new() {Type = Token.Int, Literal = "10"},
+                new() {Type = Token.Eq, Literal = "=="},
+                new() {Type = Token.Int, Literal = "10"},
+                new() {Type = Token.Semicolon, Literal = ";"},
+                new() {Type = Token.Int, Literal = "10"},
+                new() {Type = Token.NotEq, Literal = "!="},
+                new() {Type = Token.Int, Literal = "9"},
+                new() {Type = Token.Semicolon, Literal = ";"},
+                new() {Type = Token.String, Literal = "fooBar"},
+                new() {Type = Token.String, Literal = "foo bar"},
                 new() {Type = Token.Eof, Literal = ""}
             };
 

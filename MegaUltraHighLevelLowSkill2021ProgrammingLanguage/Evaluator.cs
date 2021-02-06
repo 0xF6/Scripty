@@ -31,6 +31,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
                 nameof(Identifier) => EvalIdentifier((Identifier) node, env),
                 nameof(FunctionLiteral) => HandleFunctionLiteralEval((FunctionLiteral) node, env),
                 nameof(CallExpression) => HandleCallExpressionEval((CallExpression) node, env),
+                nameof(StringLiteral) => new String {Value = ((StringLiteral) node).Value},
                 _ => Null
             };
         }
@@ -185,6 +186,9 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
             if (left.Type() == ObjectType.IntegerObj && right.Type() == ObjectType.IntegerObj)
                 return EvalIntegerInfixExpression(infixNodeOperator, (Integer) left, (Integer) right);
 
+            if (left.Type() == ObjectType.StringObj && right.Type() == ObjectType.StringObj)
+                return EvalStringInfixExpression(infixNodeOperator, left, right);
+
             if (left.Type() != right.Type())
                 return new Error(3, left, infixNodeOperator, right);
 
@@ -194,6 +198,16 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
                 "!=" => NativeBoolToBooleanObject(!Equals(left, right)),
                 _ => new Error(2, left, infixNodeOperator, right)
             };
+        }
+
+        private static IObject EvalStringInfixExpression(string infixNodeOperator, IObject left, IObject right)
+        {
+            if (infixNodeOperator != "+") return new Error(2, left, infixNodeOperator, right);
+
+            var leftVal = ((String) left).Value;
+            var rightVal = ((String) right).Value;
+
+            return new String {Value = $"{leftVal}{rightVal}"};
         }
 
         private static IObject EvalIntegerInfixExpression(string infixNodeOperator, Integer left, Integer right)

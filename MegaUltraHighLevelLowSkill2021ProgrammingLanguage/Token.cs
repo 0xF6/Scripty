@@ -10,6 +10,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
         // identifiers
         public const string Ident = "IDENT";
         public const string Int = "INT";
+        public const string String = "STRING";
 
         //operators
         public const string Assign = "=";

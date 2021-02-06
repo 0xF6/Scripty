@@ -41,7 +41,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
                 new() {Input = "let double = fun(x) { x * 2; }; double(5);", Expected = 10},
                 new() {Input = "let add = fun(x, y) { x + y; }; add(228, 322)", Expected = 550},
                 new() {Input = "let add = fun(x, y) { x + y; }; add(5 + 5, add(5, 5));", Expected = 20},
-                new() {Input = "fun(x) { x; }(5);", Expected = 5},
+                new() {Input = "fun(x) { x; }(5);", Expected = 5}
             };
 
             foreach (var functionTests in tests)

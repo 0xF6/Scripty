@@ -1,3 +1,4 @@
+using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects;
 using NUnit.Framework;
 
 namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
@@ -133,6 +134,37 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
                 else
                     StaticTests.TestIntegerObject(evaluated, boolEvalTestCase.Expected);
             }
+        }
+
+
+        [Test]
+        public void StringEvalTest()
+        {
+            const string input = "\"Allo, da-da, Tyulen u apparata, da.\"";
+
+            var evaluated = StaticTests.TestEval(input);
+
+            Assert.AreEqual(nameof(String), evaluated.GetType().Name);
+
+            var str = (String) evaluated;
+
+            Assert.AreEqual(input.Replace("\"", "").Replace("'", ""), str.Value);
+        }
+
+
+        [Test]
+        public void StringConcatinationEvalTest()
+        {
+            const string input = "\"Allo, da-da,\" + \" \" + \"Tyulen u apparata, da.\"";
+            const string expected = "Allo, da-da, Tyulen u apparata, da.";
+
+            var evaluated = StaticTests.TestEval(input);
+
+            Assert.AreEqual(nameof(String), evaluated.GetType().Name);
+
+            var str = (String) evaluated;
+
+            Assert.AreEqual(expected, str.Value);
         }
     }
 }
