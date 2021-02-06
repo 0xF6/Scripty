@@ -10,10 +10,10 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
             ReadChar();
         }
 
-        public string Input { get; set; }
-        public int Position { get; set; }
-        public int ReadPosition { get; set; }
-        public char Ch { get; set; }
+        private string Input { get; }
+        private int Position { get; set; }
+        private int ReadPosition { get; set; }
+        private char Ch { get; set; }
 
         public Token NextToken()
         {

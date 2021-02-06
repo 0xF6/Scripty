@@ -6,7 +6,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Statements
     public class ExpressionStatement : IStatement
     {
         public Token Token { get; set; }
-        public IExpression? Expression { get; set; }
+        public IExpression Expression { get; set; }
 
         public string TokenLiteral()
         {

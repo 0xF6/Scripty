@@ -4,7 +4,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects
 {
     public class Error : IObject
     {
-        public Error(int code, IObject? left, string? op, IObject? right)
+        public Error(int code, IObject left, string op, IObject right)
         {
             switch (code)
             {
@@ -43,6 +43,10 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects
                 case 10:
                     Message = $"[MUHL10] index {right?.Inspect()} is out of range for {left?.Inspect()}";
                     Code = "[MUHL10]";
+                    break;
+                case 11:
+                    Message = "[MUHL11] null is not a function";
+                    Code = "[MUHL11]";
                     break;
                 default:
                     Message = "[MUHL1] Unknown error";

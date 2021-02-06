@@ -8,7 +8,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Statements
     {
         public Token Token { get; set; }
         public Identifier Name { get; set; }
-        public IExpression? Value { get; set; }
+        public IExpression Value { get; set; }
 
         public string TokenLiteral()
         {

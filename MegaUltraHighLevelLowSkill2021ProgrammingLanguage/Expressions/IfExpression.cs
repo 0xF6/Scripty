@@ -9,7 +9,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Expressions
         public Token Token { get; set; }
         public IExpression Condition { get; set; }
         public BlockStatement Consequence { get; set; }
-        public BlockStatement? Alternative { get; set; }
+        public BlockStatement Alternative { get; set; }
 
         public string TokenLiteral()
         {

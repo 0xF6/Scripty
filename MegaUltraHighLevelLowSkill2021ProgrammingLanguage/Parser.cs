@@ -21,29 +21,29 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
             NextToken();
         }
 
-        public Lexer Lexer { get; set; }
-        public Token CurrentToken { get; set; }
-        public Token PeekToken { get; set; }
-        public List<string> Errors { get; set; }
+        private Lexer Lexer { get; }
+        private Token CurrentToken { get; set; }
+        private Token PeekToken { get; set; }
+        public List<string> Errors { get; }
 
-        public Dictionary<string, PrefixParseFn> PrefixParseFns { get; set; }
-        public Dictionary<string, InfixParseFn> InfixParseFns { get; set; }
-        public Dictionary<string, Precedences> Precedences { get; set; }
+        private Dictionary<string, PrefixParseFn> PrefixParseFns { get; set; }
+        private Dictionary<string, InfixParseFn> InfixParseFns { get; set; }
+        private Dictionary<string, Precedences> Precedences { get; set; }
 
         private void SetPrecedences()
         {
             Precedences = new Dictionary<string, Precedences>
             {
-                {Token.Eq, Enums.Precedences.EQUALS},
-                {Token.NotEq, Enums.Precedences.EQUALS},
-                {Token.Lt, Enums.Precedences.LESSGREATER},
-                {Token.Gt, Enums.Precedences.LESSGREATER},
-                {Token.Plus, Enums.Precedences.SUM},
-                {Token.Minus, Enums.Precedences.SUM},
-                {Token.Slash, Enums.Precedences.PRODUCT},
-                {Token.Asterisk, Enums.Precedences.PRODUCT},
-                {Token.Lparen, Enums.Precedences.CALL},
-                {Token.Lbracket, Enums.Precedences.INDEX}
+                {Token.Eq, Enums.Precedences.Equals},
+                {Token.NotEq, Enums.Precedences.Equals},
+                {Token.Lt, Enums.Precedences.Lessgreater},
+                {Token.Gt, Enums.Precedences.Lessgreater},
+                {Token.Plus, Enums.Precedences.Sum},
+                {Token.Minus, Enums.Precedences.Sum},
+                {Token.Slash, Enums.Precedences.Product},
+                {Token.Asterisk, Enums.Precedences.Product},
+                {Token.Lparen, Enums.Precedences.Call},
+                {Token.Lbracket, Enums.Precedences.Index}
             };
         }
 
@@ -84,8 +84,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
 
         private IExpression ParseArrayLiteral()
         {
-            var array = new ArrayLiteral {Token = CurrentToken};
-            array.Elements = this.ParseExpressionList(Token.Rbracket);
+            var array = new ArrayLiteral {Token = CurrentToken, Elements = ParseExpressionList(Token.Rbracket)};
             return array;
         }
 
@@ -100,13 +99,13 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
             }
 
             NextToken();
-            list.Add(ParseExpression(Enums.Precedences.LOWEST));
+            list.Add(ParseExpression(Enums.Precedences.Lowest));
 
             while (PeekTokenIs(Token.Comma))
             {
                 NextToken();
                 NextToken();
-                list.Add(ParseExpression(Enums.Precedences.LOWEST));
+                list.Add(ParseExpression(Enums.Precedences.Lowest));
             }
 
             return !ExpectPeek(end) ? null : list;
@@ -158,7 +157,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
             var expression = new IfExpression {Token = CurrentToken};
             if (!ExpectPeek(Token.Lparen)) return null;
             NextToken();
-            expression.Condition = ParseExpression(Enums.Precedences.LOWEST);
+            expression.Condition = ParseExpression(Enums.Precedences.Lowest);
             if (!ExpectPeek(Token.Rparen)) return null;
             if (!ExpectPeek(Token.Lbrace)) return null;
             expression.Consequence = ParseBlockStatement();
@@ -186,10 +185,10 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
             return block;
         }
 
-        private IExpression? ParseGroupedExpression()
+        private IExpression ParseGroupedExpression()
         {
             NextToken();
-            var exp = ParseExpression(Enums.Precedences.LOWEST);
+            var exp = ParseExpression(Enums.Precedences.Lowest);
 
             return !ExpectPeek(Token.Rparen) ? null : exp;
         }
@@ -206,7 +205,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
             var exp = new IndexExpression {Token = CurrentToken, Left = v};
             NextToken();
 
-            exp.Index = ParseExpression(Enums.Precedences.LOWEST);
+            exp.Index = ParseExpression(Enums.Precedences.Lowest);
 
             return !ExpectPeek(Token.Rbracket) ? null : exp;
         }
@@ -217,28 +216,6 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
                 {Token = CurrentToken, Function = v, Arguments = ParseExpressionList(Token.Rparen)};
         }
 
-        private List<IExpression> ParseCallArguments()
-        {
-            var args = new List<IExpression>();
-            if (PeekTokenIs(Token.Rparen))
-            {
-                NextToken();
-                return args;
-            }
-
-            NextToken();
-            args.Add(ParseExpression(Enums.Precedences.LOWEST));
-            while (PeekTokenIs(Token.Comma))
-            {
-                NextToken();
-                NextToken();
-                args.Add(ParseExpression(Enums.Precedences.LOWEST));
-            }
-
-            return !ExpectPeek(Token.Rparen) ? null : args;
-        }
-
-
         private IExpression ParsePrefixExpression()
         {
             var expression = new PrefixExpression
@@ -247,7 +224,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
                 Operator = CurrentToken.Literal
             };
             NextToken();
-            expression.Right = ParseExpression(Enums.Precedences.PREFIX);
+            expression.Right = ParseExpression(Enums.Precedences.Prefix);
             return expression;
         }
 
@@ -291,17 +268,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
             return program;
         }
 
-        private void RegisterPrefixParseFn(string t, PrefixParseFn fn)
-        {
-            PrefixParseFns.Add(t, fn);
-        }
-
-        private void RegisterInfixParseFn(string t, InfixParseFn fn)
-        {
-            InfixParseFns.Add(t, fn);
-        }
-
-        private IStatement? ParseStatement()
+        private IStatement ParseStatement()
         {
             return CurrentToken.Type switch
             {
@@ -316,13 +283,13 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
             var stmt = new ExpressionStatement
             {
                 Token = CurrentToken,
-                Expression = ParseExpression(Enums.Precedences.LOWEST)
+                Expression = ParseExpression(Enums.Precedences.Lowest)
             };
             if (PeekTokenIs(Token.Semicolon)) NextToken();
             return stmt;
         }
 
-        private IExpression? ParseExpression(Precedences precedence)
+        private IExpression ParseExpression(Precedences precedence)
         {
             var valueExists = PrefixParseFns.TryGetValue(CurrentToken.Type, out var prefix);
             if (!valueExists)
@@ -347,14 +314,14 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
         {
             return Precedences.TryGetValue(PeekToken.Type, out var precedence)
                 ? precedence
-                : Enums.Precedences.LOWEST;
+                : Enums.Precedences.Lowest;
         }
 
         private Precedences CurrentPrecedence()
         {
             return Precedences.TryGetValue(CurrentToken.Type, out var precedence)
                 ? precedence
-                : Enums.Precedences.LOWEST;
+                : Enums.Precedences.Lowest;
         }
 
         private IExpression ParseInfixExpression(IExpression left)
@@ -373,7 +340,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
         {
             var stmt = new ReturnStatement {Token = CurrentToken};
             NextToken();
-            stmt.ReturnValue = ParseExpression(Enums.Precedences.LOWEST);
+            stmt.ReturnValue = ParseExpression(Enums.Precedences.Lowest);
 
             if (PeekTokenIs(Token.Semicolon)) NextToken();
 
@@ -390,7 +357,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
             if (!ExpectPeek(Token.Assign)) return null;
 
             NextToken();
-            stmt.Value = ParseExpression(Enums.Precedences.LOWEST);
+            stmt.Value = ParseExpression(Enums.Precedences.Lowest);
 
             if (PeekTokenIs(Token.Semicolon)) NextToken();
 

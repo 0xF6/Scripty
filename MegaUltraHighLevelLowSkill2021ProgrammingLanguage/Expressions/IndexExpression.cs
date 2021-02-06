@@ -1,3 +1,4 @@
+using System;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Interfaces;
 
 namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Expressions
@@ -20,7 +21,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Expressions
 
         public void ExpressionNode()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

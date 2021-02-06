@@ -26,7 +26,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
             {"wln", Puts.Build()}
         };
 
-        public static IObject? Eval(INode node, Environment env)
+        public static IObject Eval(INode node, Environment env)
         {
             return node.GetType().Name switch
             {
@@ -50,7 +50,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
             };
         }
 
-        private static IObject? HandleIndexExpressionEval(IndexExpression node, Environment env)
+        private static IObject HandleIndexExpressionEval(IndexExpression node, Environment env)
         {
             var left = Eval(node.Left, env);
             if (IsError(left)) return left;
@@ -61,14 +61,14 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
             return EvalIndexExpression(left, index);
         }
 
-        private static IObject? EvalIndexExpression(IObject left, IObject index)
+        private static IObject EvalIndexExpression(IObject left, IObject index)
         {
             if (left.Type() == ObjectType.ArrayObj && index.Type() == ObjectType.IntegerObj)
                 return EvalArrayIndexExpression(left, index);
             return new Error(9, left, null, null);
         }
 
-        private static IObject? EvalArrayIndexExpression(IObject left, IObject index)
+        private static IObject EvalArrayIndexExpression(IObject left, IObject index)
         {
             var arrObj = (Array) left;
             var idx = ((Integer) index).Value;
@@ -79,7 +79,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
             return arrObj.Elements[(int) idx];
         }
 
-        private static IObject? HandleArrayLiteralEval(ArrayLiteral node, Environment env)
+        private static IObject HandleArrayLiteralEval(ArrayLiteral node, Environment env)
         {
             var elements = EvalExpressions(node.Elements, env);
             if (elements.Count == 1 && IsError(elements.First())) return elements.First();
@@ -87,7 +87,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
             return new Array {Elements = elements};
         }
 
-        private static IObject? HandleCallExpressionEval(CallExpression node, Environment env)
+        private static IObject HandleCallExpressionEval(CallExpression node, Environment env)
         {
             var function = Eval(node.Function, env);
             if (IsError(function)) return function;
@@ -96,22 +96,17 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
             return ApplyFunction(function, args);
         }
 
-        private static IObject? ApplyFunction(IObject? fn, List<IObject> args)
+        private static IObject ApplyFunction(IObject fn, List<IObject> args)
         {
-            // if (!(fn is Function function)) return new Error(6, null, fn.Type(), null);
-            // var extendedEnv = ExtendFunctionEnv(function, args);
-            // var evaluated = Eval(function.Body, extendedEnv);
-            // return UnwrapReturnValue(evaluated);
             switch (fn.GetType().Name)
             {
                 case nameof(Function):
-                    var function = fn as Function;
+                    if (!(fn is Function function)) return new Error(6, null, fn.Type(), null);
                     var extendedEnv = ExtendFunctionEnv(function, args);
                     var evaluated = Eval(function.Body, extendedEnv);
                     return UnwrapReturnValue(evaluated);
                 case nameof(Builtin):
-                    var builtin = fn as Builtin;
-                    return builtin.Fn(args);
+                    return !(fn is Builtin builtin) ? new Error(6, null, fn.Type(), null) : builtin.Fn(args);
                 default:
                     Console.WriteLine(fn.GetType().Name);
                     return new Error(6, null, fn.Type(), null);
@@ -130,7 +125,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
             return env;
         }
 
-        private static IObject? UnwrapReturnValue(IObject? evaluated)
+        private static IObject UnwrapReturnValue(IObject evaluated)
         {
             var returnValue = evaluated as ReturnValue;
             return returnValue ?? evaluated;
@@ -153,14 +148,14 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
             return result;
         }
 
-        private static IObject? HandleFunctionLiteralEval(FunctionLiteral node, Environment env)
+        private static IObject HandleFunctionLiteralEval(FunctionLiteral node, Environment env)
         {
             var parameters = node.Parameters;
             var body = node.Body;
             return new Function {Parameters = parameters, Environment = env, Body = body};
         }
 
-        private static IObject? EvalIdentifier(Identifier node, Environment env)
+        private static IObject EvalIdentifier(Identifier node, Environment env)
         {
             var value = env.Get(node.Value);
             if (!(value is null)) return value;
@@ -177,13 +172,13 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
 
         private static IObject EvalBlockStatement(BlockStatement node, Environment env)
         {
-            IObject? result = null;
+            IObject result = null;
 
             foreach (var nodeStatement in node.Statements)
             {
                 result = Eval(nodeStatement, env);
 
-                if (result is null) continue;
+                if (result is Null) continue;
                 if (result.Type() == ObjectType.ErrorObj || result.Type() == ObjectType.ReturnValueObj)
                     return result;
             }
@@ -216,7 +211,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
             return new ReturnValue {Value = value};
         }
 
-        private static bool IsError(IObject? value)
+        private static bool IsError(IObject value)
         {
             if (value is null) return false;
             return value.Type() == ObjectType.ErrorObj;
@@ -334,20 +329,6 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
                 default:
                     return False;
             }
-        }
-
-        private static IObject EvalStatement(List<IStatement> statements, Environment env)
-        {
-            IObject result = null;
-            foreach (var statement in statements)
-            {
-                result = Eval(statement, env);
-                if (result is null) continue;
-                if (result.GetType().Name == nameof(ReturnValue))
-                    return ((ReturnValue) result).Value;
-            }
-
-            return result;
         }
 
         private static Boolean NativeBoolToBooleanObject(bool input)

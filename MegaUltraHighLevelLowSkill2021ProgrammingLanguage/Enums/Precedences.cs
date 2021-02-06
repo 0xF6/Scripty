@@ -2,13 +2,13 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Enums
 {
     public enum Precedences
     {
-        LOWEST,
-        EQUALS, // == or !=
-        LESSGREATER, // > or <
-        SUM, // + or -
-        PRODUCT, // * or /
-        PREFIX, // -x or !x
-        CALL, // someFunc(x)
-        INDEX // arr[index]
+        Lowest,
+        Equals, // == or !=
+        Lessgreater, // > or <
+        Sum, // + or -
+        Product, // * or /
+        Prefix, // -x or !x
+        Call, // someFunc(x)
+        Index // arr[index]
     }
 }

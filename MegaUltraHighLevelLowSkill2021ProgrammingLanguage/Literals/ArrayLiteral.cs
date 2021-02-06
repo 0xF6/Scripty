@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Interfaces;
@@ -11,7 +12,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Literals
 
         public string TokenLiteral()
         {
-            return this.Token.Literal;
+            return Token.Literal;
         }
 
         public string Str()
@@ -21,7 +22,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Literals
 
         public void ExpressionNode()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

@@ -43,7 +43,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
         public const string Else = "ELSE";
         public const string Return = "RETURN";
 
-        private readonly Dictionary<string, string> keywords = new()
+        private readonly Dictionary<string, string> _keywords = new()
         {
             {"fun", Function},
             {"let", Let},
@@ -59,8 +59,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
 
         public string LookUpIdent(string ident)
         {
-            if (keywords.TryGetValue(ident, out var tok)) return tok;
-            return Ident;
+            return _keywords.TryGetValue(ident, out var tok) ? tok : Ident;
         }
     }
 }

@@ -35,7 +35,6 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
         private static void PrintParserErrors(List<string> errors)
         {
             foreach (var error in errors)
-                // TODO: add makaque
                 Console.WriteLine(error);
         }
     }
