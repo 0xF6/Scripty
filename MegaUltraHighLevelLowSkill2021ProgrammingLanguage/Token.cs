@@ -52,8 +52,8 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
             {"return", Return}
         };
 
-        public string Type { get; set; }
-        public string Literal { get; set; }
+        public string? Type { get; set; }
+        public string? Literal { get; set; }
 
         public string LookUpIdent(string ident)
         {

@@ -24,7 +24,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
             {"length", Length.Build()}
         };
 
-        public static IObject? Eval(INode node, Environment env)
+        public static IObject Eval(INode node, Environment env)
         {
             return node.GetType().Name switch
             {
@@ -61,15 +61,13 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
             // var extendedEnv = ExtendFunctionEnv(function, args);
             // var evaluated = Eval(function.Body, extendedEnv);
             // return UnwrapReturnValue(evaluated);
-            switch (fn.GetType().Name)
+            switch (fn)
             {
-                case nameof(Function):
-                    var function = fn as Function;
+                case Function function:
                     var extendedEnv = ExtendFunctionEnv(function, args);
                     var evaluated = Eval(function.Body, extendedEnv);
                     return UnwrapReturnValue(evaluated);
-                case nameof(Builtin):
-                    var builtin = fn as Builtin;
+                case Builtin builtin:
                     return builtin.Fn(args);
                 default:
                     Console.WriteLine(fn.GetType().Name);
@@ -95,7 +93,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
             return returnValue ?? evaluated;
         }
 
-        private static List<IObject> EvalExpressions(List<IExpression> nodeArguments, Environment env)
+        private static List<IObject> EvalExpressions(IEnumerable<IExpression> nodeArguments, Environment env)
         {
             var result = new List<IObject>();
             foreach (var evaluated in nodeArguments.Select(nodeArgument => Eval(nodeArgument, env)))
@@ -264,14 +262,12 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
         }
 
         private static IObject EvalPrefixExpression(string op, IObject right)
+        => op switch
         {
-            return op switch
-            {
-                "!" => EvalBangOperatorExpression(right),
-                "-" => EvalMinusPrefixOperatorExpression(right),
-                _ => new Error(4, null, op, right)
-            };
-        }
+            "!" => EvalBangOperatorExpression(right),
+            "-" => EvalMinusPrefixOperatorExpression(right),
+            _ => new Error(4, null, op, right)
+        };
 
 
         private static IObject EvalMinusPrefixOperatorExpression(IObject right)

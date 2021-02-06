@@ -128,14 +128,9 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
             while (true)
             {
                 ReadChar();
-                if (singleQuote)
-                {
-                    if (Ch == '\'' || Ch == '\0') break;
-                }
-                else
-                {
-                    if (Ch == '"' || Ch == '\0') break;
-                }
+                if (singleQuote && (Ch == '\'' || Ch == '\0'))
+                    break;
+                if (Ch == '"' || Ch == '\0') break;
             }
 
             return Input[position..Position];
@@ -173,19 +168,13 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
             while (Ch == ' ' || Ch == '\n' || Ch == '\t' || Ch == '\r') ReadChar();
         }
 
-        private static Token NewToken(string type, string ch)
-        {
-            return new() {Type = type, Literal = ch};
-        }
+        private static Token NewToken(string type, string ch) => 
+            new() {Type = type, Literal = ch};
 
-        private static bool IsLetter(char ch)
-        {
-            return 'a' <= ch && ch <= 'z' || 'A' <= ch && ch <= 'Z';
-        }
+        private static bool IsLetter(char ch) 
+            => 'a' <= ch && ch <= 'z' || 'A' <= ch && ch <= 'Z';
 
-        private static bool IsDigit(char ch)
-        {
-            return '0' <= ch && ch <= '9';
-        }
+        private static bool IsDigit(char ch) 
+            => '0' <= ch && ch <= '9';
     }
 }
