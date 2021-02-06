@@ -19,6 +19,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.BuiltinFunctions
             return args.First().Type() switch
             {
                 ObjectType.StringObj => new Integer {Value = ((String) args.First()).Value.Length},
+                ObjectType.ArrayObj => new Integer {Value = ((Array) args.First()).Elements.Count},
                 _ => new Error(8, null, args.First().Type(), null)
             };
         }

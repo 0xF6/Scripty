@@ -7,6 +7,7 @@ using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Interfaces;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Literals;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Statements;
+using Array = MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects.Array;
 using Boolean = MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects.Boolean;
 using Environment = MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects.Environment;
 using String = MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects.String;
@@ -43,8 +44,47 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
                 nameof(FunctionLiteral) => HandleFunctionLiteralEval((FunctionLiteral) node, env),
                 nameof(CallExpression) => HandleCallExpressionEval((CallExpression) node, env),
                 nameof(StringLiteral) => new String {Value = ((StringLiteral) node).Value},
+                nameof(ArrayLiteral) => HandleArrayLiteralEval((ArrayLiteral) node, env),
+                nameof(IndexExpression) => HandleIndexExpressionEval((IndexExpression) node, env),
                 _ => Null
             };
+        }
+
+        private static IObject? HandleIndexExpressionEval(IndexExpression node, Environment env)
+        {
+            var left = Eval(node.Left, env);
+            if (IsError(left)) return left;
+
+            var index = Eval(node.Index, env);
+            if (IsError(index)) return index;
+
+            return EvalIndexExpression(left, index);
+        }
+
+        private static IObject? EvalIndexExpression(IObject left, IObject index)
+        {
+            if (left.Type() == ObjectType.ArrayObj && index.Type() == ObjectType.IntegerObj)
+                return EvalArrayIndexExpression(left, index);
+            return new Error(9, left, null, null);
+        }
+
+        private static IObject? EvalArrayIndexExpression(IObject left, IObject index)
+        {
+            var arrObj = (Array) left;
+            var idx = ((Integer) index).Value;
+            var max = arrObj.Elements.Count - 1;
+            if (idx < 0 || idx > max)
+                return new Error(10, arrObj, null, (Integer) index);
+
+            return arrObj.Elements[(int) idx];
+        }
+
+        private static IObject? HandleArrayLiteralEval(ArrayLiteral node, Environment env)
+        {
+            var elements = EvalExpressions(node.Elements, env);
+            if (elements.Count == 1 && IsError(elements.First())) return elements.First();
+
+            return new Array {Elements = elements};
         }
 
         private static IObject? HandleCallExpressionEval(CallExpression node, Environment env)

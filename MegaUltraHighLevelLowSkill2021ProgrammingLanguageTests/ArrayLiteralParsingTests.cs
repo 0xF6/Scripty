@@ -1,6 +1,7 @@
 using System.Linq;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Literals;
+using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Statements;
 using NUnit.Framework;
 
@@ -34,10 +35,27 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
             Assert.AreEqual(3, array.Elements.Count);
 
             StaticTests.TestIntegerLiteral(array.Elements.First(), 1);
-            var int2 = new IntegerLiteral {Token = new Token {Type = Token.Int, Literal = "2"}, Value = 2};
-            var int3 = new IntegerLiteral {Token = new Token {Type = Token.Int, Literal = "3"}, Value = 3};
-            StaticTests.TestInfixExpression(array.Elements[1], int2, "*", int2);
-            StaticTests.TestInfixExpression(array.Elements[2], int3, "+", int3);
+            IntegerLiteral two = 2;
+            IntegerLiteral three = 3;
+            StaticTests.TestInfixExpression(array.Elements[1], two, "*", two);
+            StaticTests.TestInfixExpression(array.Elements[2], three, "+", three);
+        }
+
+        [Test]
+        public void ArrayObjectTest()
+        {
+            const string input = "[1, 2 * 2, 3 + 3]";
+            var evaluated = StaticTests.TestEval(input);
+
+            Assert.AreEqual(nameof(Array), evaluated.GetType().Name);
+
+            var array = (Array) evaluated;
+
+            Assert.AreEqual(3, array.Elements.Count);
+
+            StaticTests.TestIntegerObject(array.Elements.First(), 1);
+            StaticTests.TestIntegerObject(array.Elements[1], 4);
+            StaticTests.TestIntegerObject(array.Elements[2], 6);
         }
     }
 }

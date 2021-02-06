@@ -10,5 +10,6 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects
         public const string FunctionObj = "FUNCTION";
         public const string StringObj = "STRING";
         public const string BuiltinObj = "BUILTIN";
+        public const string ArrayObj = "ARRAY";
     }
 }

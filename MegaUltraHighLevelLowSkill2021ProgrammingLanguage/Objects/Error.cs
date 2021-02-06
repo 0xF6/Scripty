@@ -36,6 +36,14 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects
                     Message = $"[MUHL8] invalid operation: {op} has no length.";
                     Code = "[MUHL8]";
                     break;
+                case 9:
+                    Message = $"[MUHL9] index operator not supported for {left?.Type()}";
+                    Code = "[MUHL9]";
+                    break;
+                case 10:
+                    Message = $"[MUHL10] index {right?.Inspect()} is out of range for {left?.Inspect()}";
+                    Code = "[MUHL10]";
+                    break;
                 default:
                     Message = "[MUHL1] Unknown error";
                     Code = "[MUHL1]";

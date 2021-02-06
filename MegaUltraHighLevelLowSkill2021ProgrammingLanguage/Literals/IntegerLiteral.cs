@@ -22,5 +22,8 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Literals
         {
             throw new NotImplementedException();
         }
+
+        public static implicit operator IntegerLiteral(int v) =>
+            new() {Token = new Token() {Type = Token.Int, Literal = v.ToString()}, Value = v};
     }
 }
