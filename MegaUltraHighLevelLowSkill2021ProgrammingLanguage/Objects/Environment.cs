@@ -7,15 +7,26 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects
     public class Environment
     {
         private readonly Dictionary<string, IObject> Store;
+        public Environment? Outer { get; set; }
 
         public Environment()
         {
             Store = new Dictionary<string, IObject>();
+            Outer = null;
+        }
+
+        public Environment(Environment outer)
+        {
+            Store = new Dictionary<string, IObject>();
+            Outer = outer;
         }
 
         public IObject? Get(string key)
         {
-            return Store.GetValueOrDefault(key, null);
+            var existingValue = Store.GetValueOrDefault(key, null);
+            if ((existingValue is null) && !(Outer is null))
+                existingValue = Outer.Get(key);
+            return existingValue;
         }
 
         public IObject Set(string key, IObject obj)

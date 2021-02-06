@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Expressions;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Interfaces;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Literals;
@@ -28,8 +29,69 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
                 nameof(ReturnStatement) => HandleReturnStatementEval((ReturnStatement) node, env),
                 nameof(LetStatement) => HandleLetStatementCase((LetStatement) node, env),
                 nameof(Identifier) => EvalIdentifier((Identifier) node, env),
+                nameof(FunctionLiteral) => HandleFunctionLiteralEval((FunctionLiteral) node, env),
+                nameof(CallExpression) => HandleCallExpressionEval((CallExpression) node, env),
                 _ => Null
             };
+        }
+
+        private static IObject? HandleCallExpressionEval(CallExpression node, Environment env)
+        {
+            var function = Eval(node.Function, env);
+            if (IsError(function)) return function;
+            var args = EvalExpressions(node.Arguments, env);
+            if (args.Count == 1 && IsError(args.First())) return args.First();
+            return ApplyFunction(function, args);
+        }
+
+        private static IObject? ApplyFunction(IObject? fn, List<IObject> args)
+        {
+            if (!(fn is Function function)) return new Error(6, null, fn.Type(), null);
+            var extendedEnv = ExtendFunctionEnv(function, args);
+            var evaluated = Eval(function.Body, extendedEnv);
+            return UnwrapReturnValue(evaluated);
+        }
+
+        private static Environment ExtendFunctionEnv(Function function, List<IObject> args)
+        {
+            var env = new Environment(function.Environment);
+            for (var i = 0; i < function.Parameters.Count; i++)
+            {
+                var functionParam = function.Parameters[i];
+                env.Set(functionParam.Value, args[i]);
+            }
+
+            return env;
+        }
+
+        private static IObject? UnwrapReturnValue(IObject? evaluated)
+        {
+            var returnValue = evaluated as ReturnValue;
+            return returnValue ?? evaluated;
+        }
+
+        private static List<IObject> EvalExpressions(List<IExpression> nodeArguments, Environment env)
+        {
+            var result = new List<IObject>();
+            foreach (var evaluated in nodeArguments.Select(nodeArgument => Eval(nodeArgument, env)))
+            {
+                if (IsError(evaluated))
+                {
+                    result.Add(evaluated);
+                    return result;
+                }
+
+                result.Add(evaluated);
+            }
+
+            return result;
+        }
+
+        private static IObject? HandleFunctionLiteralEval(FunctionLiteral node, Environment env)
+        {
+            var parameters = node.Parameters;
+            var body = node.Body;
+            return new Function {Parameters = parameters, Environment = env, Body = body};
         }
 
         private static IObject? EvalIdentifier(Identifier node, Environment env)

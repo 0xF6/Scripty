@@ -24,6 +24,10 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects
                     Message = $"[MUHL5] identifier not found: {op}";
                     Code = "[MUHL5]";
                     break;
+                case 6:
+                    Message = $"[MUHL6] {op} not a function";
+                    Code = "[MUHL6]";
+                    break;
                 default:
                     Message = "[MUHL1] Unknown error";
                     Code = "[MUHL1]";
