@@ -1,10 +1,15 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.BuiltinFunctions;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Expressions;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Interfaces;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Literals;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Statements;
+using Boolean = MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects.Boolean;
+using Environment = MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects.Environment;
+using String = MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects.String;
 
 namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
 {
@@ -13,6 +18,11 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
         public static readonly Boolean True = new() {Value = true};
         public static readonly Boolean False = new() {Value = false};
         public static readonly Null Null = new();
+
+        public static readonly Dictionary<string, Builtin> Builtins = new()
+        {
+            {"length", Length.Build()}
+        };
 
         public static IObject? Eval(INode node, Environment env)
         {
@@ -47,10 +57,24 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
 
         private static IObject? ApplyFunction(IObject? fn, List<IObject> args)
         {
-            if (!(fn is Function function)) return new Error(6, null, fn.Type(), null);
-            var extendedEnv = ExtendFunctionEnv(function, args);
-            var evaluated = Eval(function.Body, extendedEnv);
-            return UnwrapReturnValue(evaluated);
+            // if (!(fn is Function function)) return new Error(6, null, fn.Type(), null);
+            // var extendedEnv = ExtendFunctionEnv(function, args);
+            // var evaluated = Eval(function.Body, extendedEnv);
+            // return UnwrapReturnValue(evaluated);
+            switch (fn.GetType().Name)
+            {
+                case nameof(Function):
+                    var function = fn as Function;
+                    var extendedEnv = ExtendFunctionEnv(function, args);
+                    var evaluated = Eval(function.Body, extendedEnv);
+                    return UnwrapReturnValue(evaluated);
+                case nameof(Builtin):
+                    var builtin = fn as Builtin;
+                    return builtin.Fn(args);
+                default:
+                    Console.WriteLine(fn.GetType().Name);
+                    return new Error(6, null, fn.Type(), null);
+            }
         }
 
         private static Environment ExtendFunctionEnv(Function function, List<IObject> args)
@@ -98,7 +122,10 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
         private static IObject? EvalIdentifier(Identifier node, Environment env)
         {
             var value = env.Get(node.Value);
-            return value ?? new Error(5, null, node.Value, null);
+            if (!(value is null)) return value;
+            var builtin = Builtins.GetValueOrDefault(node.Value, null);
+            if (!(builtin is null)) return builtin;
+            return new Error(5, null, node.Value, null);
         }
 
         private static IObject HandleLetStatementCase(LetStatement node, Environment env)

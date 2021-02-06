@@ -87,11 +87,11 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
                     break;
                 case '"':
                     tok.Type = Token.String;
-                    tok.Literal = ReadString();
+                    tok.Literal = ReadString(false);
                     break;
                 case '\'':
                     tok.Type = Token.String;
-                    tok.Literal = ReadString();
+                    tok.Literal = ReadString(true);
                     break;
                 case '\0':
                     tok.Type = Token.Eof;
@@ -122,13 +122,20 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
             return tok;
         }
 
-        private string ReadString()
+        private string ReadString(bool singleQuote)
         {
             var position = Position + 1;
             while (true)
             {
                 ReadChar();
-                if (Ch == '"' || Ch == '\'' || Ch == '\0') break;
+                if (singleQuote)
+                {
+                    if (Ch == '\'' || Ch == '\0') break;
+                }
+                else
+                {
+                    if (Ch == '"' || Ch == '\0') break;
+                }
             }
 
             return Input[position..Position];

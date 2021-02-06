@@ -1,3 +1,4 @@
+using System;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Expressions;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Interfaces;
@@ -5,6 +6,8 @@ using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Literals;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Statements;
 using NUnit.Framework;
+using Boolean = MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects.Boolean;
+using Environment = MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects.Environment;
 
 namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
 {
@@ -131,6 +134,24 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
             Assert.AreEqual(name, statement.Name.Value, $"statement name value not {name}, got={statement.Name.Value}");
             Assert.AreEqual(name, statement.Name.TokenLiteral(),
                 $"statement name token literal not {name}, got={statement.Name.TokenLiteral()}");
+        }
+
+        public static void TestBuiltinFunction(string toEval, object expected)
+        {
+            var evaluated = TestEval(toEval);
+
+            switch (expected.GetType().Name)
+            {
+                case "Int64":
+                    TestIntegerObject(evaluated, (long) expected);
+                    break;
+                case "String":
+                    Assert.AreEqual(nameof(Error), evaluated.GetType().Name);
+                    break;
+                default:
+                    Console.WriteLine(expected.GetType().Name);
+                    break;
+            }
         }
     }
 }

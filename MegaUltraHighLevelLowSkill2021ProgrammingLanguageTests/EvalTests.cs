@@ -15,24 +15,24 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
         {
             var tests = new IntegerTests[]
             {
-                new() {Input = "5", expected = 5},
-                new() {Input = "228322", expected = 228322},
-                new() {Input = "-322", expected = -322},
-                new() {Input = "-228", expected = -228},
-                new() {Input = "5 + 5 + 5 + 5 - 10", expected = 10},
-                new() {Input = "2 * 2 * 2 * 2 * 2", expected = 32},
-                new() {Input = "100 + -50", expected = 50},
-                new() {Input = "-50 + 100 + -50", expected = 0},
-                new() {Input = "50 / 2 * 2 + 10", expected = 60},
-                new() {Input = "20 + 2 * -10", expected = 0},
-                new() {Input = "2 * (5 + 10)", expected = 30},
-                new() {Input = "(5 + 10 * 2 + 15 / 3) * 2 + -10", expected = 50}
+                new() {Input = "5", Expected = 5},
+                new() {Input = "228322", Expected = 228322},
+                new() {Input = "-322", Expected = -322},
+                new() {Input = "-228", Expected = -228},
+                new() {Input = "5 + 5 + 5 + 5 - 10", Expected = 10},
+                new() {Input = "2 * 2 * 2 * 2 * 2", Expected = 32},
+                new() {Input = "100 + -50", Expected = 50},
+                new() {Input = "-50 + 100 + -50", Expected = 0},
+                new() {Input = "50 / 2 * 2 + 10", Expected = 60},
+                new() {Input = "20 + 2 * -10", Expected = 0},
+                new() {Input = "2 * (5 + 10)", Expected = 30},
+                new() {Input = "(5 + 10 * 2 + 15 / 3) * 2 + -10", Expected = 50}
             };
 
             foreach (var integerTest in tests)
             {
                 var evaluated = StaticTests.TestEval(integerTest.Input);
-                StaticTests.TestIntegerObject(evaluated, integerTest.expected);
+                StaticTests.TestIntegerObject(evaluated, integerTest.Expected);
             }
         }
 
@@ -165,6 +165,28 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
             var str = (String) evaluated;
 
             Assert.AreEqual(expected, str.Value);
+        }
+
+        [Test]
+        public void BuiltinFunctionsTest()
+        {
+            var workingCases = new IntegerTests[]
+            {
+                new() {Input = "length(\"\");", Expected = 0},
+                new() {Input = "length('something');", Expected = 9},
+                new() {Input = "length('hello world');", Expected = 11}
+            };
+            var casesWithErrors = new OperatorTest[]
+            {
+                new() {Input = "length(1);", Expected = "[MUHL8] invalid operation: {op} has no length."},
+                new() {Input = "length('one', '2');", Expected = "[MUHL7] wrong number of arguments: expected 1, got 2"}
+            };
+
+            foreach (var lengthWorkingTest in workingCases)
+                StaticTests.TestBuiltinFunction(lengthWorkingTest.Input, lengthWorkingTest.Expected);
+
+            foreach (var casesWithError in casesWithErrors)
+                StaticTests.TestBuiltinFunction(casesWithError.Input, casesWithError.Expected);
         }
     }
 }

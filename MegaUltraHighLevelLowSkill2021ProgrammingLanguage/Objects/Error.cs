@@ -28,6 +28,14 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects
                     Message = $"[MUHL6] {op} not a function";
                     Code = "[MUHL6]";
                     break;
+                case 7:
+                    Message = $"[MUHL7] wrong number of arguments: expected 1, got {op}";
+                    Code = "[MUHL7]";
+                    break;
+                case 8:
+                    Message = $"[MUHL8] invalid operation: {op} has no length.";
+                    Code = "[MUHL8]";
+                    break;
                 default:
                     Message = "[MUHL1] Unknown error";
                     Code = "[MUHL1]";
