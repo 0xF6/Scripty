@@ -4,6 +4,8 @@
         <TargetFramework>net5.0</TargetFramework>
 
         <IsPackable>false</IsPackable>
+
+        <RootNamespace>MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -13,7 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\MegaUltraHighLevelLowSkill2021ProgrammingLanguage\MegaUltraHighLevelLowSkill2021ProgrammingLanguage.csproj" />
+      <ProjectReference Include="..\src\src.csproj" />
     </ItemGroup>
 
 </Project>

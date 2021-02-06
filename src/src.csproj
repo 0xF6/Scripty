@@ -4,6 +4,7 @@
         <OutputType>Exe</OutputType>
         <TargetFramework>net5.0</TargetFramework>
         <Nullable>disable</Nullable>
+        <RootNamespace>MegaUltraHighLevelLowSkill2021ProgrammingLanguage</RootNamespace>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">

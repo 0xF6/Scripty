@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MegaUltraHighLevelLowSkill2021ProgrammingLanguage", "MegaUltraHighLevelLowSkill2021ProgrammingLanguage\MegaUltraHighLevelLowSkill2021ProgrammingLanguage.csproj", "{E93237B8-00A3-4A72-93E9-3EBA20FF2711}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "src", "src\src.csproj", "{E93237B8-00A3-4A72-93E9-3EBA20FF2711}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests", "MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests\MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests.csproj", "{A95DF449-AE5C-432D-870B-9E6239062554}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests", "tests\tests.csproj", "{A95DF449-AE5C-432D-870B-9E6239062554}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
