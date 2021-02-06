@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Environment = MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects.Environment;
 
 namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
 {
@@ -9,6 +10,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
 
         public static void Run()
         {
+            var env = new Environment();
             while (true)
             {
                 Console.Write(Prompt);
@@ -25,7 +27,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
                     continue;
                 }
 
-                var evaluated = Evaluator.Eval(program);
+                var evaluated = Evaluator.Eval(program, env);
                 if (!(evaluated is null)) Console.WriteLine(evaluated.Inspect());
             }
         }

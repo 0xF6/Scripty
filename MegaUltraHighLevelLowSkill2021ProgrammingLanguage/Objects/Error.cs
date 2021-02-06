@@ -4,9 +4,6 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects
 {
     public class Error : IObject
     {
-        public string Message { get; set; }
-        public string Code { get; set; }
-
         public Error(int code, IObject? left, string? op, IObject? right)
         {
             switch (code)
@@ -23,12 +20,19 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects
                     Message = $"[MUHL4] unknown operator: {op}{right.Type()}";
                     Code = "[MUHL3]";
                     break;
+                case 5:
+                    Message = $"[MUHL5] identifier not found: {op}";
+                    Code = "[MUHL5]";
+                    break;
                 default:
                     Message = "[MUHL1] Unknown error";
                     Code = "[MUHL1]";
                     break;
             }
         }
+
+        public string Message { get; set; }
+        public string Code { get; set; }
 
         public string Type()
         {

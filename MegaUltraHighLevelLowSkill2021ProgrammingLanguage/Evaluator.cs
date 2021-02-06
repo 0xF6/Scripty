@@ -13,30 +13,44 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
         public static readonly Boolean False = new() {Value = false};
         public static readonly Null Null = new();
 
-        public static IObject? Eval(INode node)
+        public static IObject? Eval(INode node, Environment env)
         {
             return node.GetType().Name switch
             {
                 nameof(IntegerLiteral) => new Integer {Value = ((IntegerLiteral) node).Value},
-                nameof(ExpressionStatement) => Eval(((ExpressionStatement) node).Expression),
-                nameof(Code) => EvalProgram((Code) node),
+                nameof(ExpressionStatement) => Eval(((ExpressionStatement) node).Expression, env),
+                nameof(Code) => EvalProgram((Code) node, env),
                 nameof(BooleanLiteral) => NativeBoolToBooleanObject(((BooleanLiteral) node).Value),
-                nameof(PrefixExpression) => HandlePrefixExpression(node),
-                nameof(InfixExpression) => HandleInfixExpression(node),
-                nameof(BlockStatement) => EvalBlockStatement((BlockStatement) node),
-                nameof(IfExpression) => EvalIfExpression((IfExpression) node),
-                nameof(ReturnStatement) => HandleReturnStatementEval((ReturnStatement) node),
+                nameof(PrefixExpression) => HandlePrefixExpression(node, env),
+                nameof(InfixExpression) => HandleInfixExpression(node, env),
+                nameof(BlockStatement) => EvalBlockStatement((BlockStatement) node, env),
+                nameof(IfExpression) => EvalIfExpression((IfExpression) node, env),
+                nameof(ReturnStatement) => HandleReturnStatementEval((ReturnStatement) node, env),
+                nameof(LetStatement) => HandleLetStatementCase((LetStatement) node, env),
+                nameof(Identifier) => EvalIdentifier((Identifier) node, env),
                 _ => Null
             };
         }
 
-        private static IObject EvalBlockStatement(BlockStatement node)
+        private static IObject? EvalIdentifier(Identifier node, Environment env)
+        {
+            var value = env.Get(node.Value);
+            return value ?? new Error(5, null, node.Value, null);
+        }
+
+        private static IObject HandleLetStatementCase(LetStatement node, Environment env)
+        {
+            var value = Eval(node.Value, env);
+            return IsError(value) ? value : env.Set(node.Name.Value, value);
+        }
+
+        private static IObject EvalBlockStatement(BlockStatement node, Environment env)
         {
             IObject? result = null;
 
             foreach (var nodeStatement in node.Statements)
             {
-                result = Eval(nodeStatement);
+                result = Eval(nodeStatement, env);
 
                 if (result is null) continue;
                 if (result.Type() == ObjectType.ErrorObj || result.Type() == ObjectType.ReturnValueObj)
@@ -46,12 +60,12 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
             return result;
         }
 
-        private static IObject EvalProgram(Code node)
+        private static IObject EvalProgram(Code node, Environment env)
         {
             IObject result = null;
             foreach (var nodeStatement in node.Statements)
             {
-                result = Eval(nodeStatement);
+                result = Eval(nodeStatement, env);
                 switch (result.GetType().Name)
                 {
                     case nameof(ReturnValue):
@@ -64,9 +78,9 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
             return result;
         }
 
-        private static IObject HandleReturnStatementEval(ReturnStatement node)
+        private static IObject HandleReturnStatementEval(ReturnStatement node, Environment env)
         {
-            var value = Eval(node.ReturnValue);
+            var value = Eval(node.ReturnValue, env);
             if (IsError(value)) return value;
             return new ReturnValue {Value = value};
         }
@@ -77,14 +91,14 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
             return value.Type() == ObjectType.ErrorObj;
         }
 
-        private static IObject EvalIfExpression(IfExpression node)
+        private static IObject EvalIfExpression(IfExpression node, Environment env)
         {
-            var condition = Eval(node.Condition);
+            var condition = Eval(node.Condition, env);
             if (IsError(condition)) return condition;
             if (IsTruthy(condition))
-                return Eval(node.Consequence);
+                return Eval(node.Consequence, env);
 
-            return !(node.Alternative is null) ? Eval(node.Alternative) : Null;
+            return !(node.Alternative is null) ? Eval(node.Alternative, env) : Null;
         }
 
         private static bool IsTruthy(IObject obj)
@@ -94,12 +108,12 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
             return !Equals(obj, False);
         }
 
-        private static IObject HandleInfixExpression(INode node)
+        private static IObject HandleInfixExpression(INode node, Environment env)
         {
             var infixNode = (InfixExpression) node;
-            var left = Eval(infixNode.Left);
+            var left = Eval(infixNode.Left, env);
             if (IsError(left)) return left;
-            var right = Eval(infixNode.Right);
+            var right = Eval(infixNode.Right, env);
             if (IsError(right)) return right;
             return EvalInfixExpression(infixNode.Operator, left, right);
         }
@@ -116,7 +130,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
             {
                 "==" => NativeBoolToBooleanObject(Equals(left, right)),
                 "!=" => NativeBoolToBooleanObject(!Equals(left, right)),
-                _ => new Error(2, left, infixNodeOperator, right),
+                _ => new Error(2, left, infixNodeOperator, right)
             };
         }
 
@@ -134,14 +148,14 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
                 ">" => NativeBoolToBooleanObject(leftVal > rightVal),
                 "!=" => NativeBoolToBooleanObject(leftVal != rightVal),
                 "==" => NativeBoolToBooleanObject(leftVal == rightVal),
-                _ => new Error(2, left, infixNodeOperator, right),
+                _ => new Error(2, left, infixNodeOperator, right)
             };
         }
 
-        private static IObject HandlePrefixExpression(INode node)
+        private static IObject HandlePrefixExpression(INode node, Environment env)
         {
             var prefixedNode = (PrefixExpression) node;
-            var right = Eval(prefixedNode.Right);
+            var right = Eval(prefixedNode.Right, env);
             if (IsError(right)) return right;
             return EvalPrefixExpression(prefixedNode.Operator, right);
         }
@@ -178,12 +192,12 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
             }
         }
 
-        private static IObject EvalStatement(List<IStatement> statements)
+        private static IObject EvalStatement(List<IStatement> statements, Environment env)
         {
             IObject result = null;
             foreach (var statement in statements)
             {
-                result = Eval(statement);
+                result = Eval(statement, env);
                 if (result is null) continue;
                 if (result.GetType().Name == nameof(ReturnValue))
                     return ((ReturnValue) result).Value;

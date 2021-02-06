@@ -1,4 +1,3 @@
-using System;
 using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects;
 using NUnit.Framework;
 
@@ -35,6 +34,11 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
                     Input = "if (10 > 1) { if (9 > 1) { return true + true; } return false; }",
                     Expected = "[MUHL2] unknown operator: BOOLEAN + BOOLEAN"
                 },
+                new()
+                {
+                    Input = "kekpuk",
+                    Expected = "[MUHL5] identifier not found: kekpuk"
+                }
             };
 
             foreach (var errorTest in tests)

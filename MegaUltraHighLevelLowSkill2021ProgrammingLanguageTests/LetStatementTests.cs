@@ -73,5 +73,23 @@ let foo = 123456789; ";
                 StaticTests.TestLiteralExpression(value, letStatementTestCases.ExpectedValueGet());
             }
         }
+
+
+        [Test]
+        public void LetStatementsTest2()
+        {
+            var tests = new LetStatementWithIntegerValueEvalTestCase[]
+            {
+                new() {Input = "let a = 5; a;", Expected = 5},
+                new() {Input = "let a = 5 * 5; a;", Expected = 25},
+                new() {Input = "let a = 5; let b = a; b;", Expected = 5},
+                new() {Input = "let a = 5; let b = a; let c = a + b + 5; c;", Expected = 15}
+            };
+            foreach (var letStatementWithIntegerValueEvalTestCase in tests)
+            {
+                var evaledValue = StaticTests.TestEval(letStatementWithIntegerValueEvalTestCase.Input);
+                StaticTests.TestIntegerObject(evaledValue, letStatementWithIntegerValueEvalTestCase.Expected);
+            }
+        }
     }
 }

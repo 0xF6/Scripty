@@ -70,7 +70,7 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
                     break;
             }
         }
-        
+
         public static bool TestNullObject(IObject evaluated)
         {
             return Equals(evaluated, Evaluator.Null);
@@ -99,8 +99,9 @@ namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
             var lexer = new Lexer(input);
             var parser = new Parser(lexer);
             var program = parser.ParseCode();
+            var env = new Environment();
 
-            return Evaluator.Eval(program);
+            return Evaluator.Eval(program, env);
         }
 
         public static void TestInfixExpression(IExpression exp, IExpression left, string op, IExpression right)

@@ -1,6 +1,3 @@
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Interfaces;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects;
 using NUnit.Framework;
 
 namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
