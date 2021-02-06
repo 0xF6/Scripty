@@ -3,7 +3,6 @@
 [![forthebadge](https://forthebadge.com/images/badges/gluten-free.svg)]()
 [![forthebadge](https://forthebadge.com/images/badges/powered-by-electricity.svg)]()
 [![forthebadge](https://forthebadge.com/images/badges/60-percent-of-the-time-works-every-time.svg)]()
-[![forthebadge](https://forthebadge.com/images/badges/check-it-out.svg)]()
 [![forthebadge](https://forthebadge.com/images/badges/made-with-c-sharp.svg)]()
 [![forthebadge](https://forthebadge.com/images/badges/for-you.svg)]()
 [![forthebadge](https://forthebadge.com/images/badges/open-source.svg)]()
