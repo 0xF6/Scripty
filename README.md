@@ -17,7 +17,12 @@
 * `$ dotnet publish -c release -r <TARGET> -p:PublishSingleFile=true -p:PublishTrimmed=true -p:PublishReadyToRun=true`
   to build
 
-
 ## Contribute
 
 * Add an issue or create a pull request
+
+## Copyrights and License
+
+Copyright © 2021 Aram Hayrapetyan
+
+This code is licensed under the MIT License
