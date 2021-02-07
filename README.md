@@ -17,6 +17,30 @@
 * `$ dotnet publish -c release -r <TARGET> -p:PublishSingleFile=true -p:PublishTrimmed=true -p:PublishReadyToRun=true`
   to build
 
+## Current Milestone
+
+### Legend:
+
+* `🙈️` To Do
+* `🙉` In Progress
+* `🙊` Done
+
+|       Feature        | Status    |            Feature                | Status    |
+|:------------------:	|:------:	|:-----------------------------:	|:------:	|
+|      Variables        |    🙊    |             Int64                |    🙊    |
+|      Functions        |    🙊    |             String                |    🙊    |
+|  Start from a file    |    🙈️    |        Collection-Array        |    🙉    |
+|      Booleans        |    🙊    |     Collection-Dictionary        |    🙈️    |
+|    Boolean logic    |    🙊    |        Length function            |    🙉    |
+| Writeline function    |    🙊    | Collection Specific Functions    |    🙈️    |
+|     Interpreter        |    🙉    |        Virtual Machine            |    🙈️    |
+
 ## Contribute
 
 * Add an issue or create a pull request
+
+## Copyrights and License
+
+Copyright © 2021 Aram Hayrapetyan
+
+This code is licensed under the MIT License
