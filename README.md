@@ -34,6 +34,7 @@
 |    Boolean logic    |    🙊    |        Length function            |    🙉    |
 | Writeline function    |    🙊    | Collection Specific Functions    |    🙈️    |
 |     Interpreter        |    🙉    |        Virtual Machine            |    🙈️    |
+|        Float        |    🙈️    |                               	|        	|
 
 ## Contribute
 
