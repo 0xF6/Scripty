@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Environment = MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects.Environment;
+using Environment = Scripty.Objects.Environment;
 
-namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
+namespace Scripty
 {
     public static class Repl
     {

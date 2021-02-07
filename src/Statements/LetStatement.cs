@@ -1,8 +1,8 @@
 using System;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Expressions;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Interfaces;
+using Scripty.Expressions;
+using Scripty.Interfaces;
 
-namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Statements
+namespace Scripty.Statements
 {
     public class LetStatement : IStatement
     {

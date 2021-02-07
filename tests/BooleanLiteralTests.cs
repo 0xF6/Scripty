@@ -1,10 +1,10 @@
 using System.Linq;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Literals;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Statements;
 using NUnit.Framework;
+using Scripty;
+using Scripty.Literals;
+using Scripty.Statements;
 
-namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
+namespace ScriptyTests
 {
     public class BooleanLiteralTests
     {

@@ -1,8 +1,8 @@
 using System;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Interfaces;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Statements;
+using Scripty.Interfaces;
+using Scripty.Statements;
 
-namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Expressions
+namespace Scripty.Expressions
 {
     public class IfExpression : IExpression
     {

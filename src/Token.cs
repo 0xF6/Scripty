@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
+namespace Scripty
 {
     public class Token
     {

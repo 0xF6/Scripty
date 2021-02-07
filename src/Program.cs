@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
+namespace Scripty
 {
     internal class Program
     {

@@ -1,4 +1,4 @@
-namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
+namespace Scripty
 {
     public class Lexer
     {

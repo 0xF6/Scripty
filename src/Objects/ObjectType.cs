@@ -1,4 +1,4 @@
-namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects
+namespace Scripty.Objects
 {
     public static class ObjectType
     {

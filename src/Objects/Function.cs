@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Expressions;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Interfaces;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Statements;
+using Scripty.Expressions;
+using Scripty.Interfaces;
+using Scripty.Statements;
 
-namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects
+namespace Scripty.Objects
 {
     public class Function : IObject
     {

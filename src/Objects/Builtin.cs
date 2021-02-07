@@ -1,7 +1,7 @@
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Delegates;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Interfaces;
+using Scripty.Delegates;
+using Scripty.Interfaces;
 
-namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects
+namespace Scripty.Objects
 {
     public class Builtin : IObject
     {

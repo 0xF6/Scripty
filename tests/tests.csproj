@@ -5,7 +5,7 @@
 
         <IsPackable>false</IsPackable>
 
-        <RootNamespace>MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests</RootNamespace>
+        <RootNamespace>ScriptyTests</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

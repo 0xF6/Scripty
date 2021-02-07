@@ -1,12 +1,12 @@
 using System.Collections.Generic;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Delegates;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Enums;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Expressions;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Interfaces;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Literals;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Statements;
+using Scripty.Delegates;
+using Scripty.Enums;
+using Scripty.Expressions;
+using Scripty.Interfaces;
+using Scripty.Literals;
+using Scripty.Statements;
 
-namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
+namespace Scripty
 {
     public class Parser
     {

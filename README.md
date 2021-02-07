@@ -1,4 +1,4 @@
-# MegaUltraHighLevelLowSkill2021ProgrammingLanguage
+# Scripty
 
 [![forthebadge](https://forthebadge.com/images/badges/gluten-free.svg)]()
 [![forthebadge](https://forthebadge.com/images/badges/powered-by-electricity.svg)]()

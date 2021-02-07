@@ -1,7 +1,7 @@
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage;
 using NUnit.Framework;
+using Scripty;
 
-namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
+namespace ScriptyTests
 {
     public class OperatorPrecedenceParseTests
     {

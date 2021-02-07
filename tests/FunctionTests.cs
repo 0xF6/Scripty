@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
+namespace ScriptyTests
 {
     internal struct FunctionTests
     {

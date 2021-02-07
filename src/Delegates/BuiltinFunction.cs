@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Interfaces;
+using Scripty.Interfaces;
 
-namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Delegates
+namespace Scripty.Delegates
 {
     public delegate IObject BuiltinFunction(List<IObject> args);
 }

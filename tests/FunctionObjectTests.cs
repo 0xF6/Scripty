@@ -1,8 +1,8 @@
 using System.Linq;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects;
 using NUnit.Framework;
+using Scripty.Objects;
 
-namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
+namespace ScriptyTests
 {
     public class FunctionObjectTests
     {
