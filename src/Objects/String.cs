@@ -15,5 +15,10 @@ namespace Scripty.Objects
         {
             return Value;
         }
+
+        public static implicit operator String(string v)
+        {
+            return new() {Value = v};
+        }
     }
 }

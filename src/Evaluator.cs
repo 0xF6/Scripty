@@ -23,7 +23,9 @@ namespace Scripty
         public static readonly Dictionary<string, Builtin> Builtins = new()
         {
             {"length", Length.Build()},
-            {"wln", Puts.Build()}
+            {"wln", Puts.Build()},
+            {"first", First.Build()},
+            {"last", Last.Build()}
         };
 
         public static IObject Eval(INode node, Environment env)
@@ -65,7 +67,20 @@ namespace Scripty
         {
             if (left.Type() == ObjectType.ArrayObj && index.Type() == ObjectType.IntegerObj)
                 return EvalArrayIndexExpression(left, index);
+            if (left.Type() == ObjectType.StringObj && index.Type() == ObjectType.IntegerObj)
+                return EvalStringIndexExpression(left, index);
             return new Error(9, left, null, null);
+        }
+
+        private static IObject EvalStringIndexExpression(IObject left, IObject index)
+        {
+            var stringObj = (String) left;
+            var idx = ((Integer) index).Value;
+            var max = stringObj.Value.Length - 1;
+            if (idx < 0 || idx > max)
+                return new Error(10, stringObj, null, (Integer) index);
+            String ch = stringObj.Value[(int) idx].ToString();
+            return ch;
         }
 
         private static IObject EvalArrayIndexExpression(IObject left, IObject index)

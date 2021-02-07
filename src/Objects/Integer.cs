@@ -15,5 +15,10 @@ namespace Scripty.Objects
         {
             return $"{Value}";
         }
+
+        public static implicit operator Integer(long v)
+        {
+            return new() {Value = v};
+        }
     }
 }
