@@ -17,6 +17,7 @@
 * `$ dotnet publish -c release -r <TARGET> -p:PublishSingleFile=true -p:PublishTrimmed=true -p:PublishReadyToRun=true`
   to build
 
+
 ## Contribute
 
 * Add an issue or create a pull request
