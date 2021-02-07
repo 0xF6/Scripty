@@ -1,6 +1,6 @@
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Interfaces;
+using Scripty.Interfaces;
 
-namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Delegates
+namespace Scripty.Delegates
 {
     public delegate IExpression PrefixParseFn();
 }

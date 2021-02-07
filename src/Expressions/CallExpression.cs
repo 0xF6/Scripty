@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Interfaces;
+using Scripty.Interfaces;
 
-namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Expressions
+namespace Scripty.Expressions
 {
     public class CallExpression : IExpression
     {

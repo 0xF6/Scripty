@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Expressions;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Interfaces;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Statements;
+using Scripty.Expressions;
+using Scripty.Interfaces;
+using Scripty.Statements;
 
-namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Literals
+namespace Scripty.Literals
 {
     public class FunctionLiteral : IExpression
     {

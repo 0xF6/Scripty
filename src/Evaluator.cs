@@ -1,18 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.BuiltinFunctions;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Expressions;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Interfaces;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Literals;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Statements;
-using Array = MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects.Array;
-using Boolean = MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects.Boolean;
-using Environment = MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects.Environment;
-using String = MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects.String;
+using Scripty.BuiltinFunctions;
+using Scripty.Expressions;
+using Scripty.Interfaces;
+using Scripty.Literals;
+using Scripty.Objects;
+using Scripty.Statements;
+using Array = Scripty.Objects.Array;
+using Boolean = Scripty.Objects.Boolean;
+using Environment = Scripty.Objects.Environment;
+using String = Scripty.Objects.String;
 
-namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage
+namespace Scripty
 {
     public static class Evaluator
     {

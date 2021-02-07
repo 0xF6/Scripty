@@ -1,11 +1,11 @@
 using System.Linq;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Literals;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Statements;
 using NUnit.Framework;
+using Scripty;
+using Scripty.Literals;
+using Scripty.Objects;
+using Scripty.Statements;
 
-namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
+namespace ScriptyTests
 {
     public class ArrayLiteralParsingTests
     {

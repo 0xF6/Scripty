@@ -1,15 +1,15 @@
 using System;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Expressions;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Interfaces;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Literals;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Statements;
 using NUnit.Framework;
-using Boolean = MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects.Boolean;
-using Environment = MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects.Environment;
+using Scripty;
+using Scripty.Expressions;
+using Scripty.Interfaces;
+using Scripty.Literals;
+using Scripty.Objects;
+using Scripty.Statements;
+using Boolean = Scripty.Objects.Boolean;
+using Environment = Scripty.Objects.Environment;
 
-namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
+namespace ScriptyTests
 {
     public static class StaticTests
     {

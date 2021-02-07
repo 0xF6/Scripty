@@ -1,4 +1,4 @@
-namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Interfaces
+namespace Scripty.Interfaces
 {
     public interface IExpression : INode
     {

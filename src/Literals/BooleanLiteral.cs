@@ -1,7 +1,7 @@
 using System;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Interfaces;
+using Scripty.Interfaces;
 
-namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Literals
+namespace Scripty.Literals
 {
     public class BooleanLiteral : IExpression
     {

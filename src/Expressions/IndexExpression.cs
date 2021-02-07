@@ -1,7 +1,7 @@
 using System;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Interfaces;
+using Scripty.Interfaces;
 
-namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Expressions
+namespace Scripty.Expressions
 {
     public class IndexExpression : IExpression
     {

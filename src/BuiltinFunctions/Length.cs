@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Interfaces;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects;
+using Scripty.Interfaces;
+using Scripty.Objects;
 
-namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.BuiltinFunctions
+namespace Scripty.BuiltinFunctions
 {
     public static class Length
     {

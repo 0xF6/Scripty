@@ -1,4 +1,4 @@
-namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Enums
+namespace Scripty.Enums
 {
     public enum Precedences
     {

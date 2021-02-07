@@ -1,4 +1,4 @@
-namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguageTests
+namespace ScriptyTests
 {
     internal struct StatementEvalTestCase
     {

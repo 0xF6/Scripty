@@ -1,7 +1,7 @@
 using System;
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Interfaces;
+using Scripty.Interfaces;
 
-namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Statements
+namespace Scripty.Statements
 {
     public class ExpressionStatement : IStatement
     {

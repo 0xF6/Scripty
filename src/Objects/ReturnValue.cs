@@ -1,6 +1,6 @@
-using MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Interfaces;
+using Scripty.Interfaces;
 
-namespace MegaUltraHighLevelLowSkill2021ProgrammingLanguage.Objects
+namespace Scripty.Objects
 {
     public class ReturnValue : IObject
     {
