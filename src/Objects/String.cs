@@ -17,8 +17,6 @@ namespace Scripty.Objects
         }
 
         public static implicit operator String(string v)
-        {
-            return new() {Value = v};
-        }
+               => new() {Value = v};
     }
 }
