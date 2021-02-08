@@ -12,7 +12,7 @@ namespace Scripty.Literals
 
         #region Implementation of INode
 
-        public string TokenLiteral() => Token.Literal;
+        public string TokenLiteral() => Token?.Literal;
 
         public string Str()
         {
