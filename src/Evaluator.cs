@@ -62,7 +62,7 @@ namespace Scripty
                 var key = Eval(keyNode, env);
                 if (IsError(key)) return key;
 
-                if (!(key is IHashable hashKey)) return new Error(14, key, null, null);
+                if (key is not IHashable hashKey) return new Error(14, key, null, null);
 
                 var value = Eval(valueNode, env);
                 if (IsError(value)) return value;
