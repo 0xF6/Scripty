@@ -7,10 +7,8 @@ namespace Scripty.BuiltinFunctions
 {
     public static class First
     {
-        public static Builtin Build()
-        {
-            return new() {Fn = Fn};
-        }
+        public static Builtin Build() 
+              => new() {Fn = Fn};
 
         private static IObject Fn(List<IObject> args)
         {
