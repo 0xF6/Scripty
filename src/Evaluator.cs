@@ -49,8 +49,31 @@ namespace Scripty
                 nameof(StringLiteral) => new String {Value = ((StringLiteral) node).Value},
                 nameof(ArrayLiteral) => HandleArrayLiteralEval((ArrayLiteral) node, env),
                 nameof(IndexExpression) => HandleIndexExpressionEval((IndexExpression) node, env),
+                nameof(HashLiteral) => EvalHashLiteral((HashLiteral) node, env),
                 _ => Null
             };
+
+        private static IObject EvalHashLiteral(HashLiteral node, Environment env)
+        {
+            var pairs = new Dictionary<HashKey, HashPair>();
+
+            foreach (var (keyNode, valueNode) in node.Pairs)
+            {
+                var key = Eval(keyNode, env);
+                if (IsError(key)) return key;
+
+                if (!(key is IHashable hashKey)) return new Error(14, key, null, null);
+
+                var value = Eval(valueNode, env);
+                if (IsError(value)) return value;
+
+                var hashed = hashKey.HashKey();
+
+                pairs.Add(hashed, new HashPair {Key = key, Value = value});
+            }
+
+            return new Hash {Pairs = pairs};
+        }
 
         private static IObject HandleIndexExpressionEval(IndexExpression node, Environment env)
         {
@@ -69,7 +92,16 @@ namespace Scripty
                 return EvalArrayIndexExpression(left, index);
             if (left.Type() == ObjectType.StringObj && index.Type() == ObjectType.IntegerObj)
                 return EvalStringIndexExpression(left, index);
+            if (left.Type() == ObjectType.HashObj) return EvalHashIndexExpression(left, index);
             return new Error(9, left, null, null);
+        }
+
+        private static IObject EvalHashIndexExpression(IObject left, IObject index)
+        {
+            if (left is not Hash hashObject) return new Error(15, left, null, null);
+            if (index is not IHashable key) return new Error(14, index, null, null);
+            var pairExists = hashObject.Pairs.TryGetValue(key.HashKey(), out var pair);
+            return !pairExists ? new Error(16, hashObject, null, index) : pair.Value;
         }
 
         private static IObject EvalStringIndexExpression(IObject left, IObject index)

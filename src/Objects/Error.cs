@@ -29,7 +29,7 @@ namespace Scripty.Objects
                     Code = "[MUHL6]";
                     break;
                 case 7:
-                    Message = $"[MUHL7] wrong number of arguments: expected {left.Inspect()}, got {op}";
+                    Message = $"[MUHL7] wrong number of arguments: expected `{left.Inspect()}`, got {op}";
                     Code = "[MUHL7]";
                     break;
                 case 8:
@@ -41,7 +41,7 @@ namespace Scripty.Objects
                     Code = "[MUHL9]";
                     break;
                 case 10:
-                    Message = $"[MUHL10] index {right?.Inspect()} is out of range for {left?.Inspect()}";
+                    Message = $"[MUHL10] index `{right?.Inspect()}` is out of range for {left?.Inspect()}";
                     Code = "[MUHL10]";
                     break;
                 case 11:
@@ -53,8 +53,20 @@ namespace Scripty.Objects
                     Code = "[MUHL12]";
                     break;
                 case 13:
-                    Message = $"[MUHL13] cannot pass {left.Inspect()} to {op}()";
+                    Message = $"[MUHL13] cannot pass `{left.Inspect()}` to {op}()";
                     Code = "[MUHL13]";
+                    break;
+                case 14:
+                    Message = $"[MUHL14] {left.Type()} is unusable as hash key";
+                    Code = "[MUHL14]";
+                    break;
+                case 15:
+                    Message = $"[MUHL15] `{left.Inspect()}` is not a hash";
+                    Code = "[MUHL15]";
+                    break;
+                case 16:
+                    Message = $"[MUHL16] `{left.Inspect()}` does not contain key `{right.Inspect()}`";
+                    Code = "[MUHL16]";
                     break;
                 default:
                     Message = "[MUHL1] Unknown error";

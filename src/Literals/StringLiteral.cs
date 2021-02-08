@@ -13,5 +13,9 @@ namespace Scripty.Literals
         public string Str() => TokenLiteral();
 
         public void ExpressionNode() => throw new NotImplementedException();
+
+
+        public static implicit operator StringLiteral(string v) =>
+            new() {Token = new Token {Type = Token.String, Literal = v}, Value = v};
     }
 }

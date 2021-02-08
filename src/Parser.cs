@@ -58,8 +58,32 @@ namespace Scripty
                 {Token.If, ParseIfExpression},
                 {Token.Function, ParseFunctionLiteral},
                 {Token.String, ParseStringLiteral},
-                {Token.Lbracket, ParseArrayLiteral}
+                {Token.Lbracket, ParseArrayLiteral},
+                {Token.Lbrace, ParseHashLiteral}
             };
+
+        private IExpression ParseHashLiteral()
+        {
+            var hash = new HashLiteral {Token = CurrentToken, Pairs = new Dictionary<IExpression, IExpression>()};
+
+            while (!PeekTokenIs(Token.Rbrace))
+            {
+                NextToken();
+                var key = ParseExpression(Enums.Precedences.Lowest);
+
+                if (!ExpectPeek(Token.Colon)) return null;
+
+                NextToken();
+
+                var value = ParseExpression((Enums.Precedences.Lowest));
+
+                hash.Pairs.Add(key, value);
+
+                if (!PeekTokenIs(Token.Rbrace) && !ExpectPeek(Token.Comma)) return null;
+            }
+
+            return !ExpectPeek(Token.Rbrace) ? null : hash;
+        }
 
         private void SetInfixFns() =>
             InfixParseFns = new Dictionary<string, InfixParseFn>

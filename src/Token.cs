@@ -23,10 +23,13 @@ namespace Scripty
         public const string Lt = "<";
         public const string Eq = "==";
         public const string NotEq = "!=";
+        public const string And = "&&";
+        public const string Or = "||";
 
         // delimiters
         public const string Comma = ",";
         public const string Semicolon = ";";
+        public const string Colon = ":";
         public const string Lparen = "(";
         public const string Rparen = ")";
         public const string Lbrace = "{";
