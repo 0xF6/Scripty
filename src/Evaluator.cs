@@ -69,7 +69,7 @@ namespace Scripty
 
                 var hashed = hashKey.HashKey();
 
-                pairs.Add(hashed, new HashPair {Key = key, Value = value});
+                pairs.Add(hashed, new() { Key = key, Value = value });
             }
 
             return new() { Pairs = pairs };
