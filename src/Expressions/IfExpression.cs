@@ -1,9 +1,9 @@
-using System;
-using Scripty.Interfaces;
-using Scripty.Statements;
-
 namespace Scripty.Expressions
 {
+    using System;
+    using Interfaces;
+    using Statements;
+
     public class IfExpression : IExpression
     {
         public Token Token { get; set; }
@@ -11,10 +11,7 @@ namespace Scripty.Expressions
         public BlockStatement Consequence { get; set; }
         public BlockStatement Alternative { get; set; }
 
-        public string TokenLiteral()
-        {
-            return Token.Literal;
-        }
+        public string TokenLiteral() => Token.Literal;
 
         public string Str()
         {
@@ -23,9 +20,6 @@ namespace Scripty.Expressions
             return res;
         }
 
-        public void ExpressionNode()
-        {
-            throw new NotImplementedException();
-        }
+        public void ExpressionNode() => throw new NotImplementedException();
     }
 }

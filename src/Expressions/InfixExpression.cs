@@ -1,8 +1,8 @@
-using System;
-using Scripty.Interfaces;
-
 namespace Scripty.Expressions
 {
+    using System;
+    using Interfaces;
+
     public class InfixExpression : IExpression
     {
         public Token Token { get; set; }
@@ -10,19 +10,10 @@ namespace Scripty.Expressions
         public string Operator { get; set; }
         public IExpression Right { get; set; }
 
-        public string TokenLiteral()
-        {
-            return Token.Literal;
-        }
+        public string TokenLiteral() => Token.Literal;
 
-        public string Str()
-        {
-            return $"({Left.Str()} {Operator} {Right.Str()})";
-        }
+        public string Str() => $"({Left.Str()} {Operator} {Right.Str()})";
 
-        public void ExpressionNode()
-        {
-            throw new NotImplementedException();
-        }
+        public void ExpressionNode() => throw new NotImplementedException();
     }
 }

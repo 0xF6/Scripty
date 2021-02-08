@@ -1,27 +1,18 @@
-using System;
-using Scripty.Interfaces;
-
 namespace Scripty.Statements
 {
+    using System;
+    using Interfaces;
+
     public class ExpressionStatement : IStatement
     {
         public Token Token { get; set; }
         public IExpression Expression { get; set; }
 
-        public string TokenLiteral()
-        {
-            return Token.Literal;
-        }
+        public string TokenLiteral() => Token.Literal;
 
-        public string Str()
-        {
-            return !(Expression is null) ? Expression.Str() : "";
-        }
+        public string Str() => !(Expression is null) ? Expression.Str() : "";
 
 
-        public void StatementNode()
-        {
-            throw new NotImplementedException();
-        }
+        public void StatementNode() => throw new NotImplementedException();
     }
 }

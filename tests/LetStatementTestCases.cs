@@ -12,9 +12,6 @@ namespace ScriptyTests
             return this;
         }
 
-        public object ExpectedValueGet()
-        {
-            return _expectedVal;
-        }
+        public object ExpectedValueGet() => _expectedVal;
     }
 }

@@ -1,19 +1,15 @@
-using Scripty.Interfaces;
-
 namespace Scripty.Objects
 {
+    using Interfaces;
+
     public class Integer : IObject
     {
         public long Value { get; set; }
 
-        public string Type()
-        {
-            return ObjectType.IntegerObj;
-        }
+        public string Type() => ObjectType.IntegerObj;
 
-        public string Inspect()
-        {
-            return $"{Value}";
-        }
+        public string Inspect() => $"{Value}";
+
+        public static implicit operator Integer(long v) => new() {Value = v};
     }
 }

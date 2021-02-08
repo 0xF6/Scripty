@@ -1,16 +1,13 @@
-using System;
-using System.Collections.Generic;
-using Scripty.Interfaces;
-using Scripty.Objects;
-
 namespace Scripty.BuiltinFunctions
 {
+    using System;
+    using System.Collections.Generic;
+    using Interfaces;
+    using Objects;
+
     public static class Puts
     {
-        public static Builtin Build()
-        {
-            return new() {Fn = Fn};
-        }
+        public static Builtin Build() => new() {Fn = Fn};
 
         private static IObject Fn(List<IObject> args)
         {

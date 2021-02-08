@@ -1,19 +1,13 @@
-using Scripty.Interfaces;
-
 namespace Scripty.Objects
 {
+    using Interfaces;
+
     public class Boolean : IObject
     {
         public bool Value { get; set; }
 
-        public string Type()
-        {
-            return ObjectType.BooleanObj;
-        }
+        public string Type() => ObjectType.BooleanObj;
 
-        public string Inspect()
-        {
-            return Value.ToString().ToLower();
-        }
+        public string Inspect() => Value.ToString().ToLower();
     }
 }

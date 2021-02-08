@@ -1,9 +1,9 @@
-using System;
-using System.Collections.Generic;
-using Environment = Scripty.Objects.Environment;
-
 namespace Scripty
 {
+    using System;
+    using System.Collections.Generic;
+    using Environment = Objects.Environment;
+
     public static class Repl
     {
         private const string Prompt = "> ";

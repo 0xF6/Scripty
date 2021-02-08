@@ -1,19 +1,19 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Scripty.BuiltinFunctions;
-using Scripty.Expressions;
-using Scripty.Interfaces;
-using Scripty.Literals;
-using Scripty.Objects;
-using Scripty.Statements;
-using Array = Scripty.Objects.Array;
-using Boolean = Scripty.Objects.Boolean;
-using Environment = Scripty.Objects.Environment;
-using String = Scripty.Objects.String;
-
 namespace Scripty
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using BuiltinFunctions;
+    using Expressions;
+    using Interfaces;
+    using Literals;
+    using Objects;
+    using Statements;
+    using Array = Objects.Array;
+    using Boolean = Objects.Boolean;
+    using Environment = Objects.Environment;
+    using String = Objects.String;
+
     public static class Evaluator
     {
         public static readonly Boolean True = new() {Value = true};
@@ -23,12 +23,15 @@ namespace Scripty
         public static readonly Dictionary<string, Builtin> Builtins = new()
         {
             {"length", Length.Build()},
-            {"wln", Puts.Build()}
+            {"wln", Puts.Build()},
+            {"first", First.Build()},
+            {"last", Last.Build()},
+            {"push", Push.Build()},
+            {"rest", Rest.Build()}
         };
 
-        public static IObject Eval(INode node, Environment env)
-        {
-            return node.GetType().Name switch
+        public static IObject Eval(INode node, Environment env) =>
+            node.GetType().Name switch
             {
                 nameof(IntegerLiteral) => new Integer {Value = ((IntegerLiteral) node).Value},
                 nameof(ExpressionStatement) => Eval(((ExpressionStatement) node).Expression, env),
@@ -48,7 +51,6 @@ namespace Scripty
                 nameof(IndexExpression) => HandleIndexExpressionEval((IndexExpression) node, env),
                 _ => Null
             };
-        }
 
         private static IObject HandleIndexExpressionEval(IndexExpression node, Environment env)
         {
@@ -65,7 +67,19 @@ namespace Scripty
         {
             if (left.Type() == ObjectType.ArrayObj && index.Type() == ObjectType.IntegerObj)
                 return EvalArrayIndexExpression(left, index);
+            if (left.Type() == ObjectType.StringObj && index.Type() == ObjectType.IntegerObj)
+                return EvalStringIndexExpression(left, index);
             return new Error(9, left, null, null);
+        }
+
+        private static IObject EvalStringIndexExpression(IObject left, IObject index)
+        {
+            var stringObj = (String) left;
+            var idx = ((Integer) index).Value;
+            var max = stringObj.Value.Length - 1;
+            if (idx < 0 || idx > max)
+                return new Error(10, stringObj, null, (Integer) index);
+            return (String) stringObj.Value[(int) idx].ToString();
         }
 
         private static IObject EvalArrayIndexExpression(IObject left, IObject index)
@@ -299,15 +313,13 @@ namespace Scripty
             return EvalPrefixExpression(prefixedNode.Operator, right);
         }
 
-        private static IObject EvalPrefixExpression(string op, IObject right)
-        {
-            return op switch
+        private static IObject EvalPrefixExpression(string op, IObject right) =>
+            op switch
             {
                 "!" => EvalBangOperatorExpression(right),
                 "-" => EvalMinusPrefixOperatorExpression(right),
                 _ => new Error(4, null, op, right)
             };
-        }
 
 
         private static IObject EvalMinusPrefixOperatorExpression(IObject right)
@@ -331,9 +343,6 @@ namespace Scripty
             }
         }
 
-        private static Boolean NativeBoolToBooleanObject(bool input)
-        {
-            return input ? True : False;
-        }
+        private static Boolean NativeBoolToBooleanObject(bool input) => input ? True : False;
     }
 }

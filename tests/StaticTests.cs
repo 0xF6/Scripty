@@ -1,16 +1,16 @@
-using System;
-using NUnit.Framework;
-using Scripty;
-using Scripty.Expressions;
-using Scripty.Interfaces;
-using Scripty.Literals;
-using Scripty.Objects;
-using Scripty.Statements;
-using Boolean = Scripty.Objects.Boolean;
-using Environment = Scripty.Objects.Environment;
-
 namespace ScriptyTests
 {
+    using System;
+    using NUnit.Framework;
+    using Scripty;
+    using Scripty.Expressions;
+    using Scripty.Interfaces;
+    using Scripty.Literals;
+    using Scripty.Objects;
+    using Scripty.Statements;
+    using Boolean = Scripty.Objects.Boolean;
+    using Environment = Scripty.Objects.Environment;
+
     public static class StaticTests
     {
         public static void CheckParserErrors(Parser parser)
@@ -74,10 +74,7 @@ namespace ScriptyTests
             }
         }
 
-        public static bool TestNullObject(IObject evaluated)
-        {
-            return Equals(evaluated, Evaluator.Null);
-        }
+        public static bool TestNullObject(IObject evaluated) => Equals(evaluated, Evaluator.Null);
 
         public static void TestBooleanObject(IObject obj, bool expected)
         {

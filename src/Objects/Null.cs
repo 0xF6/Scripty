@@ -1,17 +1,11 @@
-using Scripty.Interfaces;
-
 namespace Scripty.Objects
 {
+    using Interfaces;
+
     public class Null : IObject
     {
-        public string Type()
-        {
-            return ObjectType.NullObj;
-        }
+        public string Type() => ObjectType.NullObj;
 
-        public string Inspect()
-        {
-            return "null";
-        }
+        public string Inspect() => "null";
     }
 }

@@ -1,22 +1,19 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Scripty.Expressions;
-using Scripty.Interfaces;
-using Scripty.Statements;
-
 namespace Scripty.Literals
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Expressions;
+    using Interfaces;
+    using Statements;
+
     public class FunctionLiteral : IExpression
     {
         public Token Token { get; set; }
         public List<Identifier> Parameters { get; set; }
         public BlockStatement Body { get; set; }
 
-        public string TokenLiteral()
-        {
-            return Token.Literal;
-        }
+        public string TokenLiteral() => Token.Literal;
 
         public string Str()
         {
@@ -25,9 +22,6 @@ namespace Scripty.Literals
             return $"{TokenLiteral()}({string.Join(", ", parameters)}){Body.Str()}";
         }
 
-        public void ExpressionNode()
-        {
-            throw new NotImplementedException();
-        }
+        public void ExpressionNode() => throw new NotImplementedException();
     }
 }

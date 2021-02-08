@@ -1,9 +1,9 @@
-using System;
-using System.Collections.Generic;
-using Scripty.Interfaces;
-
 namespace Scripty.Objects
 {
+    using System;
+    using System.Collections.Generic;
+    using Interfaces;
+
     public class Environment
     {
         private readonly Dictionary<string, IObject> Store;

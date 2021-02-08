@@ -147,10 +147,7 @@ namespace Scripty
             return Input[position..Position];
         }
 
-        private char PeekChar()
-        {
-            return ReadPosition >= Input.Length ? '\0' : Input[ReadPosition];
-        }
+        private char PeekChar() => ReadPosition >= Input.Length ? '\0' : Input[ReadPosition];
 
 
         private void ReadChar()
@@ -179,19 +176,10 @@ namespace Scripty
             while (Ch == ' ' || Ch == '\n' || Ch == '\t' || Ch == '\r') ReadChar();
         }
 
-        private static Token NewToken(string type, string ch)
-        {
-            return new() {Type = type, Literal = ch};
-        }
+        private static Token NewToken(string type, string ch) => new() {Type = type, Literal = ch};
 
-        private static bool IsLetter(char ch)
-        {
-            return 'a' <= ch && ch <= 'z' || 'A' <= ch && ch <= 'Z';
-        }
+        private static bool IsLetter(char ch) => 'a' <= ch && ch <= 'z' || 'A' <= ch && ch <= 'Z';
 
-        private static bool IsDigit(char ch)
-        {
-            return '0' <= ch && ch <= '9';
-        }
+        private static bool IsDigit(char ch) => '0' <= ch && ch <= '9';
     }
 }

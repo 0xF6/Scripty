@@ -1,7 +1,7 @@
-using Scripty.Interfaces;
-
 namespace Scripty.Objects
 {
+    using Interfaces;
+
     public class Error : IObject
     {
         public Error(int code, IObject left, string op, IObject right)
@@ -29,7 +29,7 @@ namespace Scripty.Objects
                     Code = "[MUHL6]";
                     break;
                 case 7:
-                    Message = $"[MUHL7] wrong number of arguments: expected 1, got {op}";
+                    Message = $"[MUHL7] wrong number of arguments: expected {left.Inspect()}, got {op}";
                     Code = "[MUHL7]";
                     break;
                 case 8:
@@ -48,6 +48,14 @@ namespace Scripty.Objects
                     Message = "[MUHL11] null is not a function";
                     Code = "[MUHL11]";
                     break;
+                case 12:
+                    Message = $"[MUHL12] {op}() argument cannot be {left.Type()}";
+                    Code = "[MUHL12]";
+                    break;
+                case 13:
+                    Message = $"[MUHL13] cannot pass {left.Inspect()} to {op}()";
+                    Code = "[MUHL13]";
+                    break;
                 default:
                     Message = "[MUHL1] Unknown error";
                     Code = "[MUHL1]";
@@ -58,14 +66,8 @@ namespace Scripty.Objects
         public string Message { get; set; }
         public string Code { get; set; }
 
-        public string Type()
-        {
-            return ObjectType.ErrorObj;
-        }
+        public string Type() => ObjectType.ErrorObj;
 
-        public string Inspect()
-        {
-            return $"ERROR: {Message}";
-        }
+        public string Inspect() => $"ERROR: {Message}";
     }
 }

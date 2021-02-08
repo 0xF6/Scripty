@@ -1,20 +1,17 @@
-using System.Collections.Generic;
-using System.Linq;
-using Scripty.Interfaces;
-using Scripty.Objects;
-
 namespace Scripty.BuiltinFunctions
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using Interfaces;
+    using Objects;
+
     public static class Length
     {
-        public static Builtin Build()
-        {
-            return new() {Fn = Fn};
-        }
+        public static Builtin Build() => new() {Fn = Fn};
 
         private static IObject Fn(List<IObject> args)
         {
-            if (args.Count != 1) return new Error(7, null, args.Count.ToString(), null);
+            if (args.Count != 1) return new Error(7, (Integer) 1, args.Count.ToString(), null);
 
             return args.First().Type() switch
             {
