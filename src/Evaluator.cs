@@ -72,7 +72,7 @@ namespace Scripty
                 pairs.Add(hashed, new HashPair {Key = key, Value = value});
             }
 
-            return new Hash {Pairs = pairs};
+            return new() { Pairs = pairs };
         }
 
         private static IObject HandleIndexExpressionEval(IndexExpression node, Environment env)
