@@ -27,7 +27,7 @@ namespace Scripty.BuiltinFunctions
             var str = (String) args.First();
 
             if (str.Value.Length <= 0) return new Error(10, str, null, idx);
-            String s = str.Value[0].ToString();
+            var s = str.Value[0].ToString();
 
             return s;
         }
