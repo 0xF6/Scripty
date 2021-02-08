@@ -1,7 +1,5 @@
 namespace Scripty.Objects
 {
-    using Interfaces;
-
     public class HashKey
     {
         public string Type { get; set; }

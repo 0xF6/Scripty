@@ -26,10 +26,10 @@ namespace Scripty.Objects
                 ulong num3;
                 while ((num3 = *chPtr2) != 0)
                 {
-                    num1 = (num1 << 5) + num1 ^ num3;
+                    num1 = ((num1 << 5) + num1) ^ num3;
                     var num4 = (ulong) chPtr2[1];
                     if (num4 == 0) break;
-                    num2 = (num2 << 5) + num2 ^ num4;
+                    num2 = ((num2 << 5) + num2) ^ num4;
                     chPtr2 += 2;
                 }
 

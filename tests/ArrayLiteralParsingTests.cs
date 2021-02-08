@@ -76,8 +76,8 @@ namespace ScriptyTests
             };
             var failingTests = new OperatorTest[]
             {
-                new() {Input = "[1,2,3][3]", Expected = "[MUHL10] index 3 is out of range for [1, 2, 3]"},
-                new() {Input = "[1,2,3][-1]", Expected = "[MUHL10] index -1 is out of range for [1, 2, 3]"}
+                new() {Input = "[1,2,3][3]", Expected = "[MUHL10] index `3` is out of range for [1, 2, 3]"},
+                new() {Input = "[1,2,3][-1]", Expected = "[MUHL10] index `-1` is out of range for [1, 2, 3]"}
             };
 
             foreach (var passingTest in passingTests)

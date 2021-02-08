@@ -1,9 +1,8 @@
 namespace ScriptyTests
 {
-    using System;
     using System.Collections.Generic;
     using NUnit.Framework;
-    using String = Scripty.Objects.String;
+    using Scripty.Objects;
 
     public class StringHashKeyTests
     {
@@ -15,16 +14,13 @@ namespace ScriptyTests
         [Test]
         public void StringHashKeyTest1()
         {
-            var tests = new Dictionary<String, String>()
+            var tests = new Dictionary<String, String>
             {
                 {"Hello", "Hello"},
                 {"Diff1", "Diff1"}
             };
 
-            foreach (var (key, value) in tests)
-            {
-                Assert.AreEqual(key.HashKey().Value, value.HashKey().Value);
-            }
+            foreach (var (key, value) in tests) Assert.AreEqual(key.HashKey().Value, value.HashKey().Value);
         }
     }
 }

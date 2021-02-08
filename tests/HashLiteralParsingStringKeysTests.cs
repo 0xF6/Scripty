@@ -1,6 +1,5 @@
 namespace ScriptyTests
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using NUnit.Framework;
@@ -34,7 +33,7 @@ namespace ScriptyTests
 
             Assert.AreEqual(3, hash.Pairs.Count);
 
-            var expected = new Dictionary<string, long>()
+            var expected = new Dictionary<string, long>
             {
                 {"one", 1},
                 {"two", 2},
@@ -91,23 +90,23 @@ namespace ScriptyTests
 
             Assert.AreEqual(3, hash.Pairs.Count);
 
-            var tests = new Dictionary<string, ExpressionTestDelegate>()
+            var tests = new Dictionary<string, ExpressionTestDelegate>
             {
                 {
                     "one",
-                    (expression =>
-                        StaticTests.TestInfixExpression(expression, (IntegerLiteral) 0, "+", (IntegerLiteral) 1))
+                    expression =>
+                        StaticTests.TestInfixExpression(expression, (IntegerLiteral) 0, "+", (IntegerLiteral) 1)
                 },
                 {
                     "two",
-                    (expression =>
-                        StaticTests.TestInfixExpression(expression, (IntegerLiteral) 228, "-", (IntegerLiteral) 226))
+                    expression =>
+                        StaticTests.TestInfixExpression(expression, (IntegerLiteral) 228, "-", (IntegerLiteral) 226)
                 },
                 {
                     "three",
-                    (expression =>
-                        StaticTests.TestInfixExpression(expression, (IntegerLiteral) 45, "/", (IntegerLiteral) 15))
-                },
+                    expression =>
+                        StaticTests.TestInfixExpression(expression, (IntegerLiteral) 45, "/", (IntegerLiteral) 15)
+                }
             };
 
             foreach (var pairsKey in hash.Pairs.Keys)

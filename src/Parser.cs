@@ -75,7 +75,7 @@ namespace Scripty
 
                 NextToken();
 
-                var value = ParseExpression((Enums.Precedences.Lowest));
+                var value = ParseExpression(Enums.Precedences.Lowest);
 
                 hash.Pairs.Add(key, value);
 

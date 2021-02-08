@@ -10,12 +10,12 @@ namespace Scripty.Objects
 
         public string Inspect() => $"{Value}";
 
-        public static implicit operator Integer(long v) => new() {Value = v};
-
         #region Implementation of IHashable
 
         public HashKey HashKey() => new() {Type = Type(), Value = (ulong) Value};
 
         #endregion
+
+        public static implicit operator Integer(long v) => new() {Value = v};
     }
 }
