@@ -1,19 +1,13 @@
-using Scripty.Interfaces;
-
 namespace Scripty.Objects
 {
+    using Interfaces;
+
     public class ReturnValue : IObject
     {
         public IObject Value { get; set; }
 
-        public string Type()
-        {
-            return ObjectType.ReturnValueObj;
-        }
+        public string Type() => ObjectType.ReturnValueObj;
 
-        public string Inspect()
-        {
-            return Value.Inspect();
-        }
+        public string Inspect() => Value.Inspect();
     }
 }

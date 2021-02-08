@@ -1,14 +1,14 @@
-using System;
-using System.Linq;
-using NUnit.Framework;
-using Scripty;
-using Scripty.Literals;
-using Scripty.Objects;
-using Scripty.Statements;
-using Array = Scripty.Objects.Array;
-
 namespace ScriptyTests
 {
+    using System;
+    using System.Linq;
+    using NUnit.Framework;
+    using Scripty;
+    using Scripty.Literals;
+    using Scripty.Objects;
+    using Scripty.Statements;
+    using Array = Scripty.Objects.Array;
+
     public class ArrayLiteralParsingTests
     {
         [SetUp]

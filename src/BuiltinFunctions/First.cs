@@ -1,14 +1,13 @@
-using System.Collections.Generic;
-using System.Linq;
-using Scripty.Interfaces;
-using Scripty.Objects;
-
 namespace Scripty.BuiltinFunctions
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using Interfaces;
+    using Objects;
+
     public static class First
     {
-        public static Builtin Build() 
-              => new() {Fn = Fn};
+        public static Builtin Build() => new() {Fn = Fn};
 
         private static IObject Fn(List<IObject> args)
         {
@@ -25,9 +24,7 @@ namespace Scripty.BuiltinFunctions
             var str = (String) args.First();
 
             if (str.Value.Length <= 0) return new Error(10, str, null, idx);
-            var s = str.Value[0].ToString();
-
-            return s;
+            return (String) str.Value[0].ToString();
         }
     }
 }

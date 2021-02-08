@@ -1,13 +1,13 @@
-using System.Collections.Generic;
-using Scripty.Delegates;
-using Scripty.Enums;
-using Scripty.Expressions;
-using Scripty.Interfaces;
-using Scripty.Literals;
-using Scripty.Statements;
-
 namespace Scripty
 {
+    using System.Collections.Generic;
+    using Delegates;
+    using Enums;
+    using Expressions;
+    using Interfaces;
+    using Literals;
+    using Statements;
+
     public class Parser
     {
         public Parser(Lexer lexer)
@@ -30,8 +30,7 @@ namespace Scripty
         private Dictionary<string, InfixParseFn> InfixParseFns { get; set; }
         private Dictionary<string, Precedences> Precedences { get; set; }
 
-        private void SetPrecedences()
-        {
+        private void SetPrecedences() =>
             Precedences = new Dictionary<string, Precedences>
             {
                 {Token.Eq, Enums.Precedences.Equals},
@@ -45,10 +44,8 @@ namespace Scripty
                 {Token.Lparen, Enums.Precedences.Call},
                 {Token.Lbracket, Enums.Precedences.Index}
             };
-        }
 
-        private void SetPrefixFns()
-        {
+        private void SetPrefixFns() =>
             PrefixParseFns = new Dictionary<string, PrefixParseFn>
             {
                 {Token.Ident, ParseIdentifier},
@@ -63,10 +60,8 @@ namespace Scripty
                 {Token.String, ParseStringLiteral},
                 {Token.Lbracket, ParseArrayLiteral}
             };
-        }
 
-        private void SetInfixFns()
-        {
+        private void SetInfixFns() =>
             InfixParseFns = new Dictionary<string, InfixParseFn>
             {
                 {Token.Plus, ParseInfixExpression},
@@ -80,7 +75,6 @@ namespace Scripty
                 {Token.Lparen, ParseCallExpression},
                 {Token.Lbracket, ParseIndexExpression}
             };
-        }
 
         private IExpression ParseArrayLiteral()
         {
@@ -111,10 +105,8 @@ namespace Scripty
             return !ExpectPeek(end) ? null : list;
         }
 
-        private IExpression ParseStringLiteral()
-        {
-            return new StringLiteral {Token = CurrentToken, Value = CurrentToken.Literal};
-        }
+        private IExpression ParseStringLiteral() =>
+            new StringLiteral {Token = CurrentToken, Value = CurrentToken.Literal};
 
         private IExpression ParseFunctionLiteral()
         {
@@ -193,11 +185,9 @@ namespace Scripty
             return !ExpectPeek(Token.Rparen) ? null : exp;
         }
 
-        private IExpression ParseBoolean()
-        {
-            return new BooleanLiteral
+        private IExpression ParseBoolean() =>
+            new BooleanLiteral
                 {Token = CurrentToken, Value = CurTokenIs(Token.True)};
-        }
 
 
         private IExpression ParseIndexExpression(IExpression v)
@@ -210,11 +200,9 @@ namespace Scripty
             return !ExpectPeek(Token.Rbracket) ? null : exp;
         }
 
-        private IExpression ParseCallExpression(IExpression v)
-        {
-            return new CallExpression
+        private IExpression ParseCallExpression(IExpression v) =>
+            new CallExpression
                 {Token = CurrentToken, Function = v, Arguments = ParseExpressionList(Token.Rparen)};
-        }
 
         private IExpression ParsePrefixExpression()
         {
@@ -242,17 +230,12 @@ namespace Scripty
             return lit;
         }
 
-        private IExpression ParseIdentifier()
-        {
-            return new Identifier
+        private IExpression ParseIdentifier() =>
+            new Identifier
                 {Token = CurrentToken, Value = CurrentToken.Literal};
-        }
 
 
-        private void NoPrefixParseFnError(string t)
-        {
-            Errors.Add($"no prefix parse function found for {t}");
-        }
+        private void NoPrefixParseFnError(string t) => Errors.Add($"no prefix parse function found for {t}");
 
         public Code ParseCode()
         {
@@ -268,15 +251,13 @@ namespace Scripty
             return program;
         }
 
-        private IStatement ParseStatement()
-        {
-            return CurrentToken.Type switch
+        private IStatement ParseStatement() =>
+            CurrentToken.Type switch
             {
                 Token.Let => ParseLetStatement(),
                 Token.Return => ParseReturnStatement(),
                 _ => ParseExpressionStatement()
             };
-        }
 
         private ExpressionStatement ParseExpressionStatement()
         {
@@ -310,19 +291,15 @@ namespace Scripty
             return leftExp;
         }
 
-        private Precedences PeekPrecedence()
-        {
-            return Precedences.TryGetValue(PeekToken.Type, out var precedence)
+        private Precedences PeekPrecedence() =>
+            Precedences.TryGetValue(PeekToken.Type, out var precedence)
                 ? precedence
                 : Enums.Precedences.Lowest;
-        }
 
-        private Precedences CurrentPrecedence()
-        {
-            return Precedences.TryGetValue(CurrentToken.Type, out var precedence)
+        private Precedences CurrentPrecedence() =>
+            Precedences.TryGetValue(CurrentToken.Type, out var precedence)
                 ? precedence
                 : Enums.Precedences.Lowest;
-        }
 
         private IExpression ParseInfixExpression(IExpression left)
         {
@@ -364,10 +341,7 @@ namespace Scripty
             return stmt;
         }
 
-        private bool CurTokenIs(string t)
-        {
-            return CurrentToken.Type == t;
-        }
+        private bool CurTokenIs(string t) => CurrentToken.Type == t;
 
         private bool ExpectPeek(string t)
         {
@@ -381,10 +355,7 @@ namespace Scripty
             return false;
         }
 
-        private bool PeekTokenIs(string t)
-        {
-            return PeekToken.Type == t;
-        }
+        private bool PeekTokenIs(string t) => PeekToken.Type == t;
 
         private void NextToken()
         {
@@ -392,9 +363,7 @@ namespace Scripty
             PeekToken = Lexer.NextToken();
         }
 
-        private void PeekError(string t)
-        {
+        private void PeekError(string t) =>
             Errors.Add($"expected next token to be '{t}', got '{PeekToken.Type}' instead");
-        }
     }
 }

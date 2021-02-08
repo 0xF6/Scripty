@@ -1,8 +1,8 @@
-using NUnit.Framework;
-using Scripty.Objects;
-
 namespace ScriptyTests
 {
+    using NUnit.Framework;
+    using Scripty.Objects;
+
     public class ErrorHandlingTests
     {
         [SetUp]

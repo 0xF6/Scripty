@@ -1,10 +1,10 @@
-using System.Linq;
-using NUnit.Framework;
-using Scripty;
-using Scripty.Statements;
-
 namespace ScriptyTests
 {
+    using System.Linq;
+    using NUnit.Framework;
+    using Scripty;
+    using Scripty.Statements;
+
     public class ReturnStatementsTest
     {
         [SetUp]

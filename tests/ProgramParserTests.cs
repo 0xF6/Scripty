@@ -1,12 +1,12 @@
-using System.Collections.Generic;
-using NUnit.Framework;
-using Scripty;
-using Scripty.Expressions;
-using Scripty.Interfaces;
-using Scripty.Statements;
-
 namespace ScriptyTests
 {
+    using System.Collections.Generic;
+    using NUnit.Framework;
+    using Scripty;
+    using Scripty.Expressions;
+    using Scripty.Interfaces;
+    using Scripty.Statements;
+
     public class ProgramParserTests
     {
         [SetUp]

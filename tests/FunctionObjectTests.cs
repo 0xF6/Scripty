@@ -1,9 +1,9 @@
-using System.Linq;
-using NUnit.Framework;
-using Scripty.Objects;
-
 namespace ScriptyTests
 {
+    using System.Linq;
+    using NUnit.Framework;
+    using Scripty.Objects;
+
     public class FunctionObjectTests
     {
         [SetUp]

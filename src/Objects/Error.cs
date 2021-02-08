@@ -1,7 +1,7 @@
-using Scripty.Interfaces;
-
 namespace Scripty.Objects
 {
+    using Interfaces;
+
     public class Error : IObject
     {
         public Error(int code, IObject left, string op, IObject right)
@@ -66,14 +66,8 @@ namespace Scripty.Objects
         public string Message { get; set; }
         public string Code { get; set; }
 
-        public string Type()
-        {
-            return ObjectType.ErrorObj;
-        }
+        public string Type() => ObjectType.ErrorObj;
 
-        public string Inspect()
-        {
-            return $"ERROR: {Message}";
-        }
+        public string Inspect() => $"ERROR: {Message}";
     }
 }

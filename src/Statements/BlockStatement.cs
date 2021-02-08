@@ -1,29 +1,20 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Scripty.Interfaces;
-
 namespace Scripty.Statements
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Interfaces;
+
     public class BlockStatement : IStatement
     {
         public Token Token { get; set; }
         public List<IStatement> Statements { get; set; }
 
-        public string TokenLiteral()
-        {
-            return Token.Literal;
-        }
+        public string TokenLiteral() => Token.Literal;
 
-        public string Str()
-        {
-            return Statements.Aggregate("", (current, statement) => $"{current}{statement.Str()}");
-        }
+        public string Str() => Statements.Aggregate("", (current, statement) => $"{current}{statement.Str()}");
 
 
-        public void StatementNode()
-        {
-            throw new NotImplementedException();
-        }
+        public void StatementNode() => throw new NotImplementedException();
     }
 }

@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace Scripty
+﻿namespace Scripty
 {
+    using System;
+
     internal class Program
     {
         private static void Main(string[] args)

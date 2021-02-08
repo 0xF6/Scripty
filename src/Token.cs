@@ -1,7 +1,7 @@
-using System.Collections.Generic;
-
 namespace Scripty
 {
+    using System.Collections.Generic;
+
     public class Token
     {
         public const string Illegal = "ILLEGAL";
@@ -57,9 +57,6 @@ namespace Scripty
         public string Type { get; set; }
         public string Literal { get; set; }
 
-        public string LookUpIdent(string ident)
-        {
-            return _keywords.TryGetValue(ident, out var tok) ? tok : Ident;
-        }
+        public string LookUpIdent(string ident) => _keywords.TryGetValue(ident, out var tok) ? tok : Ident;
     }
 }

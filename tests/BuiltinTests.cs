@@ -1,10 +1,10 @@
-using System.Collections.Generic;
-using NUnit.Framework;
-using Scripty.Interfaces;
-using Scripty.Objects;
-
 namespace ScriptyTests
 {
+    using System.Collections.Generic;
+    using NUnit.Framework;
+    using Scripty.Interfaces;
+    using Scripty.Objects;
+
     public class BuiltinTests
     {
         private const string MapReduceAndSum = @"let map = fun(arr, f) {

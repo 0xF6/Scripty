@@ -1,8 +1,8 @@
-using NUnit.Framework;
-using Scripty;
-
 namespace ScriptyTests
 {
+    using NUnit.Framework;
+    using Scripty;
+
     public class LexerTests
     {
         [SetUp]
