@@ -25,7 +25,9 @@ namespace Scripty
             {"length", Length.Build()},
             {"wln", Puts.Build()},
             {"first", First.Build()},
-            {"last", Last.Build()}
+            {"last", Last.Build()},
+            {"push", Push.Build()},
+            {"rest", Rest.Build()}
         };
 
         public static IObject Eval(INode node, Environment env)

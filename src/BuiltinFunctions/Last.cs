@@ -14,7 +14,7 @@ namespace Scripty.BuiltinFunctions
 
         private static IObject Fn(List<IObject> args)
         {
-            if (args.Count != 1) return new Error(7, null, args.Count.ToString(), null);
+            if (args.Count != 1) return new Error(7, (Integer) 1, args.Count.ToString(), null);
             Integer idx;
             if (args.First().Type() == ObjectType.ArrayObj)
             {

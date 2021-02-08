@@ -5,7 +5,7 @@ using Scripty.Objects;
 
 namespace Scripty.BuiltinFunctions
 {
-    public static class Length
+    public class Rest
     {
         public static Builtin Build()
         {
@@ -16,12 +16,16 @@ namespace Scripty.BuiltinFunctions
         {
             if (args.Count != 1) return new Error(7, (Integer) 1, args.Count.ToString(), null);
 
-            return args.First().Type() switch
-            {
-                ObjectType.StringObj => new Integer {Value = ((String) args.First()).Value.Length},
-                ObjectType.ArrayObj => new Integer {Value = ((Array) args.First()).Elements.Count},
-                _ => new Error(8, null, args.First().Type(), null)
-            };
+            if (args.First().Type() != ObjectType.ArrayObj) return new Error(12, args.First(), "rest", null);
+
+            var arr = (Array) args.First();
+
+            var length = arr.Elements.Count;
+
+            if (length > 0)
+                return new Array {Elements = arr.Elements.GetRange(1, length - 1).ToList()};
+
+            return new Error(13, arr, "rest", null);
         }
     }
 }
