@@ -13,7 +13,7 @@ namespace Scripty.BuiltinFunctions
         private static IObject Fn(List<IObject> args)
         {
             if (args.Count != 1) return new Error(7, (Integer) 1, args.Count.ToString(), null);
-            Integer idx = (long) 0;
+            Integer idx = 0L;
             if (args.First().Type() == ObjectType.ArrayObj)
             {
                 var arr = (Array) args.First();
