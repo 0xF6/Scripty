@@ -8,7 +8,7 @@ namespace Scripty.Literals
     public class HashLiteral : IExpression
     {
         public Token Token { get; set; }
-        public Dictionary<IExpression, IExpression> Pairs { get; set; } = new ();
+        public Dictionary<IExpression, IExpression> Pairs { get; set; } = new();
 
         #region Implementation of INode
 
