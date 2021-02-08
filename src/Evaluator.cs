@@ -81,8 +81,7 @@ namespace Scripty
             var max = stringObj.Value.Length - 1;
             if (idx < 0 || idx > max)
                 return new Error(10, stringObj, null, (Integer) index);
-            String ch = stringObj.Value[(int) idx].ToString();
-            return ch;
+            return stringObj.Value[(int) idx].ToString();
         }
 
         private static IObject EvalArrayIndexExpression(IObject left, IObject index)
