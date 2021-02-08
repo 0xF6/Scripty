@@ -15,7 +15,7 @@ namespace Scripty.Objects
 
         public string Inspect()
         {
-            var pairs = Pairs.Select(pair => $"{pair.Value.Key.Inspect()}: {pair.Value.Value.Inspect()}").ToList();
+            var pairs = Pairs.Select(pair => $"{pair.Value.Key.Inspect()}: {pair.Value.Value.Inspect()}");
             return $"{{{string.Join(", ", pairs)}}}";
         }
 
