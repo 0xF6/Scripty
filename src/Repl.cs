@@ -8,7 +8,7 @@ namespace Scripty
     {
         private const string Prompt = "> ";
 
-        public static void Run()
+        public static void Run(string std)
         {
             var env = new ScriptyEnvironment();
             while (true)
@@ -16,7 +16,7 @@ namespace Scripty
                 Console.Write(Prompt);
                 var input = Console.ReadLine();
                 if (input is null) return;
-
+                input = std + input;
                 var lexer = new Lexer(input);
                 var parser = new Parser(lexer);
 
