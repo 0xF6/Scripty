@@ -8,7 +8,6 @@ namespace Scripty.Objects
     {
         public Dictionary<HashKey, HashPair> Pairs { get; set; }
 
-
         #region Implementation of IObject
 
         public string Type() => ObjectType.HashObj;

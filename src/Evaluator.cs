@@ -96,7 +96,8 @@ namespace Scripty
         {
             if (left is not ScriptyHash hashObject) return new ScriptyError(15, left, null, null);
             if (index is not IHashable key) return new ScriptyError(14, index, null, null);
-            var pairExists = hashObject.Pairs.TryGetValue(key.HashKey(), out var pair);
+            var hashKey = key.HashKey();
+            var pairExists = hashObject.Pairs.TryGetValue(hashKey, out var pair);
             return !pairExists ? new ScriptyError(16, hashObject, null, index) : pair.Value;
         }
 
