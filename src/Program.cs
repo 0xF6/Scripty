@@ -6,6 +6,11 @@
 
     internal class Program
     {
+        private static readonly string[] StdLoadOrder =
+        {
+            "map.scripty", "reduce.scripty", "sum.scripty"
+        };
+
         private static int Main(string[] args)
         {
             var std = LoadStd();
@@ -20,11 +25,6 @@
             Repl.Run(std);
             return 0;
         }
-
-        private static string[] StdLoadOrder = new string[]
-        {
-            "map.scripty", "reduce.scripty", "sum.scripty"
-        };
 
         private static string LoadStd()
         {
