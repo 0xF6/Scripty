@@ -1,10 +1,10 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Scripty.Interfaces;
+
 namespace Scripty.Expressions
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using Interfaces;
-
     public class CallExpression : IExpression
     {
         public Token Token { get; set; }

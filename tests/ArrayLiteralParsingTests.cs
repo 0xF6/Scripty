@@ -7,7 +7,6 @@ namespace ScriptyTests
     using Scripty.Literals;
     using Scripty.Objects;
     using Scripty.Statements;
-    using Array = Scripty.Objects.Array;
 
     public class ArrayLiteralParsingTests
     {
@@ -49,9 +48,9 @@ namespace ScriptyTests
             const string input = "[1, 2 * 2, 3 + 3]";
             var evaluated = StaticTests.TestEval(input);
 
-            Assert.AreEqual(nameof(Array), evaluated.GetType().Name);
+            Assert.AreEqual(nameof(ScriptyArray), evaluated.GetType().Name);
 
-            var array = (Array) evaluated;
+            var array = (ScriptyArray) evaluated;
 
             Assert.AreEqual(3, array.Elements.Count);
 
@@ -99,7 +98,7 @@ namespace ScriptyTests
                     break;
                 case "String":
                     var str = (string) expected;
-                    var err = (Error) evaluated;
+                    var err = (ScriptyError) evaluated;
                     Assert.AreEqual(str, err.Message);
                     break;
                 default:

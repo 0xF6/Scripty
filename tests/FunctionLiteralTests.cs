@@ -1,12 +1,12 @@
+using System.Collections.Generic;
+using System.Linq;
+using NUnit.Framework;
+using Scripty;
+using Scripty.Literals;
+using Scripty.Statements;
+
 namespace ScriptyTests
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using NUnit.Framework;
-    using Scripty;
-    using Scripty.Literals;
-    using Scripty.Statements;
-
     public class FunctionLiteralTests
     {
         [SetUp]

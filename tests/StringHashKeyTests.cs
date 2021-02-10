@@ -1,9 +1,9 @@
+using System.Collections.Generic;
+using NUnit.Framework;
+using Scripty.Objects;
+
 namespace ScriptyTests
 {
-    using System.Collections.Generic;
-    using NUnit.Framework;
-    using Scripty.Objects;
-
     public class StringHashKeyTests
     {
         [SetUp]
@@ -14,7 +14,7 @@ namespace ScriptyTests
         [Test]
         public void StringHashKeyTest1()
         {
-            var tests = new Dictionary<String, String>
+            var tests = new Dictionary<ScriptyString, ScriptyString>
             {
                 {"Hello", "Hello"},
                 {"Diff1", "Diff1"}

@@ -1,10 +1,10 @@
+using System.Collections.Generic;
+using System.Linq;
+using Scripty.Interfaces;
+
 namespace Scripty.Objects
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using Interfaces;
-
-    public class Hash : IObject
+    public class ScriptyHash : IObject
     {
         public Dictionary<HashKey, HashPair> Pairs { get; set; }
 

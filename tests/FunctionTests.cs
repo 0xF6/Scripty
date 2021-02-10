@@ -1,7 +1,7 @@
+using System.Collections.Generic;
+
 namespace ScriptyTests
 {
-    using System.Collections.Generic;
-
     internal struct FunctionTests
     {
         public string Input { get; set; }

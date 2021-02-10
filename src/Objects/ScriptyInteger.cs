@@ -1,8 +1,8 @@
+using Scripty.Interfaces;
+
 namespace Scripty.Objects
 {
-    using Interfaces;
-
-    public class Integer : IHashable
+    public class ScriptyInteger : IHashable
     {
         public long Value { get; set; }
 
@@ -16,6 +16,6 @@ namespace Scripty.Objects
 
         #endregion
 
-        public static implicit operator Integer(long v) => new() {Value = v};
+        public static implicit operator ScriptyInteger(long v) => new() {Value = v};
     }
 }

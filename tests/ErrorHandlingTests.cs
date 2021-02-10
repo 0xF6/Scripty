@@ -1,8 +1,8 @@
+using NUnit.Framework;
+using Scripty.Objects;
+
 namespace ScriptyTests
 {
-    using NUnit.Framework;
-    using Scripty.Objects;
-
     public class ErrorHandlingTests
     {
         [SetUp]
@@ -50,9 +50,9 @@ namespace ScriptyTests
             {
                 var evaluated = StaticTests.TestEval(errorTest.Input);
 
-                Assert.AreEqual(nameof(Error), evaluated.GetType().Name);
+                Assert.AreEqual(nameof(ScriptyError), evaluated.GetType().Name);
 
-                var errObj = (Error) evaluated;
+                var errObj = (ScriptyError) evaluated;
 
                 Assert.AreEqual(errorTest.Expected, errObj.Message);
             }

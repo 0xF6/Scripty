@@ -1,10 +1,10 @@
+using Scripty.Interfaces;
+
 namespace Scripty.Objects
 {
-    using Interfaces;
-
-    public class Error : IObject
+    public class ScriptyError : IObject
     {
-        public Error(int code, IObject left, string op, IObject right)
+        public ScriptyError(int code, IObject left, string op, IObject right)
         {
             switch (code)
             {

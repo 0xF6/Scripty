@@ -8,8 +8,6 @@ namespace ScriptyTests
     using Scripty.Literals;
     using Scripty.Objects;
     using Scripty.Statements;
-    using Boolean = Scripty.Objects.Boolean;
-    using Environment = Scripty.Objects.Environment;
 
     public static class StaticTests
     {
@@ -74,22 +72,22 @@ namespace ScriptyTests
             }
         }
 
-        public static bool TestNullObject(IObject evaluated) => Equals(evaluated, Evaluator.Null);
+        public static bool TestNullObject(IObject evaluated) => Equals(evaluated, Evaluator.ScriptyNull);
 
         public static void TestBooleanObject(IObject obj, bool expected)
         {
-            Assert.AreEqual("Boolean", obj.GetType().Name);
+            Assert.AreEqual(nameof(ScriptyBoolean), obj.GetType().Name);
 
-            var result = obj as Boolean;
+            var result = obj as ScriptyBoolean;
 
             Assert.AreEqual(expected, result.Value);
         }
 
         public static void TestIntegerObject(IObject obj, long? expected)
         {
-            Assert.AreEqual("Integer", obj.GetType().Name);
+            Assert.AreEqual(nameof(ScriptyInteger), obj.GetType().Name);
 
-            var result = obj as Integer;
+            var result = obj as ScriptyInteger;
 
             Assert.AreEqual(expected, result.Value);
         }
@@ -99,7 +97,7 @@ namespace ScriptyTests
             var lexer = new Lexer(input);
             var parser = new Parser(lexer);
             var program = parser.ParseCode();
-            var env = new Environment();
+            var env = new ScriptyEnvironment();
 
             return Evaluator.Eval(program, env);
         }
@@ -143,7 +141,7 @@ namespace ScriptyTests
                     TestIntegerObject(evaluated, (long) expected);
                     break;
                 case "String":
-                    Assert.AreEqual(nameof(Error), evaluated.GetType().Name);
+                    Assert.AreEqual(nameof(ScriptyError), evaluated.GetType().Name);
                     break;
                 default:
                     Console.WriteLine(expected.GetType().Name);

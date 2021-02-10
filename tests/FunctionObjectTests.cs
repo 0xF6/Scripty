@@ -1,9 +1,9 @@
+using System.Linq;
+using NUnit.Framework;
+using Scripty.Objects;
+
 namespace ScriptyTests
 {
-    using System.Linq;
-    using NUnit.Framework;
-    using Scripty.Objects;
-
     public class FunctionObjectTests
     {
         [SetUp]
@@ -17,9 +17,9 @@ namespace ScriptyTests
             const string input = "fun(x) { x + 2; };";
             var evaluated = StaticTests.TestEval(input);
 
-            Assert.AreEqual(nameof(Function), evaluated.GetType().Name);
+            Assert.AreEqual(nameof(ScriptyFunction), evaluated.GetType().Name);
 
-            var fn = (Function) evaluated;
+            var fn = (ScriptyFunction) evaluated;
 
             Assert.AreEqual(1, fn.Parameters.Count);
 

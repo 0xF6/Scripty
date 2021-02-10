@@ -1,16 +1,16 @@
+using System;
+using System.Collections.Generic;
+using Scripty.Objects;
+
 namespace Scripty
 {
-    using System;
-    using System.Collections.Generic;
-    using Environment = Objects.Environment;
-
     public static class Repl
     {
         private const string Prompt = "> ";
 
         public static void Run()
         {
-            var env = new Environment();
+            var env = new ScriptyEnvironment();
             while (true)
             {
                 Console.Write(Prompt);

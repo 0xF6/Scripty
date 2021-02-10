@@ -1,10 +1,10 @@
+using System.Collections.Generic;
+using System.Linq;
+using Scripty.Interfaces;
+
 namespace Scripty.Objects
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using Interfaces;
-
-    public class Array : IObject
+    public class ScriptyArray : IObject
     {
         public List<IObject> Elements { get; set; }
 

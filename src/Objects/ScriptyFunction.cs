@@ -1,16 +1,16 @@
+using System.Collections.Generic;
+using System.Linq;
+using Scripty.Expressions;
+using Scripty.Interfaces;
+using Scripty.Statements;
+
 namespace Scripty.Objects
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using Expressions;
-    using Interfaces;
-    using Statements;
-
-    public class Function : IObject
+    public class ScriptyFunction : IObject
     {
         public List<Identifier> Parameters { get; set; }
         public BlockStatement Body { get; set; }
-        public Environment Environment { get; set; }
+        public ScriptyEnvironment Environment { get; set; }
 
         public string Type() => ObjectType.FunctionObj;
 

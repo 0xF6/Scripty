@@ -1,10 +1,10 @@
+using System.Collections.Generic;
+using NUnit.Framework;
+using Scripty.Interfaces;
+using Scripty.Objects;
+
 namespace ScriptyTests
 {
-    using System.Collections.Generic;
-    using NUnit.Framework;
-    using Scripty.Interfaces;
-    using Scripty.Objects;
-
     public class BuiltinTests
     {
         private const string MapReduceAndSum = @"let map = fun(arr, f) {
@@ -46,9 +46,9 @@ let sum = fun(arr) {
 
             var evaluated = StaticTests.TestEval(input);
 
-            Assert.AreEqual(nameof(Integer), evaluated.GetType().Name);
+            Assert.AreEqual(nameof(ScriptyInteger), evaluated.GetType().Name);
 
-            var integer = (Integer) evaluated;
+            var integer = (ScriptyInteger) evaluated;
 
             Assert.AreEqual(10, integer.Value);
         }
@@ -63,20 +63,20 @@ map([1,2,3,4], a);";
 
             var evaluated = StaticTests.TestEval(input);
 
-            Assert.AreEqual(nameof(Array), evaluated.GetType().Name);
+            Assert.AreEqual(nameof(ScriptyArray), evaluated.GetType().Name);
 
-            var arr = (Array) evaluated;
+            var arr = (ScriptyArray) evaluated;
             var expected = new List<IObject>
             {
-                (Integer) 3,
-                (Integer) 4,
-                (Integer) 5,
-                (Integer) 6
+                (ScriptyInteger) 3,
+                (ScriptyInteger) 4,
+                (ScriptyInteger) 5,
+                (ScriptyInteger) 6
             };
             for (var i = 0; i < expected.Count; i++)
             {
-                var ex = (Integer) expected[i];
-                var evaled = (Integer) arr.Elements[i];
+                var ex = (ScriptyInteger) expected[i];
+                var evaled = (ScriptyInteger) arr.Elements[i];
                 Assert.AreEqual(ex.Value, evaled.Value);
             }
         }

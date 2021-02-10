@@ -1,8 +1,8 @@
+using Scripty.Interfaces;
+
 namespace Scripty.Objects
 {
-    using Interfaces;
-
-    public class Boolean : IHashable
+    public class ScriptyBoolean : IHashable
     {
         public bool Value { get; set; }
 

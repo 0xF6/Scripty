@@ -1,8 +1,8 @@
+using Scripty.Interfaces;
+
 namespace Scripty.Objects
 {
-    using Interfaces;
-
-    public class String : IHashable
+    public class ScriptyString : IHashable
     {
         public string Value { get; set; }
 
@@ -10,7 +10,7 @@ namespace Scripty.Objects
 
         public string Inspect() => Value;
 
-        public static implicit operator String(string v) => new() {Value = v};
+        public static implicit operator ScriptyString(string v) => new() {Value = v};
 
         #region Implementation of IHashable
 

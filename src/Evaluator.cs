@@ -9,18 +9,14 @@ namespace Scripty
     using Literals;
     using Objects;
     using Statements;
-    using Array = Objects.Array;
-    using Boolean = Objects.Boolean;
-    using Environment = Objects.Environment;
-    using String = Objects.String;
 
     public static class Evaluator
     {
-        public static readonly Boolean True = new() {Value = true};
-        public static readonly Boolean False = new() {Value = false};
-        public static readonly Null Null = new();
+        public static readonly ScriptyBoolean True = new() {Value = true};
+        public static readonly ScriptyBoolean False = new() {Value = false};
+        public static readonly ScriptyNull ScriptyNull = new();
 
-        public static readonly Dictionary<string, Builtin> Builtins = new()
+        public static readonly Dictionary<string, ScriptyBuiltin> Builtins = new()
         {
             {"length", Length.Build()},
             {"wln", Puts.Build()},
@@ -30,10 +26,10 @@ namespace Scripty
             {"rest", Rest.Build()}
         };
 
-        public static IObject Eval(INode node, Environment env) =>
+        public static IObject Eval(INode node, ScriptyEnvironment env) =>
             node.GetType().Name switch
             {
-                nameof(IntegerLiteral) => new Integer {Value = ((IntegerLiteral) node).Value},
+                nameof(IntegerLiteral) => new ScriptyInteger {Value = ((IntegerLiteral) node).Value},
                 nameof(ExpressionStatement) => Eval(((ExpressionStatement) node).Expression, env),
                 nameof(Code) => EvalProgram((Code) node, env),
                 nameof(BooleanLiteral) => NativeBoolToBooleanObject(((BooleanLiteral) node).Value),
@@ -46,14 +42,14 @@ namespace Scripty
                 nameof(Identifier) => EvalIdentifier((Identifier) node, env),
                 nameof(FunctionLiteral) => HandleFunctionLiteralEval((FunctionLiteral) node, env),
                 nameof(CallExpression) => HandleCallExpressionEval((CallExpression) node, env),
-                nameof(StringLiteral) => new String {Value = ((StringLiteral) node).Value},
+                nameof(StringLiteral) => new ScriptyString {Value = ((StringLiteral) node).Value},
                 nameof(ArrayLiteral) => HandleArrayLiteralEval((ArrayLiteral) node, env),
                 nameof(IndexExpression) => HandleIndexExpressionEval((IndexExpression) node, env),
                 nameof(HashLiteral) => EvalHashLiteral((HashLiteral) node, env),
-                _ => Null
+                _ => ScriptyNull
             };
 
-        private static IObject EvalHashLiteral(HashLiteral node, Environment env)
+        private static IObject EvalHashLiteral(HashLiteral node, ScriptyEnvironment env)
         {
             var pairs = new Dictionary<HashKey, HashPair>();
 
@@ -62,7 +58,7 @@ namespace Scripty
                 var key = Eval(keyNode, env);
                 if (IsError(key)) return key;
 
-                if (key is not IHashable hashKey) return new Error(14, key, null, null);
+                if (key is not IHashable hashKey) return new ScriptyError(14, key, null, null);
 
                 var value = Eval(valueNode, env);
                 if (IsError(value)) return value;
@@ -72,10 +68,10 @@ namespace Scripty
                 pairs.Add(hashed, new HashPair() {Key = key, Value = value});
             }
 
-            return new Hash {Pairs = pairs};
+            return new ScriptyHash {Pairs = pairs};
         }
 
-        private static IObject HandleIndexExpressionEval(IndexExpression node, Environment env)
+        private static IObject HandleIndexExpressionEval(IndexExpression node, ScriptyEnvironment env)
         {
             var left = Eval(node.Left, env);
             if (IsError(left)) return left;
@@ -93,47 +89,47 @@ namespace Scripty
             if (left.Type() == ObjectType.StringObj && index.Type() == ObjectType.IntegerObj)
                 return EvalStringIndexExpression(left, index);
             if (left.Type() == ObjectType.HashObj) return EvalHashIndexExpression(left, index);
-            return new Error(9, left, null, null);
+            return new ScriptyError(9, left, null, null);
         }
 
         private static IObject EvalHashIndexExpression(IObject left, IObject index)
         {
-            if (left is not Hash hashObject) return new Error(15, left, null, null);
-            if (index is not IHashable key) return new Error(14, index, null, null);
+            if (left is not ScriptyHash hashObject) return new ScriptyError(15, left, null, null);
+            if (index is not IHashable key) return new ScriptyError(14, index, null, null);
             var pairExists = hashObject.Pairs.TryGetValue(key.HashKey(), out var pair);
-            return !pairExists ? new Error(16, hashObject, null, index) : pair.Value;
+            return !pairExists ? new ScriptyError(16, hashObject, null, index) : pair.Value;
         }
 
         private static IObject EvalStringIndexExpression(IObject left, IObject index)
         {
-            var stringObj = (String) left;
-            var idx = ((Integer) index).Value;
+            var stringObj = (ScriptyString) left;
+            var idx = ((ScriptyInteger) index).Value;
             var max = stringObj.Value.Length - 1;
             if (idx < 0 || idx > max)
-                return new Error(10, stringObj, null, (Integer) index);
-            return (String) stringObj.Value[(int) idx].ToString();
+                return new ScriptyError(10, stringObj, null, (ScriptyInteger) index);
+            return (ScriptyString) stringObj.Value[(int) idx].ToString();
         }
 
         private static IObject EvalArrayIndexExpression(IObject left, IObject index)
         {
-            var arrObj = (Array) left;
-            var idx = ((Integer) index).Value;
+            var arrObj = (ScriptyArray) left;
+            var idx = ((ScriptyInteger) index).Value;
             var max = arrObj.Elements.Count - 1;
             if (idx < 0 || idx > max)
-                return new Error(10, arrObj, null, (Integer) index);
+                return new ScriptyError(10, arrObj, null, (ScriptyInteger) index);
 
             return arrObj.Elements[(int) idx];
         }
 
-        private static IObject HandleArrayLiteralEval(ArrayLiteral node, Environment env)
+        private static IObject HandleArrayLiteralEval(ArrayLiteral node, ScriptyEnvironment env)
         {
             var elements = EvalExpressions(node.Elements, env);
             if (elements.Count == 1 && IsError(elements.First())) return elements.First();
 
-            return new Array {Elements = elements};
+            return new ScriptyArray {Elements = elements};
         }
 
-        private static IObject HandleCallExpressionEval(CallExpression node, Environment env)
+        private static IObject HandleCallExpressionEval(CallExpression node, ScriptyEnvironment env)
         {
             var function = Eval(node.Function, env);
             if (IsError(function)) return function;
@@ -146,25 +142,27 @@ namespace Scripty
         {
             switch (fn.GetType().Name)
             {
-                case nameof(Function):
-                    if (!(fn is Function function)) return new Error(6, null, fn.Type(), null);
+                case nameof(ScriptyFunction):
+                    if (!(fn is ScriptyFunction function)) return new ScriptyError(6, null, fn.Type(), null);
                     var extendedEnv = ExtendFunctionEnv(function, args);
                     var evaluated = Eval(function.Body, extendedEnv);
                     return UnwrapReturnValue(evaluated);
-                case nameof(Builtin):
-                    return !(fn is Builtin builtin) ? new Error(6, null, fn.Type(), null) : builtin.Fn(args);
+                case nameof(ScriptyBuiltin):
+                    return !(fn is ScriptyBuiltin builtin)
+                        ? new ScriptyError(6, null, fn.Type(), null)
+                        : builtin.Fn(args);
                 default:
                     Console.WriteLine(fn.GetType().Name);
-                    return new Error(6, null, fn.Type(), null);
+                    return new ScriptyError(6, null, fn.Type(), null);
             }
         }
 
-        private static Environment ExtendFunctionEnv(Function function, List<IObject> args)
+        private static ScriptyEnvironment ExtendFunctionEnv(ScriptyFunction scriptyFunction, List<IObject> args)
         {
-            var env = new Environment(function.Environment);
-            for (var i = 0; i < function.Parameters.Count; i++)
+            var env = new ScriptyEnvironment(scriptyFunction.Environment);
+            for (var i = 0; i < scriptyFunction.Parameters.Count; i++)
             {
-                var functionParam = function.Parameters[i];
+                var functionParam = scriptyFunction.Parameters[i];
                 env.Set(functionParam.Value, args[i]);
             }
 
@@ -177,7 +175,7 @@ namespace Scripty
             return returnValue ?? evaluated;
         }
 
-        private static List<IObject> EvalExpressions(List<IExpression> nodeArguments, Environment env)
+        private static List<IObject> EvalExpressions(List<IExpression> nodeArguments, ScriptyEnvironment env)
         {
             var result = new List<IObject>();
             foreach (var evaluated in nodeArguments.Select(nodeArgument => Eval(nodeArgument, env)))
@@ -194,29 +192,29 @@ namespace Scripty
             return result;
         }
 
-        private static IObject HandleFunctionLiteralEval(FunctionLiteral node, Environment env)
+        private static IObject HandleFunctionLiteralEval(FunctionLiteral node, ScriptyEnvironment env)
         {
             var parameters = node.Parameters;
             var body = node.Body;
-            return new Function {Parameters = parameters, Environment = env, Body = body};
+            return new ScriptyFunction {Parameters = parameters, Environment = env, Body = body};
         }
 
-        private static IObject EvalIdentifier(Identifier node, Environment env)
+        private static IObject EvalIdentifier(Identifier node, ScriptyEnvironment env)
         {
             var value = env.Get(node.Value);
             if (!(value is null)) return value;
             var builtin = Builtins.GetValueOrDefault(node.Value, null);
             if (!(builtin is null)) return builtin;
-            return new Error(5, null, node.Value, null);
+            return new ScriptyError(5, null, node.Value, null);
         }
 
-        private static IObject HandleLetStatementCase(LetStatement node, Environment env)
+        private static IObject HandleLetStatementCase(LetStatement node, ScriptyEnvironment env)
         {
             var value = Eval(node.Value, env);
             return IsError(value) ? value : env.Set(node.Name.Value, value);
         }
 
-        private static IObject EvalBlockStatement(BlockStatement node, Environment env)
+        private static IObject EvalBlockStatement(BlockStatement node, ScriptyEnvironment env)
         {
             IObject result = null;
 
@@ -224,7 +222,7 @@ namespace Scripty
             {
                 result = Eval(nodeStatement, env);
 
-                if (result is Null) continue;
+                if (result is ScriptyNull) continue;
                 if (result.Type() == ObjectType.ErrorObj || result.Type() == ObjectType.ReturnValueObj)
                     return result;
             }
@@ -232,7 +230,7 @@ namespace Scripty
             return result;
         }
 
-        private static IObject EvalProgram(Code node, Environment env)
+        private static IObject EvalProgram(Code node, ScriptyEnvironment env)
         {
             IObject result = null;
             foreach (var nodeStatement in node.Statements)
@@ -242,7 +240,7 @@ namespace Scripty
                 {
                     case nameof(ReturnValue):
                         return ((ReturnValue) result).Value;
-                    case nameof(Error):
+                    case nameof(ScriptyError):
                         return result;
                 }
             }
@@ -250,7 +248,7 @@ namespace Scripty
             return result;
         }
 
-        private static IObject HandleReturnStatementEval(ReturnStatement node, Environment env)
+        private static IObject HandleReturnStatementEval(ReturnStatement node, ScriptyEnvironment env)
         {
             var value = Eval(node.ReturnValue, env);
             if (IsError(value)) return value;
@@ -263,24 +261,24 @@ namespace Scripty
             return value.Type() == ObjectType.ErrorObj;
         }
 
-        private static IObject EvalIfExpression(IfExpression node, Environment env)
+        private static IObject EvalIfExpression(IfExpression node, ScriptyEnvironment env)
         {
             var condition = Eval(node.Condition, env);
             if (IsError(condition)) return condition;
             if (IsTruthy(condition))
                 return Eval(node.Consequence, env);
 
-            return !(node.Alternative is null) ? Eval(node.Alternative, env) : Null;
+            return !(node.Alternative is null) ? Eval(node.Alternative, env) : ScriptyNull;
         }
 
         private static bool IsTruthy(IObject obj)
         {
-            if (Equals(obj, Null)) return false;
+            if (Equals(obj, ScriptyNull)) return false;
             if (Equals(obj, True)) return true;
             return !Equals(obj, False);
         }
 
-        private static IObject HandleInfixExpression(INode node, Environment env)
+        private static IObject HandleInfixExpression(INode node, ScriptyEnvironment env)
         {
             var infixNode = (InfixExpression) node;
             var left = Eval(infixNode.Left, env);
@@ -293,51 +291,52 @@ namespace Scripty
         private static IObject EvalInfixExpression(string infixNodeOperator, IObject left, IObject right)
         {
             if (left.Type() == ObjectType.IntegerObj && right.Type() == ObjectType.IntegerObj)
-                return EvalIntegerInfixExpression(infixNodeOperator, (Integer) left, (Integer) right);
+                return EvalIntegerInfixExpression(infixNodeOperator, (ScriptyInteger) left, (ScriptyInteger) right);
 
             if (left.Type() == ObjectType.StringObj && right.Type() == ObjectType.StringObj)
                 return EvalStringInfixExpression(infixNodeOperator, left, right);
 
             if (left.Type() != right.Type())
-                return new Error(3, left, infixNodeOperator, right);
+                return new ScriptyError(3, left, infixNodeOperator, right);
 
             return infixNodeOperator switch
             {
                 "==" => NativeBoolToBooleanObject(Equals(left, right)),
                 "!=" => NativeBoolToBooleanObject(!Equals(left, right)),
-                _ => new Error(2, left, infixNodeOperator, right)
+                _ => new ScriptyError(2, left, infixNodeOperator, right)
             };
         }
 
         private static IObject EvalStringInfixExpression(string infixNodeOperator, IObject left, IObject right)
         {
-            if (infixNodeOperator != "+") return new Error(2, left, infixNodeOperator, right);
+            if (infixNodeOperator != "+") return new ScriptyError(2, left, infixNodeOperator, right);
 
-            var leftVal = ((String) left).Value;
-            var rightVal = ((String) right).Value;
+            var leftVal = ((ScriptyString) left).Value;
+            var rightVal = ((ScriptyString) right).Value;
 
-            return new String {Value = $"{leftVal}{rightVal}"};
+            return new ScriptyString {Value = $"{leftVal}{rightVal}"};
         }
 
-        private static IObject EvalIntegerInfixExpression(string infixNodeOperator, Integer left, Integer right)
+        private static IObject EvalIntegerInfixExpression(string infixNodeOperator, ScriptyInteger left,
+            ScriptyInteger right)
         {
             var leftVal = left.Value;
             var rightVal = right.Value;
             return infixNodeOperator switch
             {
-                "+" => new Integer {Value = leftVal + rightVal},
-                "-" => new Integer {Value = leftVal - rightVal},
-                "*" => new Integer {Value = leftVal * rightVal},
-                "/" => new Integer {Value = leftVal / rightVal},
+                "+" => new ScriptyInteger {Value = leftVal + rightVal},
+                "-" => new ScriptyInteger {Value = leftVal - rightVal},
+                "*" => new ScriptyInteger {Value = leftVal * rightVal},
+                "/" => new ScriptyInteger {Value = leftVal / rightVal},
                 "<" => NativeBoolToBooleanObject(leftVal < rightVal),
                 ">" => NativeBoolToBooleanObject(leftVal > rightVal),
                 "!=" => NativeBoolToBooleanObject(leftVal != rightVal),
                 "==" => NativeBoolToBooleanObject(leftVal == rightVal),
-                _ => new Error(2, left, infixNodeOperator, right)
+                _ => new ScriptyError(2, left, infixNodeOperator, right)
             };
         }
 
-        private static IObject HandlePrefixExpression(INode node, Environment env)
+        private static IObject HandlePrefixExpression(INode node, ScriptyEnvironment env)
         {
             var prefixedNode = (PrefixExpression) node;
             var right = Eval(prefixedNode.Right, env);
@@ -350,31 +349,31 @@ namespace Scripty
             {
                 "!" => EvalBangOperatorExpression(right),
                 "-" => EvalMinusPrefixOperatorExpression(right),
-                _ => new Error(4, null, op, right)
+                _ => new ScriptyError(4, null, op, right)
             };
 
 
         private static IObject EvalMinusPrefixOperatorExpression(IObject right)
         {
-            if (right.Type() != ObjectType.IntegerObj) return new Error(4, null, "-", right);
-            var value = ((Integer) right).Value;
-            return new Integer {Value = -value};
+            if (right.Type() != ObjectType.IntegerObj) return new ScriptyError(4, null, "-", right);
+            var value = ((ScriptyInteger) right).Value;
+            return new ScriptyInteger {Value = -value};
         }
 
         private static IObject EvalBangOperatorExpression(IObject right)
         {
             switch (right.GetType().Name)
             {
-                case "Boolean":
-                    var boolRight = (Boolean) right;
+                case nameof(ScriptyBoolean):
+                    var boolRight = (ScriptyBoolean) right;
                     return boolRight.Value == false ? True : False;
-                case "Null":
+                case nameof(ScriptyNull):
                     return True;
                 default:
                     return False;
             }
         }
 
-        private static Boolean NativeBoolToBooleanObject(bool input) => input ? True : False;
+        private static ScriptyBoolean NativeBoolToBooleanObject(bool input) => input ? True : False;
     }
 }
