@@ -1,5 +1,6 @@
 namespace Scripty.Literals
 {
+    using System;
     using Interfaces;
 
     public class FloatLiteral : IExpression
@@ -11,7 +12,7 @@ namespace Scripty.Literals
 
         public string Str() => TokenLiteral();
 
-        public void ExpressionNode() => throw new System.NotImplementedException();
+        public void ExpressionNode() => throw new NotImplementedException();
 
         public static implicit operator FloatLiteral(double v) => new()
             {Token = new Token {Type = Token.Int, Literal = v.ToString()}, Value = v};

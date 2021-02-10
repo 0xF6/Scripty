@@ -4,7 +4,6 @@ namespace Scripty.BuiltinFunctions
     using System.Collections.Generic;
     using System.Linq;
     using Interfaces;
-    using Literals;
     using Objects;
 
     public static class ParseInt

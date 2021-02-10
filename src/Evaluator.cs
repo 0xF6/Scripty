@@ -300,8 +300,8 @@ namespace Scripty
             if (left.Type() == ObjectType.FloatObj && right.Type() == ObjectType.FloatObj)
                 return EvalIntAndFloatInfixExpression(infixNodeOperator, left, right);
 
-            if ((left.Type() == ObjectType.FloatObj && right.Type() == ObjectType.IntegerObj) ||
-                (left.Type() == ObjectType.IntegerObj && right.Type() == ObjectType.FloatObj))
+            if (left.Type() == ObjectType.FloatObj && right.Type() == ObjectType.IntegerObj ||
+                left.Type() == ObjectType.IntegerObj && right.Type() == ObjectType.FloatObj)
                 return EvalIntAndFloatInfixExpression(infixNodeOperator, left, right);
 
 
@@ -328,7 +328,7 @@ namespace Scripty
                 ? ((ScriptyInteger) right).Value
                 : ((ScriptyFloat) right).Value;
 
-            var resultTypeInteger = (left.Type() == ObjectType.IntegerObj && right.Type() == ObjectType.IntegerObj);
+            var resultTypeInteger = left.Type() == ObjectType.IntegerObj && right.Type() == ObjectType.IntegerObj;
 
             return infixNodeOperator switch
             {
