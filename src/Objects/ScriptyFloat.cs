@@ -3,7 +3,7 @@ namespace Scripty.Objects
     using System;
     using System.Collections.Generic;
     using Interfaces;
-
+    [DebuggerDisplay("{Inspect()}")]
     public class ScriptyFloat : IHashable
     {
         public double Value { get; set; }
