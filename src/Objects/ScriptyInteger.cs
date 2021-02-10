@@ -1,5 +1,6 @@
 namespace Scripty.Objects
 {
+    using System;
     using System.Collections.Generic;
     using Interfaces;
 
@@ -19,5 +20,6 @@ namespace Scripty.Objects
         #endregion
 
         public static implicit operator ScriptyInteger(long v) => new() {Value = v};
+        public static implicit operator ScriptyInteger(ScriptyFloat v) => new() {Value = Convert.ToInt64(v.Value)};
     }
 }

@@ -3,6 +3,7 @@ namespace Scripty.Objects
     public static class ObjectType
     {
         public const string IntegerObj = "INTEGER";
+        public const string FloatObj = "FLOAT";
         public const string BooleanObj = "BOOLEAN";
         public const string NullObj = "NULL";
         public const string ReturnValueObj = "RETURN_VALUE";

@@ -1,20 +1,19 @@
 namespace Scripty.Literals
 {
-    using System;
     using Interfaces;
 
-    public class IntegerLiteral : IExpression
+    public class FloatLiteral : IExpression
     {
         public Token Token { get; set; }
-        public long Value { get; set; }
+        public double Value { get; set; }
 
         public string TokenLiteral() => Token.Literal;
 
         public string Str() => TokenLiteral();
 
-        public void ExpressionNode() => throw new NotImplementedException();
+        public void ExpressionNode() => throw new System.NotImplementedException();
 
-        public static implicit operator IntegerLiteral(long v) => new()
+        public static implicit operator FloatLiteral(double v) => new()
             {Token = new Token {Type = Token.Int, Literal = v.ToString()}, Value = v};
     }
 }
