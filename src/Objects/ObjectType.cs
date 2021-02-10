@@ -11,5 +11,6 @@ namespace Scripty.Objects
         public const string StringObj = "STRING";
         public const string BuiltinObj = "BUILTIN";
         public const string ArrayObj = "ARRAY";
+        public const string HashObj = "HASH";
     }
 }

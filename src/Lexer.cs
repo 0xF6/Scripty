@@ -99,6 +99,9 @@ namespace Scripty
                 case ']':
                     tok = NewToken(Token.Rbracket, Ch.ToString());
                     break;
+                case ':':
+                    tok = NewToken(Token.Colon, Ch.ToString());
+                    break;
                 case '\0':
                     tok.Type = Token.Eof;
                     tok.Literal = "";

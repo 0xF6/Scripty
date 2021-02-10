@@ -144,9 +144,9 @@ namespace ScriptyTests
 
             var evaluated = StaticTests.TestEval(input);
 
-            Assert.AreEqual(nameof(String), evaluated.GetType().Name);
+            Assert.AreEqual(nameof(ScriptyString), evaluated.GetType().Name);
 
-            var str = (String) evaluated;
+            var str = (ScriptyString) evaluated;
 
             Assert.AreEqual(input.Replace("\"", "").Replace("'", ""), str.Value);
         }
@@ -160,9 +160,9 @@ namespace ScriptyTests
 
             var evaluated = StaticTests.TestEval(input);
 
-            Assert.AreEqual(nameof(String), evaluated.GetType().Name);
+            Assert.AreEqual(nameof(ScriptyString), evaluated.GetType().Name);
 
-            var str = (String) evaluated;
+            var str = (ScriptyString) evaluated;
 
             Assert.AreEqual(expected, str.Value);
         }

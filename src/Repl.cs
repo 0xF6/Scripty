@@ -2,7 +2,7 @@ namespace Scripty
 {
     using System;
     using System.Collections.Generic;
-    using Environment = Objects.Environment;
+    using Objects;
 
     public static class Repl
     {
@@ -10,7 +10,7 @@ namespace Scripty
 
         public static void Run()
         {
-            var env = new Environment();
+            var env = new ScriptyEnvironment();
             while (true)
             {
                 Console.Write(Prompt);

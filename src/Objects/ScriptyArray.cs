@@ -4,12 +4,13 @@ namespace Scripty.Objects
     using System.Linq;
     using Interfaces;
 
-    public class Array : IObject
+    public class ScriptyArray : IObject
     {
         public List<IObject> Elements { get; set; }
 
         public string Type() => ObjectType.ArrayObj;
 
         public string Inspect() => $"[{string.Join(", ", Elements.Select(element => element.Inspect()).ToList())}]";
+        public Dictionary<string, IObject> Properties { get; set; }
     }
 }

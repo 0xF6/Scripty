@@ -65,6 +65,7 @@ if (5 < 10) {
 'fooBar'
 'foo bar'
 [1, 2];
+{'kek': 'puk'};
 ";
             var tests = new Token[]
             {
@@ -137,6 +138,12 @@ if (5 < 10) {
                 new() {Type = Token.Comma, Literal = ","},
                 new() {Type = Token.Int, Literal = "2"},
                 new() {Type = Token.Rbracket, Literal = "]"},
+                new() {Type = Token.Semicolon, Literal = ";"},
+                new() {Type = Token.Lbrace, Literal = "{"},
+                new() {Type = Token.String, Literal = "kek"},
+                new() {Type = Token.Colon, Literal = ":"},
+                new() {Type = Token.String, Literal = "puk"},
+                new() {Type = Token.Rbrace, Literal = "}"},
                 new() {Type = Token.Semicolon, Literal = ";"},
                 new() {Type = Token.Eof, Literal = ""}
             };

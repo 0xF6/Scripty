@@ -4,23 +4,23 @@ namespace Scripty.Objects
     using System.Collections.Generic;
     using Interfaces;
 
-    public class Environment
+    public class ScriptyEnvironment
     {
         private readonly Dictionary<string, IObject> Store;
 
-        public Environment()
+        public ScriptyEnvironment()
         {
             Store = new Dictionary<string, IObject>();
             Outer = null;
         }
 
-        public Environment(Environment outer)
+        public ScriptyEnvironment(ScriptyEnvironment outer)
         {
             Store = new Dictionary<string, IObject>();
             Outer = outer;
         }
 
-        private Environment Outer { get; }
+        private ScriptyEnvironment Outer { get; }
 
         public IObject Get(string key)
         {
