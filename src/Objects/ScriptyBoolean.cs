@@ -1,5 +1,6 @@
 namespace Scripty.Objects
 {
+    using System.Collections.Generic;
     using Interfaces;
 
     public class ScriptyBoolean : IHashable
@@ -9,6 +10,7 @@ namespace Scripty.Objects
         public string Type() => ObjectType.BooleanObj;
 
         public string Inspect() => Value.ToString().ToLower();
+        public Dictionary<string, IObject> Properties { get; set; }
 
         #region Implementation of IHashable
 

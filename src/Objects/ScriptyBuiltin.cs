@@ -1,5 +1,6 @@
 namespace Scripty.Objects
 {
+    using System.Collections.Generic;
     using Delegates;
     using Interfaces;
 
@@ -10,5 +11,6 @@ namespace Scripty.Objects
         public string Type() => ObjectType.BuiltinObj;
 
         public string Inspect() => "builtin object";
+        public Dictionary<string, IObject> Properties { get; set; }
     }
 }

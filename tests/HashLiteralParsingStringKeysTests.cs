@@ -5,6 +5,7 @@ namespace ScriptyTests
     using NUnit.Framework;
     using Scripty;
     using Scripty.Literals;
+    using Scripty.Objects;
     using Scripty.Statements;
 
     public class HashLiteralParsingStringKeysTests
@@ -120,6 +121,73 @@ namespace ScriptyTests
                 Assert.True(keyExists);
 
                 testFunc(value);
+            }
+        }
+
+
+        [Test]
+        public void HashLiteralTest()
+        {
+            const string input = @"let two = 'two';
+{
+  'one': 10 -9,
+  two: 2,
+  'thr' + 'ee': 6/2,
+  4: 4,
+  true: 5,
+  false: 6
+};";
+            var evaluated = StaticTests.TestEval(input);
+            Assert.AreEqual(nameof(ScriptyHash), evaluated.GetType().Name);
+            var result = (ScriptyHash) evaluated;
+            var expected = new Dictionary<HashKey, int>
+            {
+                {((ScriptyString) "one").HashKey(), 1},
+                {((ScriptyString) "two").HashKey(), 2},
+                {((ScriptyString) "three").HashKey(), 3},
+                {((ScriptyInteger) 4).HashKey(), 4},
+                {Evaluator.True.HashKey(), 5},
+                {Evaluator.False.HashKey(), 6}
+            };
+
+            Assert.AreEqual(expected.Count, result.Pairs.Count);
+
+            foreach (var (hkey, hval) in expected)
+            {
+                var pairExists = result.Pairs.TryGetValue(hkey, out var pair);
+                Assert.True(pairExists);
+                StaticTests.TestIntegerObject(pair.Value, hval);
+            }
+        }
+
+        [Test]
+        public void HashIndexExpressionTest()
+        {
+            var passingTests = new IntegerTests[]
+            {
+                new() {Input = "{'a': 5}['a']", Expected = 5},
+                new() {Input = "let key = 'k'; {'k': 5}[key]", Expected = 5},
+                new() {Input = "{5: 5}[5]", Expected = 5},
+                new() {Input = "{true: 5}[true]", Expected = 5},
+                new() {Input = "{false: 5}[false]", Expected = 5}
+            };
+
+            var failingTests = new OperatorTest[]
+            {
+                new() {Input = "{}[5]", Expected = "ERROR: [MUHL16] `{}` does not contain key `5`"},
+                new() {Input = "{'a': 5}[5]", Expected = "ERROR: [MUHL16] `{a: 5}` does not contain key `5`"}
+            };
+
+            foreach (var passingTest in passingTests)
+            {
+                var evaluated = StaticTests.TestEval(passingTest.Input);
+                StaticTests.TestIntegerObject(evaluated, passingTest.Expected);
+            }
+
+            foreach (var failingTest in failingTests)
+            {
+                var evaluated = StaticTests.TestEval(failingTest.Input);
+                Assert.AreEqual(failingTest.Expected, evaluated.Inspect());
             }
         }
     }

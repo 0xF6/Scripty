@@ -1,5 +1,6 @@
 namespace Scripty.Objects
 {
+    using System.Collections.Generic;
     using Interfaces;
 
     public class ScriptyInteger : IHashable
@@ -9,6 +10,7 @@ namespace Scripty.Objects
         public string Type() => ObjectType.IntegerObj;
 
         public string Inspect() => $"{Value}";
+        public Dictionary<string, IObject> Properties { get; set; }
 
         #region Implementation of IHashable
 

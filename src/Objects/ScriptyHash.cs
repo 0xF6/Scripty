@@ -18,6 +18,8 @@ namespace Scripty.Objects
             return $"{{{string.Join(", ", pairs)}}}";
         }
 
+        public Dictionary<string, IObject> Properties { get; set; }
+
         #endregion
     }
 }

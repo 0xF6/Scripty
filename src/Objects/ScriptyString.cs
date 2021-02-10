@@ -1,5 +1,6 @@
 namespace Scripty.Objects
 {
+    using System.Collections.Generic;
     using Interfaces;
 
     public class ScriptyString : IHashable
@@ -9,6 +10,8 @@ namespace Scripty.Objects
         public string Type() => ObjectType.StringObj;
 
         public string Inspect() => Value;
+
+        public Dictionary<string, IObject> Properties { get; set; }
 
         public static implicit operator ScriptyString(string v) => new() {Value = v};
 

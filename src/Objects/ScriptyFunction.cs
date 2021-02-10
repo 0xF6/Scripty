@@ -16,5 +16,7 @@ namespace Scripty.Objects
 
         public string Inspect() =>
             $"fun({string.Join(", ", Parameters.Select(identifier => identifier.Str()).ToList())}){{\n{Body.Str()}\n}}";
+
+        public Dictionary<string, IObject> Properties { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 namespace Scripty.Objects
 {
+    using System.Collections.Generic;
     using Interfaces;
 
     public class ReturnValue : IObject
@@ -9,5 +10,6 @@ namespace Scripty.Objects
         public string Type() => ObjectType.ReturnValueObj;
 
         public string Inspect() => Value.Inspect();
+        public Dictionary<string, IObject> Properties { get; set; }
     }
 }

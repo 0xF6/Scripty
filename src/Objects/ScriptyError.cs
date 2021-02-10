@@ -1,5 +1,6 @@
 namespace Scripty.Objects
 {
+    using System.Collections.Generic;
     using Interfaces;
 
     public class ScriptyError : IObject
@@ -81,5 +82,6 @@ namespace Scripty.Objects
         public string Type() => ObjectType.ErrorObj;
 
         public string Inspect() => $"ERROR: {Message}";
+        public Dictionary<string, IObject> Properties { get; set; }
     }
 }
