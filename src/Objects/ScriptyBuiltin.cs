@@ -1,8 +1,8 @@
-using Scripty.Delegates;
-using Scripty.Interfaces;
-
 namespace Scripty.Objects
 {
+    using Delegates;
+    using Interfaces;
+
     public class ScriptyBuiltin : IObject
     {
         public BuiltinFunction Fn { get; set; }

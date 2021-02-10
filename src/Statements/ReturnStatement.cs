@@ -1,8 +1,8 @@
-using System;
-using Scripty.Interfaces;
-
 namespace Scripty.Statements
 {
+    using System;
+    using Interfaces;
+
     public class ReturnStatement : IStatement
     {
         public Token Token { get; set; }

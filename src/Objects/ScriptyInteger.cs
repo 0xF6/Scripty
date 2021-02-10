@@ -1,7 +1,7 @@
-using Scripty.Interfaces;
-
 namespace Scripty.Objects
 {
+    using Interfaces;
+
     public class ScriptyInteger : IHashable
     {
         public long Value { get; set; }

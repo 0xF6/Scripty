@@ -1,9 +1,9 @@
-using System.Collections.Generic;
-using System.Linq;
-using Scripty.Interfaces;
-
 namespace Scripty
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using Interfaces;
+
     public class Code : INode
     {
         public List<IStatement> Statements { get; set; }

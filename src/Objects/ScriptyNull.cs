@@ -1,7 +1,7 @@
-using Scripty.Interfaces;
-
 namespace Scripty.Objects
 {
+    using Interfaces;
+
     public class ScriptyNull : IObject
     {
         public string Type() => ObjectType.NullObj;

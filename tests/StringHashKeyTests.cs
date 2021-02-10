@@ -1,9 +1,9 @@
-using System.Collections.Generic;
-using NUnit.Framework;
-using Scripty.Objects;
-
 namespace ScriptyTests
 {
+    using System.Collections.Generic;
+    using NUnit.Framework;
+    using Scripty.Objects;
+
     public class StringHashKeyTests
     {
         [SetUp]

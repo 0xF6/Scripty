@@ -1,11 +1,11 @@
-using System.Collections.Generic;
-using System.Linq;
-using Scripty.Expressions;
-using Scripty.Interfaces;
-using Scripty.Statements;
-
 namespace Scripty.Objects
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using Expressions;
+    using Interfaces;
+    using Statements;
+
     public class ScriptyFunction : IObject
     {
         public List<Identifier> Parameters { get; set; }

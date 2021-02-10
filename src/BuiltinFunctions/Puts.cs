@@ -1,10 +1,10 @@
-using System;
-using System.Collections.Generic;
-using Scripty.Interfaces;
-using Scripty.Objects;
-
 namespace Scripty.BuiltinFunctions
 {
+    using System;
+    using System.Collections.Generic;
+    using Interfaces;
+    using Objects;
+
     public static class Puts
     {
         public static ScriptyBuiltin Build() => new() {Fn = Fn};

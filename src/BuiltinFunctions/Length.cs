@@ -1,10 +1,10 @@
-using System.Collections.Generic;
-using System.Linq;
-using Scripty.Interfaces;
-using Scripty.Objects;
-
 namespace Scripty.BuiltinFunctions
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using Interfaces;
+    using Objects;
+
     public static class Length
     {
         public static ScriptyBuiltin Build() => new() {Fn = Fn};

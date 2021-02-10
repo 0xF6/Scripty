@@ -1,7 +1,7 @@
-using System.Collections.Generic;
-
 namespace Scripty
 {
+    using System.Collections.Generic;
+
     public class Token
     {
         public const string Illegal = "ILLEGAL";

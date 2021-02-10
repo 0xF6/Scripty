@@ -1,9 +1,9 @@
-using System;
-using System.Collections.Generic;
-using Scripty.Objects;
-
 namespace Scripty
 {
+    using System;
+    using System.Collections.Generic;
+    using Objects;
+
     public static class Repl
     {
         private const string Prompt = "> ";

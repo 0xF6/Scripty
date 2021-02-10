@@ -1,8 +1,8 @@
-using System;
-using Scripty.Interfaces;
-
 namespace Scripty.Expressions
 {
+    using System;
+    using Interfaces;
+
     public class Identifier : IExpression
     {
         public Token Token { get; set; }

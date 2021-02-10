@@ -1,7 +1,7 @@
-using Scripty.Interfaces;
-
 namespace Scripty.Objects
 {
+    using Interfaces;
+
     public class ScriptyError : IObject
     {
         public ScriptyError(int code, IObject left, string op, IObject right)

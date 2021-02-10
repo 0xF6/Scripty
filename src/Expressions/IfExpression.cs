@@ -1,9 +1,9 @@
-using System;
-using Scripty.Interfaces;
-using Scripty.Statements;
-
 namespace Scripty.Expressions
 {
+    using System;
+    using Interfaces;
+    using Statements;
+
     public class IfExpression : IExpression
     {
         public Token Token { get; set; }

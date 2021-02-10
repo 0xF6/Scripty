@@ -1,12 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Scripty.Expressions;
-using Scripty.Interfaces;
-using Scripty.Statements;
-
 namespace Scripty.Literals
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Expressions;
+    using Interfaces;
+    using Statements;
+
     public class FunctionLiteral : IExpression
     {
         public Token Token { get; set; }

@@ -1,8 +1,8 @@
-using System;
-using Scripty.Interfaces;
-
 namespace Scripty.Literals
 {
+    using System;
+    using Interfaces;
+
     public class StringLiteral : IExpression
     {
         public Token Token { get; set; }

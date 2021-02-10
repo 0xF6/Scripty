@@ -1,13 +1,13 @@
-using System.Collections.Generic;
-using Scripty.Delegates;
-using Scripty.Enums;
-using Scripty.Expressions;
-using Scripty.Interfaces;
-using Scripty.Literals;
-using Scripty.Statements;
-
 namespace Scripty
 {
+    using System.Collections.Generic;
+    using Delegates;
+    using Enums;
+    using Expressions;
+    using Interfaces;
+    using Literals;
+    using Statements;
+
     public class Parser
     {
         public Parser(Lexer lexer)

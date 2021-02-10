@@ -1,9 +1,9 @@
-using System;
-using Scripty.Expressions;
-using Scripty.Interfaces;
-
 namespace Scripty.Statements
 {
+    using System;
+    using Expressions;
+    using Interfaces;
+
     public class LetStatement : IStatement
     {
         public Token Token { get; set; }

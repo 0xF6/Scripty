@@ -1,7 +1,7 @@
-using Scripty.Interfaces;
-
 namespace Scripty.Objects
 {
+    using Interfaces;
+
     public class ScriptyBoolean : IHashable
     {
         public bool Value { get; set; }
