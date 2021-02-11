@@ -1,3 +1,0 @@
-let sum = fun(arr) {
-    reduce(arr, 0, fun(initial, el) { initial + el });
-};

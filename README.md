@@ -27,14 +27,14 @@
 
 |       Feature        | Status    |            Feature                | Status    |
 |:------------------:	|:------:	|:-----------------------------:	|:------:	|
-|      Variables        |    🙊    |             Int64                |    🙊    |
-|      Functions        |    🙊    |             String                |    🙊    |
-|  Start from a file    |    🙊️    |        Collection-Array        |    🙊    |
-|      Booleans        |    🙊    |     Collection-Dictionary        |    🙊    |
-|    Boolean logic    |    🙊    |        Length function            |    🙊    |
-| Writeline function    |    🙊    | Collection Specific Functions    |    🙉    |
-|     Interpreter        |    🙉    |        Virtual Machine            |    🙈️    |
-|        Float        |    🙈️    |             Macros                |    🙈️    |
+|      Variables        |    🙈    |             Int64                |    🙈    |
+|      Functions        |    🙈    |             String                |    🙈    |
+|  Start from a file    |    🙈    |        Collection-Array        |    🙈    |
+|      Booleans        |    🙈    |     Collection-Dictionary        |    🙈    |
+|    Boolean logic    |    🙈    |        Length function            |    🙈    |
+| Writeline function    |    🙈    | Collection Specific Functions    |    🙈    |
+|     Interpreter        |    🙈    |        Virtual Machine            |    🙈️    |
+|        Float        |    🙈️    |             Macros                |    🙈    |
 
 ## Contribute
 
