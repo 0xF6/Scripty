@@ -11,6 +11,7 @@ namespace Scripty
         public const string Ident = "IDENT";
         public const string Int = "INT";
         public const string String = "STRING";
+        public const string Float = "FLOAT";
 
         //operators
         public const string Assign = "=";
@@ -27,6 +28,7 @@ namespace Scripty
         public const string Or = "||";
 
         // delimiters
+        public const string Dot = ".";
         public const string Comma = ",";
         public const string Semicolon = ";";
         public const string Colon = ":";

@@ -175,7 +175,7 @@ namespace ScriptyTests
             var failingTests = new OperatorTest[]
             {
                 new() {Input = "{}[5]", Expected = "ERROR: [SC16] `{}` does not contain key `5`"},
-                new() {Input = "{'a': 5}[5]", Expected = "ERROR: [SC16] `{a: 5}` does not contain key `5`"}
+                new() {Input = "{'a': 5}[5]", Expected = "ERROR: [SC16] `{'a': 5}` does not contain key `5`"}
             };
 
             foreach (var passingTest in passingTests)
