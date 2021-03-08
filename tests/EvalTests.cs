@@ -178,8 +178,8 @@ namespace ScriptyTests
             };
             var casesWithErrors = new OperatorTest[]
             {
-                new() {Input = "length(1);", Expected = "[MUHL8] invalid operation: {op} has no length."},
-                new() {Input = "length('one', '2');", Expected = "[MUHL7] wrong number of arguments: expected 1, got 2"}
+                new() {Input = "length(1);", Expected = "[SC8] invalid operation: {op} has no length."},
+                new() {Input = "length('one', '2');", Expected = "[SC7] wrong number of arguments: expected 1, got 2"}
             };
 
             foreach (var lengthWorkingTest in workingCases)

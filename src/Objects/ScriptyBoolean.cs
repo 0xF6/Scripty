@@ -14,7 +14,7 @@ namespace Scripty.Objects
 
         #region Implementation of IHashable
 
-        public HashKey HashKey() => new() {Type = Type(), Value = Value ? 1 : 0};
+        public HashKey HashKey() => new() {Type = Type(), Value = Value ? 1UL : 0UL};
 
         #endregion
     }

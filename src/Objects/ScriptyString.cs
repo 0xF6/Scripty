@@ -9,7 +9,7 @@ namespace Scripty.Objects
 
         public string Type() => ObjectType.StringObj;
 
-        public string Inspect() => Value;
+        public string Inspect() => $"'{Value}'";
 
         public Dictionary<string, IObject> Properties { get; set; }
 
