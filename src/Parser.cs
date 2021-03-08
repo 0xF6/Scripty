@@ -50,6 +50,7 @@ namespace Scripty
             {
                 {Token.Ident, ParseIdentifier},
                 {Token.Int, ParseIntegerLiteral},
+                {Token.Float, ParseFloatLiteral},
                 {Token.Bang, ParsePrefixExpression},
                 {Token.Minus, ParsePrefixExpression},
                 {Token.True, ParseBoolean},
@@ -61,6 +62,20 @@ namespace Scripty
                 {Token.Lbracket, ParseArrayLiteral},
                 {Token.Lbrace, ParseHashLiteral}
             };
+
+        private IExpression ParseFloatLiteral()
+        {
+            var lit = new FloatLiteral {Token = CurrentToken};
+            var success = double.TryParse(CurrentToken.Literal, out var value);
+            if (!success)
+            {
+                Errors.Add($"could not parse {CurrentToken.Literal} into float64");
+                return null;
+            }
+
+            lit.Value = value;
+            return lit;
+        }
 
         private IExpression ParseHashLiteral()
         {

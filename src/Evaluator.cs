@@ -23,13 +23,16 @@ namespace Scripty
             {"first", First.Build()},
             {"last", Last.Build()},
             {"push", Push.Build()},
-            {"rest", Rest.Build()}
+            {"rest", Rest.Build()},
+            {"parseInt", ParseInt.Build()},
+            {"parseFloat", ParseFloat.Build()}
         };
 
         public static IObject Eval(INode node, ScriptyEnvironment env) =>
             node.GetType().Name switch
             {
                 nameof(IntegerLiteral) => new ScriptyInteger {Value = ((IntegerLiteral) node).Value},
+                nameof(FloatLiteral) => new ScriptyFloat {Value = ((FloatLiteral) node).Value},
                 nameof(ExpressionStatement) => Eval(((ExpressionStatement) node).Expression, env),
                 nameof(Code) => EvalProgram((Code) node, env),
                 nameof(BooleanLiteral) => NativeBoolToBooleanObject(((BooleanLiteral) node).Value),
@@ -292,7 +295,14 @@ namespace Scripty
         private static IObject EvalInfixExpression(string infixNodeOperator, IObject left, IObject right)
         {
             if (left.Type() == ObjectType.IntegerObj && right.Type() == ObjectType.IntegerObj)
-                return EvalIntegerInfixExpression(infixNodeOperator, (ScriptyInteger) left, (ScriptyInteger) right);
+                return EvalIntAndFloatInfixExpression(infixNodeOperator, left, right);
+
+            if (left.Type() == ObjectType.FloatObj && right.Type() == ObjectType.FloatObj)
+                return EvalIntAndFloatInfixExpression(infixNodeOperator, left, right);
+
+            if (left.Type() == ObjectType.FloatObj && right.Type() == ObjectType.IntegerObj ||
+                left.Type() == ObjectType.IntegerObj && right.Type() == ObjectType.FloatObj)
+                return EvalIntAndFloatInfixExpression(infixNodeOperator, left, right);
 
             if (left.Type() == ObjectType.StringObj && right.Type() == ObjectType.StringObj)
                 return EvalStringInfixExpression(infixNodeOperator, left, right);
@@ -318,21 +328,26 @@ namespace Scripty
             return new ScriptyString {Value = $"{leftVal}{rightVal}"};
         }
 
-        private static IObject EvalIntegerInfixExpression(string infixNodeOperator, ScriptyInteger left,
-            ScriptyInteger right)
+        private static IObject EvalIntAndFloatInfixExpression(string infixNodeOperator, IObject left,
+            IObject right)
         {
-            var leftVal = left.Value;
-            var rightVal = right.Value;
+            var leftVal = left.Type() == ObjectType.IntegerObj
+                ? ((ScriptyInteger) left).Value
+                : ((ScriptyFloat) left).Value;
+            var rightVal = right.Type() == ObjectType.IntegerObj
+                ? ((ScriptyInteger) right).Value
+                : ((ScriptyFloat) right).Value;
+            var resultTypeInteger = left.Type() == ObjectType.IntegerObj && right.Type() == ObjectType.IntegerObj;
             return infixNodeOperator switch
             {
-                "+" => new ScriptyInteger {Value = leftVal + rightVal},
-                "-" => new ScriptyInteger {Value = leftVal - rightVal},
-                "*" => new ScriptyInteger {Value = leftVal * rightVal},
-                "/" => new ScriptyInteger {Value = leftVal / rightVal},
+                "+" => resultTypeInteger ? (ScriptyInteger) (leftVal + rightVal) : (ScriptyFloat) (leftVal + rightVal),
+                "-" => resultTypeInteger ? (ScriptyInteger) (leftVal - rightVal) : (ScriptyFloat) (leftVal - rightVal),
+                "*" => resultTypeInteger ? (ScriptyInteger) (leftVal * rightVal) : (ScriptyFloat) (leftVal * rightVal),
+                "/" => resultTypeInteger ? (ScriptyInteger) (leftVal / rightVal) : (ScriptyFloat) (leftVal / rightVal),
                 "<" => NativeBoolToBooleanObject(leftVal < rightVal),
                 ">" => NativeBoolToBooleanObject(leftVal > rightVal),
-                "!=" => NativeBoolToBooleanObject(leftVal != rightVal),
-                "==" => NativeBoolToBooleanObject(leftVal == rightVal),
+                "!=" => NativeBoolToBooleanObject(!leftVal.Equals(rightVal)),
+                "==" => NativeBoolToBooleanObject(leftVal.Equals(rightVal)),
                 _ => new ScriptyError(2, left, infixNodeOperator, right)
             };
         }
@@ -356,9 +371,15 @@ namespace Scripty
 
         private static IObject EvalMinusPrefixOperatorExpression(IObject right)
         {
-            if (right.Type() != ObjectType.IntegerObj) return new ScriptyError(4, null, "-", right);
-            var value = ((ScriptyInteger) right).Value;
-            return new ScriptyInteger {Value = -value};
+            if (right.Type() == ObjectType.IntegerObj)
+                return new ScriptyInteger {Value = -((ScriptyInteger) right).Value};
+
+
+            if (right.Type() == ObjectType.FloatObj)
+                return new ScriptyFloat {Value = -((ScriptyFloat) right).Value};
+
+
+            return new ScriptyError(4, null, "-", right);
         }
 
         private static IObject EvalBangOperatorExpression(IObject right)

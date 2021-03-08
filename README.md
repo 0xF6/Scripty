@@ -32,9 +32,9 @@
 |  Start from a file    |    🙈️    |        Collection-Array        |    🙊    |
 |      Booleans        |    🙊    |     Collection-Dictionary        |    🙊    |
 |    Boolean logic    |    🙊    |        Length function            |    🙊    |
-| Writeline function    |    🙊    | Collection Specific Functions    |    🙉    |
-|     Interpreter        |    🙉    |        Virtual Machine            |    🙈️    |
-|        Float        |    🙈️    |             Macros                |    🙈️    |
+| Writeline function    |    🙊    | Collection Specific Functions    |    🙊    |
+|     Interpreter        |    🙊    |        Virtual Machine            |    🙈️    |
+|        Float        |    🙊    |             Macros                |    🙈️    |
 
 ## Contribute
 

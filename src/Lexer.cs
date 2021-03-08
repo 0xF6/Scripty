@@ -115,8 +115,8 @@ namespace Scripty
                     }
                     else if (IsDigit(Ch))
                     {
-                        tok.Type = Token.Int;
                         tok.Literal = ReadNumber();
+                        tok.Type = tok.Literal.Contains(".") ? Token.Float : Token.Int;
                         return tok;
                     }
                     else
@@ -170,7 +170,7 @@ namespace Scripty
         private string ReadNumber()
         {
             var position = Position;
-            while (IsDigit(Ch)) ReadChar();
+            while (IsDigit(Ch) || Ch == '.') ReadChar();
             return Input[position..Position];
         }
 
